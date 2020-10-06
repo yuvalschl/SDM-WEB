@@ -20,7 +20,7 @@ public class ServletUtils {
     the actual fetch of them is remained un-synchronized for performance POV
      */
     private static final Object userManagerLock = new Object();
-    private static final Object chatManagerLock = new Object();
+    private static final Object zoneMangerLock = new Object();
 
     public static UserManager getUserManager(ServletContext servletContext) {
 
@@ -32,7 +32,7 @@ public class ServletUtils {
         return (UserManager) servletContext.getAttribute(USER_MANAGER_ATTRIBUTE_NAME);
     }
     public static AllZonesManager getAllZoneManager(ServletContext servletContext) {
-        synchronized (chatManagerLock) {
+        synchronized (zoneMangerLock) {
             if (servletContext.getAttribute(Zone_MANAGER_ATTRIBUTE_NAME ) == null) {
                 servletContext.setAttribute(Zone_MANAGER_ATTRIBUTE_NAME , new AllZonesManager());
             }

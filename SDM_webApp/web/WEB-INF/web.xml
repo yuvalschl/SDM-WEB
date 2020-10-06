@@ -8,7 +8,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>SDM.servlets.LoginServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>UploadFileServlet</servlet-name>
+        <servlet-class>SDM.servlets.UploadFileServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>StoresAreaAndContentServlet</servlet-name>
         <servlet-class>SDM.servlets.StoresAreaAndContentServlet</servlet-class>
@@ -29,6 +32,10 @@
     <servlet-mapping>
         <servlet-name>StoresAreaAndContentServlet</servlet-name>
         <url-pattern>/pages/storesAreaAndContent/storesAreaAndContent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFileServlet</servlet-name>
+        <url-pattern>/uploadFile</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -22,6 +22,7 @@ public class UploadFileServlet extends HttpServlet{
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             Gson gson = new Gson();
+            String file = request.getParameter("file");
             AllZonesManager zoneManager = ServletUtils.getAllZoneManager(getServletContext());
             String json = gson.toJson(zoneManager);
             out.println(json);

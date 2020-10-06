@@ -32,7 +32,7 @@ public class JaxbClassToStoreManager {
 
     public static void main(String[] args) throws InterruptedException, InvalidValueException, DuplicateValueException, ItemNotSoldException {
         StoreManager storeManager = new StoreManager();
-        File file = new File("C:/Users/Dani/Downloads/ex3-big.xml");
+        File file = new File("C:/Users/yuval/Desktop/ex3-big.xml");
         JaxbClassToStoreManager jaxbClassToStoreManager = new JaxbClassToStoreManager(storeManager, file);
         storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file));
 

@@ -1,20 +1,30 @@
 var USER_DATA_URL = buildUrlWithContextPath("userData");
+var UPLOAD_FILE_URL = buildUrlWithContextPath("uploadFile")
 var refreshRate = 2000; //milli seconds
 
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
     $("#uploadButton").on("click", function (event){
-        console.log("aaaa")
+        $.ajax({
+            url: UPLOAD_FILE_URL,
+            dataType: 'json',
+            data: {"file" : $("#fileChooser").val()},
+            success : function (fileData){
+                console.log(fileData)
+            }
+        })
     })
 });
 
 function updateUsersList(entries) {
+    $("#userslist").empty()
     // add the relevant entries
     $.each(entries || [], addToUsersList);
 }
 
 function addToUsersList(index, entry){
-    var entryElement = entry.name + entry.isOwner
+    var isOwner = entry.isOwner ? 'Owner' : 'Customer'
+    var entryElement = entry.name + isOwner
     $("#userslist").append(entryElement).append("<br>");
 }
 
