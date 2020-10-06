@@ -1,6 +1,10 @@
 var USER_DATA_URL = buildUrlWithContextPath("userdata");
 
 $(document).ready(function (){
+    $("#uploadButton").on("click", function (event){
+        console.log("aaaa")
+    })
+
     $.ajax({
         url: USER_DATA_URL,
         dataType: JSON,
@@ -12,3 +16,5 @@ $(document).ready(function (){
         }
     })
 });
+
+

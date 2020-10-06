@@ -10,12 +10,10 @@
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/js/bootstrap.min.css">
 </head>
-<body>
-
-
+<body style="margin-left: 20px;">
     <!-- Two columns: 50% width on large and up-->
     <div class="row">
-        <div class="col-lg">
+        <div class="col-lg-2">
             <div class="row">
                 name:
                 <span id="nameTag"></span>
@@ -25,7 +23,18 @@
                 <span id="typeTag"></span>
             </div>
         </div>
-        <div class="col-lg"></div>
+        <div class="col-lg-7">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button type="button" class="btn" id="uploadButton">upload file</button>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Four columns: 25% width on large and up -->
