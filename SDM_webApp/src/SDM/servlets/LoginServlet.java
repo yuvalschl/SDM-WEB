@@ -20,7 +20,7 @@ public class LoginServlet extends HttpServlet {
     // you can use absolute paths, but then you need to build them from scratch, starting from the context path
     // ( can be fetched from request.getContextPath() ) and then the 'absolute' path from it.
     // Each method with it's pros and cons...
-    private final String STORES_AREA_AND_CONTENT = "../storesAreaAndContent/storesAreaAndContent.html";
+    private final String CHAT_ROOM_URL = "../storesAreaAndContent/storesAreaAndContent.html";
     private final String SIGN_UP_URL = "../signup/signup.html";
     private final String LOGIN_ERROR_URL = "/pages/loginerror/loginerror.jsp";  // must start with '/' since will be used in request dispatcher...
     /**
@@ -37,9 +37,13 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String usernameFromSession = SessionUtils.getUsername(request);
         UserManager userManager = ServletUtils.getUserManager(getServletContext());
+        boolean isOwner = false;
         if (usernameFromSession == null) {
             //user is not logged in yet
             String usernameFromParameter = request.getParameter(USERNAME);
+            String userRoleFromParameter = request.getParameter("store_owner");
+            if(userRoleFromParameter.equals("on") )
+                isOwner = true;
             if (usernameFromParameter == null || usernameFromParameter.isEmpty()) {
                 //no username in session and no username in parameter -
                 //redirect back to the index page
@@ -74,23 +78,25 @@ public class LoginServlet extends HttpServlet {
                         getServletContext().getRequestDispatcher(LOGIN_ERROR_URL).forward(request, response);
                     } else {
                         //add the new user to the users list
-                        userManager.addUser(usernameFromParameter);
+                        userManager.addUser(usernameFromParameter, isOwner);
                         //set the username in a session so it will be available on each request
                         //the true parameter means that if a session object does not exists yet
                         //create a new one
                         request.getSession(true).setAttribute(USERNAME, usernameFromParameter);
-
+                        request.getSession(false).setAttribute("store_owner", usernameFromParameter);
                         //redirect the request to the chat room - in order to actually change the URL
                         System.out.println("On login, request URI is: " + request.getRequestURI());
-                        response.sendRedirect(STORES_AREA_AND_CONTENT);
+                        response.sendRedirect(CHAT_ROOM_URL);
                     }
                 }
             }
         } else {
             //user is already logged in
-            response.sendRedirect(STORES_AREA_AND_CONTENT);
+            response.sendRedirect(CHAT_ROOM_URL);
         }
     }
+
+
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

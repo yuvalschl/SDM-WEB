@@ -8,6 +8,7 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>SDM.servlets.LoginServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>StoresAreaAndContentServlet</servlet-name>
         <servlet-class>SDM.servlets.StoresAreaAndContentServlet</servlet-class>
@@ -19,7 +20,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StoresAreaAndContentServlet</servlet-name>
-        <url-pattern>/storesAreaAndContent</url-pattern>
+        <url-pattern>/pages/storesAreaAndContent/storesAreaAndContent</url-pattern>
     </servlet-mapping>
 
 </web-app>

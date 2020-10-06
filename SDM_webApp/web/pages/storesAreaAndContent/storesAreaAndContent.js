@@ -1,4 +1,5 @@
 var USER_NAME_URL = buildUrlWithContextPath("username");
+var CHAT_LIST_URL = buildUrlWithContextPath("chat");
 
 $(document).ready(function (){
     $.ajax({
