@@ -35,6 +35,7 @@ public class JaxbClassToStoreManager {
         File file = new File("C:/Users/Dani/Downloads/ex3-big.xml");
         JaxbClassToStoreManager jaxbClassToStoreManager = new JaxbClassToStoreManager(storeManager, file);
         storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file));
+
     }
 
     //TODO: do all the new testing
