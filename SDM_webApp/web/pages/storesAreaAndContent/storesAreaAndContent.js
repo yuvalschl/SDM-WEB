@@ -1,4 +1,4 @@
-var USER_DATA_URL = buildUrlWithContextPath("userdata");
+var USER_DATA_URL = buildUrlWithContextPath("userData");
 
 $(document).ready(function (){
     $("#uploadButton").on("click", function (event){
