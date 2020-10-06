@@ -2,6 +2,7 @@ package SDM.servlets;
 
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
+import users.SingelUserEntry;
 import users.UserManager;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class UserListServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             Gson gson = new Gson();
             UserManager userManager = ServletUtils.getUserManager(getServletContext());
-            Map<String,Boolean> usersList = userManager.getUsers();
+            Map<Integer,SingelUserEntry> usersList = userManager.getUsers();
             String json = gson.toJson(usersList);
             out.println(json);
             out.flush();
