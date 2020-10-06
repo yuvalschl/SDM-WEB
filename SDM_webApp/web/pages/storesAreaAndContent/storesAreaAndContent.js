@@ -1,8 +1,8 @@
-var USER_NAME_URL = buildUrlWithContextPath("username");
+var USER_DATA_URL = buildUrlWithContextPath("userdata");
 
 $(document).ready(function (){
     $.ajax({
-        url: USER_NAME_URL,
+        url: USER_DATA_URL,
         dataType: JSON,
         success(userData){
             $("#nameTag").text(userData.name);
