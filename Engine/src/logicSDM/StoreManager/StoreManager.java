@@ -24,6 +24,7 @@ public class StoreManager {
     private Map<Integer, Item> allItems;
     private Set<Order> allOrders = new HashSet<Order>();
     private String zone;
+    private String managerName;
     private String currentFilePath;
 
 
