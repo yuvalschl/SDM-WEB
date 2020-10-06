@@ -30,7 +30,7 @@ public class StoreManager {
 
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, Map<Integer, Customer> allCustomers) {
+    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems) {
         this.allStores = allStores;
         this.allItems = allItems;
         this.allCustomers = allCustomers;

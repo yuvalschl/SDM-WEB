@@ -72,7 +72,7 @@ public class JaxbClassToStoreManager extends Task<StoreManager> {
                 TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
             }
             TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-            Map<Integer, Customer> allCustomers = createAllCustomersMap(xmlStore.getSDMCustomers().getSDMCustomer());
+
 
             updateMessage("Checking that all items are sold");
             for (i = i ; i < 90 ; i++){
@@ -82,20 +82,14 @@ public class JaxbClassToStoreManager extends Task<StoreManager> {
             TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
             HashSet<Integer> notSoldItems = checkIfAllTheItemsFromTheFileAreSold(allItems);
 
-            for(Customer customer : allCustomers.values()){
-                for(Store store : allStores.values()){
-                    if(customer.getLocation().equals(store.getLocation())){
-                        throw new DuplicateValueException(customer.getName() + " and " + store.getName() + " are in the same location");
-                    }
-                }
-            }
+
 
             if(!notSoldItems.isEmpty()){
                 throw new ItemNotSoldException("Items with id: " + notSoldItems.toString() + " are not sold by any store");
             }
             updateMessage("File loaded successfully");
             updateProgress(100,100);
-            return new StoreManager(allStores, allItems, allCustomers);
+            return new StoreManager(allStores, allItems);
         }
         catch (Exception e){
             updateMessage(e.getMessage());
@@ -103,22 +97,7 @@ public class JaxbClassToStoreManager extends Task<StoreManager> {
         }
     }
 
-    private Map<Integer, Customer> createAllCustomersMap(List<SDMCustomer> sdmCustomers) throws DuplicateValueException, InvalidValueException {
-        Map<Integer, Customer> allCustomers = new HashMap<>();
-        for (SDMCustomer customer : sdmCustomers){
-            if(allCustomers.containsKey(customer.getId())){
-                throw new DuplicateValueException("Customer with id: " + customer.getId() + " already exists in the system");
-            }
-            else if(!isLocationValid(new Point(customer.getLocation().getX(), customer.getLocation().getY()))){
-                throw new InvalidValueException(customer.getName() + " has invalid location");
-            }
-            else {
-                allCustomers.put(customer.getId(), new Customer(customer.getId(), customer.getName(), new Point(customer.getLocation().getX(), customer.getLocation().getY())));
-            }
-        }
 
-        return allCustomers;
-    }
 
     private Map<Integer, Item> createAllItemsMap(List<SDMItem> sdmItems) throws DuplicateValueException {
         Map<Integer, Item> allItems = new HashMap<Integer, Item>();
