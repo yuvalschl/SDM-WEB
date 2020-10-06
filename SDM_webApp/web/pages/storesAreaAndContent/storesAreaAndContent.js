@@ -1,9 +1,12 @@
-var USER_NAME_URL = buildUrlWithContextPath("username");
-var CHAT_LIST_URL = buildUrlWithContextPath("chat");
+var USER_DATA_URL = buildUrlWithContextPath("userdata");
 
 $(document).ready(function (){
+    $("#uploadButton").on("click", function (event){
+        console.log("aaaa")
+    })
+
     $.ajax({
-        url: USER_NAME_URL,
+        url: USER_DATA_URL,
         dataType: JSON,
         success(userData){
             $("#nameTag").text(userData.name);
@@ -13,3 +16,5 @@ $(document).ready(function (){
         }
     })
 });
+
+
