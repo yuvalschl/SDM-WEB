@@ -10,21 +10,22 @@ of the user of this class to handle the synchronization of isUserExists with oth
  */
 public class UserManager {
 
-    private final Map<String,Boolean> usersSet;
-
+    private final Map<Integer,SingelUserEntry> usersSet;
+    private static int userID =0;
     public UserManager() {
         usersSet = new HashMap<>();
     }
 
     public synchronized void addUser(String username, Boolean isOwner) {
-        usersSet.put(username,isOwner);
+        SingelUserEntry user = new SingelUserEntry(isOwner, username);
+        usersSet.put(++userID,user);
     }
 
     public synchronized void removeUser(String username) {
         usersSet.remove(username);
     }
 
-    public synchronized Map<String,Boolean> getUsers() {
+    public synchronized Map<Integer,SingelUserEntry> getUsers() {
         return Collections.unmodifiableMap(usersSet);
     }
 
