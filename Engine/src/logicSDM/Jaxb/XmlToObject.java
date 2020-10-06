@@ -1,5 +1,6 @@
 package logicSDM.Jaxb;
 
+import logicSDM.Jaxb.jaxbClasses.SuperDuperMarketDescriptor;
 import logicSDM.Order.*;
 
 import javax.xml.bind.JAXBContext;

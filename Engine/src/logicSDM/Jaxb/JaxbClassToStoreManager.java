@@ -18,81 +18,39 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class JaxbClassToStoreManager extends Task<StoreManager> {
+public class JaxbClassToStoreManager {
     private File file;
     private BooleanProperty xmlLoaded;
     private StoreManager storeManager;
 
-    private final int SLEEP_TIME = 5;
 
-    public JaxbClassToStoreManager(StoreManager storeManager, File file, BooleanProperty xmlLoaded){
+    public JaxbClassToStoreManager(StoreManager storeManager, File file){
         this.file = file;
-        this.xmlLoaded = xmlLoaded;
+        //this.xmlLoaded = xmlLoaded;
         this.storeManager = storeManager;
     }
 
-    @Override
-    protected StoreManager call() throws Exception {
-        updateMessage("Loading file...");
-        for (int i = 0 ; i < 10 ; i++){
-            updateProgress(i,100);
-            TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-        }
-
-        this.storeManager = convertJaxbClassToStoreManager(Objects.requireNonNull(XmlToObject.fromXmlFileToObject(file)));
-        if(storeManager != null){
-            xmlLoaded.setValue(false);
-        }
-        return this.storeManager;
+    public static void main(String[] args) throws InterruptedException, InvalidValueException, DuplicateValueException, ItemNotSoldException {
+        StoreManager storeManager = new StoreManager();
+        File file = new File("C:/Users/Dani/Downloads/ex3-big.xml");
+        JaxbClassToStoreManager jaxbClassToStoreManager = new JaxbClassToStoreManager(storeManager, file);
+        storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file));
     }
 
     //TODO: do all the new testing
     public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
         try{
-            int i = 10;
-            updateMessage("Checking items");
-            for (i = i ; i < 20 ; i++){
-                updateProgress(i,100);
-                TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-            }
+
             Map<Integer, Item> allItems = createAllItemsMap(xmlStore.getSDMItems().getSDMItem());
-
-            updateMessage("Checking stores");
-            for (i = i ; i < 45 ; i++){
-                updateProgress(i,100);
-                TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-            }
-
-            TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
             Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems);
-
-            updateMessage("Checking customers");
-            for (i = i ; i < 75 ; i++){
-                updateProgress(i,100);
-                TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-            }
-            TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-
-
-            updateMessage("Checking that all items are sold");
-            for (i = i ; i < 90 ; i++){
-                updateProgress(i,100);
-                TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
-            }
-            TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
             HashSet<Integer> notSoldItems = checkIfAllTheItemsFromTheFileAreSold(allItems);
-
-
-
+            String zone = xmlStore.getSDMZone().getName();
             if(!notSoldItems.isEmpty()){
                 throw new ItemNotSoldException("Items with id: " + notSoldItems.toString() + " are not sold by any store");
             }
-            updateMessage("File loaded successfully");
-            updateProgress(100,100);
-            return new StoreManager(allStores, allItems);
+            return new StoreManager(allStores, allItems, zone);
         }
         catch (Exception e){
-            updateMessage(e.getMessage());
             return null;
         }
     }

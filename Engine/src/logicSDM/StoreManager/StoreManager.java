@@ -23,31 +23,26 @@ public class StoreManager {
     private Map<Integer, Store> allStores;
     private Map<Integer, Item> allItems;
     private Set<Order> allOrders = new HashSet<Order>();
+    private String zone;
     private String currentFilePath;
-    private Map<Integer, Customer> allCustomers;//
-    private Task<Boolean> currentTask;
 
 
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems) {
+    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zone) {
         this.allStores = allStores;
         this.allItems = allItems;
-        this.allCustomers = allCustomers;
+        this.zone = zone;
         this.currentFilePath = " ";
     }
 
     public StoreManager(){
         allStores = new HashMap<Integer, Store>();
         allItems = new HashMap<Integer, Item>();
-        allCustomers = new HashMap<Integer, Customer>();
     }
 
 
     public DecimalFormat getDecimalFormat() { return decimalFormat; }
-    public Task<Boolean> getCurrentTask() {
-        return currentTask;
-    }
 
     public void setAllOrders(Set<Order> allOrders) {
         this.allOrders = allOrders;
@@ -81,13 +76,7 @@ public class StoreManager {
         this.allItems = allItems;
     }
 
-    public Map<Integer, Customer> getAllCustomers() {
-        return allCustomers;
-    }
 
-    public void setAllCustomers(Map<Integer, Customer> allCustomers) {
-        this.allCustomers = allCustomers;
-    }
 
     public void loadOrder(File file) throws JAXBException {
         OrderWrapper orderWrapper = XmlToObject.fromXmlFileToOrder(file);
