@@ -20,7 +20,7 @@
 
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
-        <url-pattern>/pages/userData</url-pattern>
+        <url-pattern>/userData</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>

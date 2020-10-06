@@ -8,29 +8,23 @@ $(document).ready(function (){
     })
 });
 
-function refreshUsersList(users) {
-    //clear all current users
-    $("#userslist").empty();
+function updateUsersList(entries) {
+    // add the relevant entries
+    $.each(entries || [], addToUsersList);
+}
 
-    // rebuild the list of users: scan all users and add them to the list of users
-    $.each(users || [], function(index, username, title) {
-        console.log("Adding user #" + index + ": " + username + "title:" + title);
-        //create a new <option> tag with a value in it and
-        //appeand it to the #userslist (div with id=userslist) element
-        $('<li>' + username + " " + title + '</li>').appendTo($("#userslist"));
-    });
+function addToUsersList(index, entry){
+    var entryElement = entry.name + entry.isOwner
+    $("#userslist").append(entryElement).append("<br>");
 }
 
 function ajaxUsersList() {
     $.ajax({
         url: USER_DATA_URL,
-        dataType: JSON,
+        dataType: 'json',
         success: function(users) {
-            refreshUsersList(users);
+            updateUsersList(users);
         },
-        error: function (e){
-            console.log("falid");
-        }
     });
 }
 
