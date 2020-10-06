@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the jaxbClasses package. 
+ * generated in the logicSDM.Jaxb.jaxbClasses.mypackage package.
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -29,10 +29,18 @@ public class ObjectFactory {
     private final static QName _PurchaseCategory_QNAME = new QName("", "purchase-category");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: jaxbClasses
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: logicSDM.Jaxb.jaxbClasses.mypackage
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link SuperDuperMarketDescriptor }
+     * 
+     */
+    public SuperDuperMarketDescriptor createSuperDuperMarketDescriptor() {
+        return new SuperDuperMarketDescriptor();
     }
 
     /**
@@ -132,27 +140,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link SDMCustomers }
+     * Create an instance of {@link SuperDuperMarketDescriptor.SDMZone }
      * 
      */
-    public SDMCustomers createSDMCustomers() {
-        return new SDMCustomers();
-    }
-
-    /**
-     * Create an instance of {@link SDMCustomer }
-     * 
-     */
-    public SDMCustomer createSDMCustomer() {
-        return new SDMCustomer();
-    }
-
-    /**
-     * Create an instance of {@link SuperDuperMarketDescriptor }
-     * 
-     */
-    public SuperDuperMarketDescriptor createSuperDuperMarketDescriptor() {
-        return new SuperDuperMarketDescriptor();
+    public SuperDuperMarketDescriptor.SDMZone createSuperDuperMarketDescriptorSDMZone() {
+        return new SuperDuperMarketDescriptor.SDMZone();
     }
 
     /**

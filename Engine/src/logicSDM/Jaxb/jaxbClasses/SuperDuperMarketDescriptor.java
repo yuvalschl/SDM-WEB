@@ -3,6 +3,7 @@ package logicSDM.Jaxb.jaxbClasses;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -18,9 +19,17 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
+ *         &lt;element name="SDM-Zone">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element ref="{}SDM-items"/>
  *         &lt;element ref="{}SDM-stores"/>
- *         &lt;element ref="{}SDM-customers"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,12 +45,36 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "super-duper-market-descriptor")
 public class SuperDuperMarketDescriptor {
 
+    @XmlElement(name = "SDM-Zone", required = true)
+    protected SuperDuperMarketDescriptor.SDMZone sdmZone;
     @XmlElement(name = "SDM-items", required = true)
     protected SDMItems sdmItems;
     @XmlElement(name = "SDM-stores", required = true)
     protected SDMStores sdmStores;
-    @XmlElement(name = "SDM-customers", required = true)
-    protected SDMCustomers sdmCustomers;
+
+    /**
+     * Gets the value of the sdmZone property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link SuperDuperMarketDescriptor.SDMZone }
+     *     
+     */
+    public SuperDuperMarketDescriptor.SDMZone getSDMZone() {
+        return sdmZone;
+    }
+
+    /**
+     * Sets the value of the sdmZone property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link SuperDuperMarketDescriptor.SDMZone }
+     *     
+     */
+    public void setSDMZone(SuperDuperMarketDescriptor.SDMZone value) {
+        this.sdmZone = value;
+    }
 
     /**
      * Gets the value of the sdmItems property.
@@ -91,28 +124,55 @@ public class SuperDuperMarketDescriptor {
         this.sdmStores = value;
     }
 
-    /**
-     * Gets the value of the sdmCustomers property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SDMCustomers }
-     *     
-     */
-    public SDMCustomers getSDMCustomers() {
-        return sdmCustomers;
-    }
 
     /**
-     * Sets the value of the sdmCustomers property.
+     * <p>Java class for anonymous complex type.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link SDMCustomers }
-     *     
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
      */
-    public void setSDMCustomers(SDMCustomers value) {
-        this.sdmCustomers = value;
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "")
+    public static class SDMZone {
+
+        @XmlAttribute(name = "name", required = true)
+        protected String name;
+
+        /**
+         * Gets the value of the name property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getName() {
+            return name;
+        }
+
+        /**
+         * Sets the value of the name property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setName(String value) {
+            this.name = value;
+        }
+
     }
 
 }
