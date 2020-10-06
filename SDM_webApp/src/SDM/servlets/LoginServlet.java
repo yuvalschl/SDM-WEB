@@ -42,7 +42,9 @@ public class LoginServlet extends HttpServlet {
             //user is not logged in yet
             String usernameFromParameter = request.getParameter(USERNAME);
             String userRoleFromParameter = request.getParameter("store_owner");
-            if(userRoleFromParameter.equals("on") )
+            if(userRoleFromParameter == null)
+                isOwner = false;
+            else
                 isOwner = true;
             if (usernameFromParameter == null || usernameFromParameter.isEmpty()) {
                 //no username in session and no username in parameter -
@@ -83,7 +85,7 @@ public class LoginServlet extends HttpServlet {
                         //the true parameter means that if a session object does not exists yet
                         //create a new one
                         request.getSession(true).setAttribute(USERNAME, usernameFromParameter);
-                        request.getSession(false).setAttribute("store_owner", usernameFromParameter);
+  //                      request.getSession(false).setAttribute("store_owner", usernameFromParameter);
                         //redirect the request to the chat room - in order to actually change the URL
                         System.out.println("On login, request URI is: " + request.getRequestURI());
                         response.sendRedirect(CHAT_ROOM_URL);
