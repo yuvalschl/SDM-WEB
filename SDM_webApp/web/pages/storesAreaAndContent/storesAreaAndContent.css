@@ -1,0 +1,13 @@
+table {
+    border     : 1px solid gray;
+    width      : 50%;
+    text-align : center;
+}
+
+table#sourcetable tbody tr {
+    background-color : #ffccff;
+}
+
+table#sourcetable tbody  tr {
+    cursor : pointer;
+}

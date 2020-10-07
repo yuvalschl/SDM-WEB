@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
 });
 
-function updateTableSingleEntry(index, itemInfo){
+/*function updateTableSingleEntry(index, itemInfo){
     var itemID = itemInfo.itemdID
     var itemName = itemInfo.itemName
     var sellBy = itemInfo.sellBy
@@ -32,7 +32,7 @@ function updateTableSingleEntry(index, itemInfo){
         "<td>" + averagePrice + "</td>" +
         "<td>" +howManyItemSold + "</td>" +
         "</tr>");
-}
+}*/
 
 function ajaxZoneTableData(){
     $.ajax({
