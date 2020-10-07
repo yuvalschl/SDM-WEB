@@ -7,50 +7,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../common/jquery-2.0.3.min.js"></script>
     <script src="../../common/context-path-helper.js"></script>
-    <script src="../../common/jquery_form.js"></script>
     <script src="localStores.js"></script>
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
 </head>
 <body>
-<table class="table">
-    <h1>Zone</h1>
-    <thead>
-    <tr>
-        <th scope="col">Item ID</th>
-        <th scope="col">Item name</th>
-        <th scope="col">Sell by</th>
-        <th scope="col">Number of stores selling</th>
-        <th scope="col">Average price</th>
-        <th scope="col">Number of times item was sold</th>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <h1>Zone</h1>
+                <h3>All items in this zone:</h3>
+                <thead class="thead-dark">
+                <tr data-href ="google.com">
+                    <th scope="col">Item ID</th>
+                    <th scope="col">Item name</th>
+                    <th scope="col">Sell by</th>
+                    <th scope="col">Number of stores selling</th>
+                    <th scope="col">Average price</th>
+                    <th scope="col">Number of times item was sold</th>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>sd</td>
-        <td>sabih</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>sd</td>
-        <td>sabih</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-        <td>celery</td>
-        <td>sd</td></tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-href ="google.com">
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>sd</td>
+                    <td>sabih</td>
+                </tr>
+                <tr data-href ="google.com">
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>sd</td>
+                    <td>sabih</td>
+                </tr>
+                <tr data-href ="google.com">
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>celery</td>
+                    <td>sd</td></tr>
 
-    </tbody>
-</table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3>Stores by name:</h3>
+    <div class="row">
+        <div class="col-lg-1">
+    <table class="table" id="sourcetable">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>Name 1</td>
+        </tr>
+        <tr>
+            <td>Name 2</td>
+        </tr>
+        <tr>
+            <td>Name 3</td>
+        </tr>
+        <tr>
+            <td>Name 4</td>
+        </tr>
+        <tr>
+            <td>Name 5</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>The field :</h3>
+
+     <input type="text" id="fillname" value="" />
+        </div>
+    </div>
+
 </body>
 </html>

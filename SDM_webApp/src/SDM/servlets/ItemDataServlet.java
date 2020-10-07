@@ -1,9 +1,9 @@
 package SDM.servlets;
 
+import SDM.utils.ItemsInfoForJson;
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
-import logicSDM.Item.Item;
 import logicSDM.StoreManager.StoreManager;
 
 import javax.servlet.http.HttpServlet;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.ArrayList;
 
 public class ItemDataServlet extends HttpServlet {
 
@@ -22,8 +22,10 @@ public class ItemDataServlet extends HttpServlet {
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String zoneName = req.getParameter("zoneNAme");
             StoreManager currZoneManager = allZonesManager.getStoreMangerForZone(zoneName);
-            //String json = gson.toJson(currZoneManager.getAllItems());
-          //  out.println(json.get());
+            ArrayList<ItemsInfoForJson> itemInfoToConvertToJson = new ArrayList<>();
+            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemsInfoForJson(item, currZoneManager));});
+            String json = gson.toJson(itemInfoToConvertToJson);
+            out.println(json);
             out.flush();
         }
     }
