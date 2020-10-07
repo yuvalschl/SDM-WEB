@@ -4,13 +4,18 @@ var refreshRate = 2000; //milli seconds
 
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
-    $("#uploadButton").on("click", function (event){
+    var file = $('[name="fileChooser"]');
+    $("#uploadButton").on("click", function (){
         $.ajax({
+            type: 'POST',
             url: UPLOAD_FILE_URL,
             dataType: 'json',
-            data: {"file" : $("#fileChooser").val()},
+            files: {"file": open($("#fileChooser").val())},
             success : function (fileData){
-                console.log(fileData)
+                console.log($(this))
+            },
+            error : function (){
+                console.log($("#fileChooser").val())
             }
         })
     })
