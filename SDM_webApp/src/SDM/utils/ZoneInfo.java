@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class ZoneInfo {
-    Owner zoneOwner;
+    String zoneOwner;
     String zoneName;
     int amountOfItemTypes;
     int amountOfStores;
