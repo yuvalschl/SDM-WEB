@@ -32,7 +32,7 @@ public class StoreManager {
 
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zone) {
+    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zoneName, String ownerName) {
         this.allStores = allStores;
         this.allItems = allItems;
         this.zoneName = zone;
@@ -44,6 +44,21 @@ public class StoreManager {
         allItems = new HashMap<Integer, Item>();
     }
 
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public String getZoneOwner() {
+        return zoneOwner;
+    }
+
+    public void setZoneOwner(String zoneOwner) {
+        this.zoneOwner = zoneOwner;
+    }
 
     public String getZoneName() { return zoneName;}
 

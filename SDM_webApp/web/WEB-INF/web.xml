@@ -20,6 +20,10 @@
         <servlet-name>UsersListServlet</servlet-name>
         <servlet-class>SDM.servlets.UserListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ZoneDataServlet</servlet-name>
+        <servlet-class>SDM.servlets.ZoneDataServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
@@ -36,6 +40,10 @@
     <servlet-mapping>
         <servlet-name>UploadFileServlet</servlet-name>
         <url-pattern>/uploadFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ZoneDataServlet</servlet-name>
+        <url-pattern>/getZoneData</url-pattern>
     </servlet-mapping>
 
 </web-app>

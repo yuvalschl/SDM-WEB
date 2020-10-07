@@ -1,16 +1,19 @@
 package SDM.servlets;
 
+;
 import SDM.utils.ServletUtils;
+import SDM.utils.SessionUtils;
+import SDM.utils.ZoneInfo;
 import com.google.gson.Gson;
-import com.sun.org.apache.xml.internal.utils.StringBufferPool;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Exceptions.DuplicateValueException;
 import logicSDM.Exceptions.InvalidValueException;
 import logicSDM.Exceptions.ItemNotSoldException;
+import logicSDM.Item.Item;
 import logicSDM.Jaxb.JaxbClassToStoreManager;
 import logicSDM.Jaxb.XmlToObject;
+import logicSDM.Store.Store;
 import logicSDM.StoreManager.StoreManager;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -28,7 +31,6 @@ public class UploadFileServlet extends HttpServlet{
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Gson gson = new Gson();
         Collection<Part> parts = request.getParts();
         StringBuilder xml = new StringBuilder();
         for(Part part : parts){
@@ -41,13 +43,19 @@ public class UploadFileServlet extends HttpServlet{
         JaxbClassToStoreManager jaxbClassToStoreManager = new JaxbClassToStoreManager();
         StoreManager storeManager = null;
         try {
-            storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file));
+            String userName = SessionUtils.getUsername(request);
+            storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file), userName);
         } catch (DuplicateValueException | InvalidValueException | ItemNotSoldException | InterruptedException e) {
             e.printStackTrace();
         }
         AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
-        allZonesManager.addZone(storeManager);
-        response.getOutputStream().write("file uploaded".getBytes());
+        if(allZonesManager.getAllZones().containsKey(storeManager.getZoneName())){
+            response.getWriter().println("zone: " + storeManager.getZoneName() + " already in the system");
+        }
+        else {
+            allZonesManager.addZone(storeManager);
+            response.getWriter().println(new Gson().toJson(new ZoneInfo(storeManager)));
+        }
     }
 
     private String readFromInputStream(InputStream inputStream) {
