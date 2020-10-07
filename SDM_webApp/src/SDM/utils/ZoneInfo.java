@@ -3,12 +3,13 @@ package SDM.utils;
 import logicSDM.Item.Item;
 import logicSDM.Store.Store;
 import logicSDM.StoreManager.StoreManager;
+import users.Owner;
 
 import java.util.HashSet;
 import java.util.Map;
 
 public class ZoneInfo {
-    String zoneOwner;
+    Owner zoneOwner;
     String zoneName;
     int amountOfItemTypes;
     int amountOfStores;

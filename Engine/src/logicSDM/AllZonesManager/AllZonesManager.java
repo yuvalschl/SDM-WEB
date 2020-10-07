@@ -22,5 +22,8 @@ public class AllZonesManager {
     public synchronized Map<String,StoreManager> getAllZones() {
         return Collections.unmodifiableMap(storeManagersByZones);
     }
+    public StoreManager getStoreMangerForZone(String zoneName){
+        return storeManagersByZones.get(zoneName);
+    }
 
 }
