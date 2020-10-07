@@ -11,7 +11,7 @@ $(document).ready(function() {
         }
 
         $("#fillname").val($(this).find("td").eq(0).html());
-        $( this ).css( "background-color", "#17a2b8" );
+        $( this ).css( "background-color", "#a5e3f6" );
 
         pickedup = $( this );
     });
