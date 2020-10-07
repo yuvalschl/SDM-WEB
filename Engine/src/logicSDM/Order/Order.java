@@ -3,8 +3,10 @@ package logicSDM.Order;
 import logicSDM.Costumer.Customer;
 import logicSDM.Store.*;
 import logicSDM.ItemPair.*;
+import users.Clinet;
 
 import javax.xml.bind.annotation.*;
+import java.awt.*;
 import java.util.*;
 
 @XmlType(propOrder={"dateOfOrder", "amountOfItems", "storeIdAndName","totalPriceOfItems", "shippingCost", "totalCost", "itemAmountAndStores", "shippingCostByStore"})
@@ -22,7 +24,10 @@ public class Order {
     private HashMap<Integer, Store> stores = new HashMap<>();
     private int orderId;
     private static int staticId = 0;
-    private Customer customer;
+    private Clinet customer;
+
+
+    private Point customerLocation;
     private HashMap<Integer, ItemAmountAndStore> itemAmountAndStores;
     private HashMap<Integer,String> storeIdAndName = new HashMap<>();
 
@@ -40,7 +45,7 @@ public class Order {
 
 
     public Order(Date dateOfOrder, int amountOfItems, float totalPriceOfItems, float shippingCost, float totalCost,
-                 HashMap<Integer, Store> stores, HashMap<Integer, ItemAmountAndStore> items, HashMap<Integer, Float> shippingCostByStore, Customer customer) {
+                 HashMap<Integer, Store> stores, HashMap<Integer, ItemAmountAndStore> items, HashMap<Integer, Float> shippingCostByStore, Clinet customer, Point customerLocation) {
         this.dateOfOrder = dateOfOrder;
         this.amountOfItems = amountOfItems;
         this.totalPriceOfItems = totalPriceOfItems;
@@ -51,6 +56,7 @@ public class Order {
         this.itemAmountAndStores = items;
         this.shippingCostByStore = shippingCostByStore;
         this.customer = customer;
+        this.customerLocation = customerLocation;
         updateStoreIdAndName(itemAmountAndStores);
     }
     public Order(){}
@@ -63,12 +69,20 @@ public class Order {
         }
     }
 
+    public Point getCustomerLocation() {
+        return customerLocation;
+    }
+
+    public void setCustomerLocation(Point customerLocation) {
+        this.customerLocation = customerLocation;
+    }
+
     public int getStaticID(){ return staticId;}
-    public Customer getCustomer() {
+    public Clinet getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(Clinet customer) {
         this.customer = customer;
     }
 

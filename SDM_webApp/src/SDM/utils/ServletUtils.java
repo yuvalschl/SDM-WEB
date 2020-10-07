@@ -31,9 +31,11 @@ public class ServletUtils {
         }
         return (UserManager) servletContext.getAttribute(USER_MANAGER_ATTRIBUTE_NAME);
     }
+
     public static AllZonesManager getAllZoneManager(ServletContext servletContext) {
         synchronized (zoneMangerLock) {
             if (servletContext.getAttribute(Zone_MANAGER_ATTRIBUTE_NAME ) == null) {
+
                 servletContext.setAttribute(Zone_MANAGER_ATTRIBUTE_NAME , new AllZonesManager());
             }
         }

@@ -9,6 +9,8 @@ import logicSDM.Store.Store;
 import logicSDM.Jaxb.XmlToObject;
 import logicSDM.Store.Discount;
 import javafx.concurrent.Task;
+import users.Clinet;
+import users.Owner;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,7 +26,7 @@ public class StoreManager {
     private Map<Integer, Item> allItems;
     private Set<Order> allOrders = new HashSet<Order>();
     private String zone;
-    private String managerName;
+    private Owner storeOwner;
     private String currentFilePath;
 
 
@@ -161,7 +163,7 @@ public class StoreManager {
 
 
 
-    public Order createOrder(Point customerLocation, Date date, HashMap<Integer, ItemAmountAndStore> items, Customer customer) {
+    public Order createOrder(Point customerLocation, Date date, HashMap<Integer, ItemAmountAndStore> items, Clinet customer) {
         float totalPriceOfItems = 0;
         HashMap<Integer, Store> allStoresInOrder = getAllStoresInOrder(items);
         float shippingCost = calcShippingCost(items, customerLocation);
@@ -173,7 +175,7 @@ public class StoreManager {
                 totalPriceOfItems += pair.amount() * pair.getItem().getPrice();
         }
         float totalCost = shippingCost + totalPriceOfItems;
-        return new Order(date, items.size(), totalPriceOfItems, shippingCost, totalCost, allStoresInOrder, items, shippingCostByStore, customer);
+        return new Order(date, items.size(), totalPriceOfItems, shippingCost, totalCost, allStoresInOrder, items, shippingCostByStore, customer, customerLocation);
     }
 
 
@@ -214,6 +216,8 @@ public class StoreManager {
     public void placeOrder(Order order) {//finilaize the order after final approval, in this method we add the order to the order set and update the amount sold in allitems
 
         allOrders.add(order);
+        order.getCustomer().getBalance().buy(order.getDateOfOrder(), order.getTotalCost());//update the customer's balance
+        storeOwner.getBalance().receivePayment(order.getDateOfOrder(), order.getTotalCost());//update the owners balance
         for (ItemAmountAndStore item : order.getItemAmountAndStores().values()) {
             int itemID = item.item().getId();
             allItems.get(itemID).setAmountSold(item.getAmount()+ allItems.get(itemID).getAmountSold());
@@ -229,7 +233,7 @@ public class StoreManager {
 
         for(Map.Entry<Integer, Store> store : order.getStores().entrySet()){
             float shippingCost = order.getShippingCostByStore().get(store.getKey());
-            float distance = distanceCalculator(order.getCustomer().getLocation(), store.getValue().getLocation()) ;
+            float distance = distanceCalculator(order.getCustomerLocation(), store.getValue().getLocation()) ;
             StoreOrder ordersToAdd = new StoreOrder(order.getDateOfOrder(), shippingCost, distance, store.getValue(), order.getOrderId(),store.getValue().getPPK());
             for(ItemAmountAndStore item : order.getItemAmountAndStores().values()){
                 if(item.getStore().getSerialNumber() == store.getValue().getSerialNumber()){

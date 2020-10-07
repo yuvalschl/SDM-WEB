@@ -17,8 +17,14 @@ public class UserManager {
     }
 
     public synchronized void addUser(String username, Boolean isOwner) {
-        SingelUserEntry user = new SingelUserEntry(isOwner, username);
-        usersSet.put(++userID,user);
+        if (isOwner){
+           Owner owner = new Owner(username);
+            usersSet.put(++userID,owner);
+        }
+        else{
+           Clinet clinet = new Clinet(username);
+            usersSet.put(++userID,clinet);
+        }
     }
 
     public synchronized void removeUser(String username) {

@@ -1,11 +1,39 @@
 package users;
 
-public class SingelUserEntry {
+import logicSDM.balance.Balance;
 
-    private boolean isOwner;
+public abstract class SingelUserEntry {
+
     private String name;
-    SingelUserEntry(boolean isOwner, String name){
-        this.isOwner = isOwner;
+    private Balance balance;
+    private boolean isOwner;
+    SingelUserEntry(String name){
+        this.name = name;
+        balance = new Balance();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
+
+    public Balance getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Balance balance) {
+        this.balance = balance;
+    }
+
+    public boolean isOwner() {
+        return isOwner;
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
+    }
+
 }

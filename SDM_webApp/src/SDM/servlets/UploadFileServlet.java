@@ -15,21 +15,21 @@ import java.util.Map;
 
 public class UploadFileServlet extends HttpServlet{
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+  /*  protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //returning JSON objects, not HTML
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             Gson gson = new Gson();
             request.getParts();
-            AllZonesManager zoneManager = ServletUtils.getAllZoneManager(getServletContext());
+    //        AllZonesManager zoneManager = ServletUtils.getAllZoneManager(getServletContext());
             String json = gson.toJson(zoneManager);
             out.println(json);
             out.flush();
         }
-    }
+    }*/
 
-    @Override
+  /*  @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
     }
@@ -37,5 +37,5 @@ public class UploadFileServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
-    }
+    }*/
 }

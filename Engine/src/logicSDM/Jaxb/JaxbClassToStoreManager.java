@@ -30,13 +30,13 @@ public class JaxbClassToStoreManager {
         this.storeManager = storeManager;
     }
 
-    public static void main(String[] args) throws InterruptedException, InvalidValueException, DuplicateValueException, ItemNotSoldException {
+ /*   public static void main(String[] args) throws InterruptedException, InvalidValueException, DuplicateValueException, ItemNotSoldException {
         StoreManager storeManager = new StoreManager();
         File file = new File("C:/Users/yuval/Desktop/ex3-big.xml");
         JaxbClassToStoreManager jaxbClassToStoreManager = new JaxbClassToStoreManager(storeManager, file);
         storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file));
 
-    }
+    }*/
 
     //TODO: do all the new testing
     public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
