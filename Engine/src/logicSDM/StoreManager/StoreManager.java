@@ -8,7 +8,6 @@ import logicSDM.Order.*;
 import logicSDM.Store.Store;
 import logicSDM.Jaxb.XmlToObject;
 import logicSDM.Store.Discount;
-import javafx.concurrent.Task;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -23,17 +22,18 @@ public class StoreManager {
     private Map<Integer, Store> allStores;
     private Map<Integer, Item> allItems;
     private Set<Order> allOrders = new HashSet<Order>();
-    private String zone;
-    private String managerName;
+    private String zoneName;
+    private String zoneOwner;
     private String currentFilePath;
 
 
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zone) {
+    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zoneName, String ownerName) {
         this.allStores = allStores;
         this.allItems = allItems;
-        this.zone = zone;
+        this.zoneName = zoneName;
+        this.zoneOwner = ownerName;
         this.currentFilePath = " ";
     }
 
@@ -42,6 +42,21 @@ public class StoreManager {
         allItems = new HashMap<Integer, Item>();
     }
 
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public String getZoneOwner() {
+        return zoneOwner;
+    }
+
+    public void setZoneOwner(String zoneOwner) {
+        this.zoneOwner = zoneOwner;
+    }
 
     public DecimalFormat getDecimalFormat() { return decimalFormat; }
 

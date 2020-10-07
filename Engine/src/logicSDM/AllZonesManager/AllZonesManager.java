@@ -9,18 +9,17 @@ import java.util.Map;
 
 public class AllZonesManager {
 
-    private HashMap<Integer, StoreManager> storeManagersByZones;
-    private static int zoneID = 0;
+    private HashMap<String, StoreManager> storeManagersByZones;
 
     public AllZonesManager() {
-        this.storeManagersByZones = new HashMap<Integer, StoreManager>();
+        this.storeManagersByZones = new HashMap<String, StoreManager>();
     }
 
     public synchronized void addZone(StoreManager zoneToManage) {
-        storeManagersByZones.put(++zoneID, zoneToManage);
+        storeManagersByZones.put(zoneToManage.getZoneName(), zoneToManage);
     }
 
-    public synchronized Map<Integer,StoreManager> getUsers() {
+    public synchronized Map<String,StoreManager> getAllZones() {
         return Collections.unmodifiableMap(storeManagersByZones);
     }
 

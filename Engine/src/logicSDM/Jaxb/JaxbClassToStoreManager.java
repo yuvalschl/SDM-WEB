@@ -31,17 +31,17 @@ public class JaxbClassToStoreManager {
     }*/
 
     //TODO: do all the new testing
-    public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
+    public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore, String ownerName) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
         try{
 
             Map<Integer, Item> allItems = createAllItemsMap(xmlStore.getSDMItems().getSDMItem());
             Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems);
             HashSet<Integer> notSoldItems = checkIfAllTheItemsFromTheFileAreSold(allItems);
-            String zone = xmlStore.getSDMZone().getName();
+            String zoneName = xmlStore.getSDMZone().getName();
             if(!notSoldItems.isEmpty()){
                 throw new ItemNotSoldException("Items with id: " + notSoldItems.toString() + " are not sold by any store");
             }
-            return new StoreManager(allStores, allItems, zone);
+            return new StoreManager(allStores, allItems, zoneName, ownerName);
         }
         catch (Exception e){
             return null;
