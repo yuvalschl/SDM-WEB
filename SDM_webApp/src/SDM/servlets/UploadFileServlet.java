@@ -49,7 +49,9 @@ public class UploadFileServlet extends HttpServlet{
             e.printStackTrace();
         }
         AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
+        assert storeManager != null;
         if(allZonesManager.getAllZones().containsKey(storeManager.getZoneName())){
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
             response.getWriter().println("zone: " + storeManager.getZoneName() + " already in the system");
         }
         else {

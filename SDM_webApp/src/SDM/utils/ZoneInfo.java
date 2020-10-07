@@ -16,7 +16,7 @@ public class ZoneInfo {
     float averagePriceOfOrders;
 
     public ZoneInfo(StoreManager storeManager){
-        zoneOwner = storeManager.getZoneOwner();
+        zoneOwner = storeManager.getZoneOwner().getName();
         zoneName = storeManager.getZoneName();
         amountOfItemTypes = calcAmountOfItems(storeManager);
         amountOfStores = storeManager.getAllStores().size();

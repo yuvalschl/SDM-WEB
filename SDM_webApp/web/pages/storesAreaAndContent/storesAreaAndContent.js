@@ -6,6 +6,10 @@ var refreshRate = 2000; //milli seconds
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
     setInterval(ajaxZoneTableData, refreshRate);
+
+    $("#fileChooser").on("click", function (){
+        $("#fileChooserLabel").text($("#fileChooser").val())
+    })
 });
 
 function uploadFile(){

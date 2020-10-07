@@ -37,6 +37,7 @@ public class StoreManager {
         this.allItems = allItems;
         this.zoneName = zoneName;
         this.currentFilePath = " ";
+        this.zoneOwner = new Owner(ownerName);
     }
 
     public StoreManager(){

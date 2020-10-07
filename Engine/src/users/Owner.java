@@ -2,7 +2,7 @@ package users;
 
 public class Owner extends SingelUserEntry {
 
-    Owner(String name){
+    public Owner(String name){
         super(name);
         super.setOwner(true);
     }
