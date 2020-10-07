@@ -1,22 +1,18 @@
 package logicSDM.Jaxb;
 
-import logicSDM.Costumer.Customer;
 import logicSDM.Exceptions.*;
 import logicSDM.Item.Item;
-import logicSDM.Item.WeightItem;
-import logicSDM.Item.UnitItem;
+import logicSDM.Item.sellBy;
 import logicSDM.Store.*;
 import logicSDM.Store.MyIfYouBuy;
 import logicSDM.StoreManager.StoreManager;
 import logicSDM.Jaxb.jaxbClasses.*;
 import javafx.beans.property.BooleanProperty;
-import javafx.concurrent.Task;
 
 import java.awt.*;
 import java.io.File;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class JaxbClassToStoreManager {
     private File file;
@@ -56,14 +52,10 @@ public class JaxbClassToStoreManager {
             if(allItems.containsKey(item.getId())){
                 throw new DuplicateValueException("logicSDM.Item with id: " + item.getId() + " already exists in the system");
             }
-            switch (item.getPurchaseCategory()){
-                case "Quantity":
-                    allItems.put(item.getId(), new UnitItem(item.getId() ,item.getName()));
-                    break;
-                case "Weight":
-                    allItems.put(item.getId(), new WeightItem(item.getId() ,item.getName()));
-                    break;
-            }        }
+            sellBy sellBy = item.getPurchaseCategory().equals("Quantity") ? logicSDM.Item.sellBy.UNIT : logicSDM.Item.sellBy.WEIGHT;
+            allItems.put(item.getId(), new Item(item.getId(), item.getName(), sellBy));
+        }
+
         return allItems;
     }
 
@@ -130,11 +122,11 @@ public class JaxbClassToStoreManager {
                 throw new InvalidValueException("logicSDM.Store.logicSDM.Store with id: " + currentStore.getId() + " already selling item with id:" + item.getItemId());
             }
             Item itemToAdd = allItemsFromFile.get(item.getItemId());
-            if(itemToAdd instanceof UnitItem){
-                itemToAdd = new UnitItem(itemToAdd, item.getPrice());
+            if(itemToAdd.getSellBy().equals(sellBy.UNIT)){
+                itemToAdd = new Item(itemToAdd, item.getPrice(), sellBy.UNIT);
             }
             else {
-                itemToAdd = new WeightItem(itemToAdd, item.getPrice());
+                itemToAdd = new Item(itemToAdd, item.getPrice(), sellBy.WEIGHT);
             }
             currentInventory.put(itemToAdd.getId(), itemToAdd);
             allItemsInSystem.get(itemToAdd.getId()).setSold(true);

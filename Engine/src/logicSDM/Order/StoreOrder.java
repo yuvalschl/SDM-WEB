@@ -1,6 +1,6 @@
 package logicSDM.Order;
 
-import logicSDM.Item.UnitItem;
+import logicSDM.Item.sellBy;
 import logicSDM.ItemPair.ItemAmountAndStore;
 import logicSDM.Store.Store;
 
@@ -53,7 +53,7 @@ public class StoreOrder {
         }
         totalCost += priceToAddToTotalCost;
         totalPriceOfItems += priceToAddToTotalItemCost;
-        if(item.getItem() instanceof UnitItem){
+        if(item.getItem().getSellBy().equals(sellBy.UNIT)){
             amountOfItems += item.getAmount();
         }
         else {

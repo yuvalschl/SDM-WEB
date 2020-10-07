@@ -4,19 +4,21 @@ import logicSDM.Exceptions.InvalidValueException;
 
 import java.util.Objects;
 
-public abstract class Item {
-    boolean isSold;
+public class Item {
+    private boolean isSold;
     private int id;
     private String name;
     private float price;
     private float amountSold;
-    private  static int maxID = 0;
+    private static int maxID = 0;
+    private sellBy sellBy;
 
-    public Item(int id, String name, float price) {
+    public Item(int id, String name, float price, sellBy sellBy) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.amountSold = 0;
+        this.sellBy = sellBy;
         isSold = false;
         if (id > maxID)
             maxID = id;
@@ -27,9 +29,18 @@ public abstract class Item {
         this.name = name;
         this.price = price;
         this.amountSold = amountSold;
-        isSold = false;
+        //isSold = false;
         if (id > maxID)
             maxID = id;
+    }
+
+    public Item(Item itemToAdd, int price, sellBy sellBy) {
+        this.id = itemToAdd.id;
+        this.name = itemToAdd.name;
+        this.price = price;
+        this.amountSold = itemToAdd.amountSold;
+        this.isSold = false;
+        this.sellBy = sellBy;
     }
 
     public int getMaxID() { return maxID; }
@@ -44,11 +55,19 @@ public abstract class Item {
         isSold = sold;
     }
 
-    public Item(int id, String name) {
+    public Item(int id, String name, sellBy sellBy) {
         this.id = id;
         this.name = name;
+        this.sellBy = sellBy;
     }
 
+    public sellBy getSellBy() {
+        return sellBy;
+    }
+
+    public void setSellBy(sellBy sellBy) {
+        this.sellBy = sellBy;
+    }
 
     public int getId() {
         return id;

@@ -178,7 +178,7 @@ public class StoreManager {
         float shippingCost = calcShippingCost(items, customerLocation);
         HashMap<Integer, Float> shippingCostByStore = calcShippingCostByStore(items, customerLocation);
         for (ItemAmountAndStore pair: items.values()) {
-            if (pair.item() instanceof UnitItem)
+            if (pair.item().getSellBy().equals(sellBy.UNIT))
                 totalPriceOfItems += (int)pair.amount() * pair.getItem().getPrice();
             else
                 totalPriceOfItems += pair.amount() * pair.getItem().getPrice();
