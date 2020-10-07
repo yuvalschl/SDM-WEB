@@ -4,22 +4,47 @@ var refreshRate = 2000; //milli seconds
 
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
-    var file = $('[name="fileChooser"]');
-    $("#uploadButton").on("click", function (){
+
+    /*$("#uploadButton").on("click", function (){
+        var form = new FormData();
+        var files = $("#fileChooser")[0].files[0];
+        form.append("file", files)
         $.ajax({
             type: 'POST',
             url: UPLOAD_FILE_URL,
-            dataType: 'json',
-            files: {"file": open($("#fileChooser").val())},
-            success : function (fileData){
-                console.log($(this))
+            data: form,
+            enctype : 'multipart/form-data',
+            contentType : false,
+            processData : false,
+            success : function (){
+                console.log("file uploaded")
             },
-            error : function (){
-                console.log($("#fileChooser").val())
+            error : function (message){
+                console.log("error while uploading file: " + message)
             }
         })
-    })
+    })*/
 });
+
+function uploadFile(){
+    var form = new FormData();
+    var files = $("#fileChooser")[0].files[0];
+    form.append("file", files)
+    $.ajax({
+        type: 'POST',
+        url: UPLOAD_FILE_URL,
+        data: form,
+        enctype : 'multipart/form-data',
+        contentType : false,
+        processData : false,
+        success : function (){
+            console.log("file uploaded")
+        },
+        error : function (message){
+            console.log("error while uploading file: " + message)
+        }
+    })
+}
 
 function updateUsersList(entries) {
     $("#userslist").empty()
