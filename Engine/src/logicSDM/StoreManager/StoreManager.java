@@ -25,8 +25,8 @@ public class StoreManager {
     private Map<Integer, Store> allStores;
     private Map<Integer, Item> allItems;
     private Set<Order> allOrders = new HashSet<Order>();
-    private String zone;
-    private Owner storeOwner;
+    private String zoneName;
+    private Owner zoneOwner;
     private String currentFilePath;
 
 
@@ -35,7 +35,7 @@ public class StoreManager {
     public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zone) {
         this.allStores = allStores;
         this.allItems = allItems;
-        this.zone = zone;
+        this.zoneName = zone;
         this.currentFilePath = " ";
     }
 
@@ -44,6 +44,14 @@ public class StoreManager {
         allItems = new HashMap<Integer, Item>();
     }
 
+
+    public String getZoneName() { return zoneName;}
+
+    public void setZoneName(String zoneName) { this.zoneName = zoneName;}
+
+    public Owner getZoneOwner() { return zoneOwner;}
+
+    public void setZoneOwner(Owner zoneOwner) { this.zoneOwner = zoneOwner;}
 
     public DecimalFormat getDecimalFormat() { return decimalFormat; }
 
@@ -217,7 +225,7 @@ public class StoreManager {
 
         allOrders.add(order);
         order.getCustomer().getBalance().buy(order.getDateOfOrder(), order.getTotalCost());//update the customer's balance
-        storeOwner.getBalance().receivePayment(order.getDateOfOrder(), order.getTotalCost());//update the owners balance
+
         for (ItemAmountAndStore item : order.getItemAmountAndStores().values()) {
             int itemID = item.item().getId();
             allItems.get(itemID).setAmountSold(item.getAmount()+ allItems.get(itemID).getAmountSold());
@@ -240,8 +248,9 @@ public class StoreManager {
                     ordersToAdd.addItemToOrder(item);
                 }
             }
-
+            store.getValue().getStoreOwner().getBalance().receivePayment(order.getDateOfOrder(),ordersToAdd.getTotalCost());//update the store owner balance
             store.getValue().getAllOrders().put(ordersToAdd.getOrderId(), ordersToAdd);
+
         }
     }
 

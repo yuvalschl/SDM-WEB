@@ -2,6 +2,7 @@ package logicSDM.Store;
 
 import logicSDM.Item.*;
 import logicSDM.Order.*;
+import users.Owner;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,6 +18,7 @@ public class Store {
     private Set<Discount> allDiscounts;
     private Map<Integer, StoreOrder> allOrders;
     private Point location;
+    private Owner storeOwner;
     private float PPK;
     private float totalDeliveriesCost;
     private float totalPayment;
@@ -59,6 +61,11 @@ public class Store {
         this.allDiscounts = discounts;
         allDiscounts.stream().forEach(discount -> discount.setStoreId(serialNumber));
     }
+
+
+    public Owner getStoreOwner() { return storeOwner;}
+
+    public void setStoreOwner(Owner storeOwner) { this.storeOwner = storeOwner;}
 
     public int getX(){
         return location.x;
