@@ -24,12 +24,14 @@
         <servlet-name>moveToZonePageServlet</servlet-name>
         <servlet-class>SDM.servlets.StoresAndContent.MoveToZonePageServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>storesDataServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.storesDataServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>ItemDataServlet</servlet-name>
         <servlet-class>SDM.servlets.MainPage.ItemDataServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
         <url-pattern>/userData</url-pattern>
@@ -50,10 +52,13 @@
         <servlet-name>moveToZonePageServlet</servlet-name>
         <url-pattern>/zonePage</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ItemDataServlet</servlet-name>
         <url-pattern>/getItemData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>storesDataServlet</servlet-name>
+        <url-pattern>/getStoresData</url-pattern>
     </servlet-mapping>
 
 </web-app>

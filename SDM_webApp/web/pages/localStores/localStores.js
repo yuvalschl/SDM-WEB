@@ -1,9 +1,15 @@
+const GET_ITEM_DATA = buildUrlWithContextPath("getItemData");
+const GET_STORES_DATA = buildUrlWithContextPath("getStoresData");
 var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
 var userName;
 var userType;
 $(document).ready(function() {
     ajaxItemTableData();
+    ajaxGetStores();
 
+    $(document).on('change', "select[name=storesDropDown]", function(){
+       //TODO: update the items table
+    });
 });
 
 
@@ -83,3 +89,24 @@ function GetURLParameter(sParam) {
         }
     }
 }
+
+function ajaxGetStores(){
+    var zoneName = GetURLParameter("zonename")
+    $.ajax({
+        url: GET_STORES_DATA,
+        dataType: 'json',
+        data: {'zoneName': zoneName},
+        success: function (stores){
+            $.each(stores || [], addStoresToDropDown)
+        }
+    })
+}
+
+function addStoresToDropDown(index, store){
+    $("#storesDropDown").append("<option>" + store.storeName + "</option")
+}
+
+function dropDownOnClick(){
+    var i = $(this)
+}
+
