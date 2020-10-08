@@ -32,6 +32,11 @@
         <servlet-name>ItemDataServlet</servlet-name>
         <servlet-class>SDM.servlets.MainPage.ItemDataServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StoreItemsServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.StoreItemsServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
         <url-pattern>/userData</url-pattern>
@@ -59,6 +64,10 @@
     <servlet-mapping>
         <servlet-name>storesDataServlet</servlet-name>
         <url-pattern>/getStoresData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreItemsServlet</servlet-name>
+        <url-pattern>/getStoreItemsData</url-pattern>
     </servlet-mapping>
 
 </web-app>
