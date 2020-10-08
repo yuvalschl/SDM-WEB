@@ -1,31 +1,30 @@
 var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
 
+var pickedup;
 
 $(document).ready(function() {
-    //initalize the item table
     ajaxItemTableData();
-    checkIfClientOrUser()
+    $( "#storesNameTable tbody tr" ).on( "click", function( event ) {
+
+        // get back to where it was before if it was selected :
+        if (pickedup != null) {
+            pickedup.css( "background-color", "#f8f9fa" );
+        }
+
+        $("#fillname").val($(this).find("td").eq(0).html());
+        $( this ).css( "background-color", "#a5e3f6" );
+
+        pickedup = $( this );
+    });
 });
 
-function checkIfClientOrUser() {
-    var user = GetURLParameter('customerCB');
-    /*if(user.localeCompare("on")){
-        return true;
-    }
-    else{
-        return false;
-    }*/
-}
-function loadClientPage() {
-
-}
 function updateTableSingleEntry(index, itemInfo){
-    var itemID = itemInfo.itemID
+    var itemID = itemInfo.itemdID
     var itemName = itemInfo.itemName
     var sellBy = itemInfo.sellBy
     var numberOfStoresSelling = itemInfo.amountOfStoresSelling
     var averagePrice = itemInfo.averagePrice
-    var howManyItemSold = itemInfo.numberOfTimesItemWasSold
+    var howManyItemSold = itemInfo.averagePriceOfOrders
     $("#itemTable").append("<tr>" +
         "<td>" + itemID + "</td>" +
         "<td>" + itemName + "</td>" +
@@ -37,40 +36,24 @@ function updateTableSingleEntry(index, itemInfo){
 }
 
 function ajaxItemTableData(){
-    var zone = GetURLParameter('zonename');
     $.ajax({
         url: GET_ITEM_DATA,
-        data: "zonename="+zone,
-        dataType: 'json',
-        success: function (itemData){
-            updateTable(itemData)
-            console.log("table loaded")
-        },
-        error: function (errorInfo){
-            console.log("error while uploading file" + errorInfo)
-        }
-    })
-}
-function ajaxItemTableData(){
-    var zone = GetURLParameter('zonename');
-    $.ajax({
-        url: GET_ITEM_DATA,
-        data: "zonename="+zone,
-        dataType: 'json',
-        success: function (itemData){
-            updateTable(itemData)
-            console.log("table loaded")
-        },
-        error: function (errorInfo){
-            console.log("error while uploading file" + errorInfo)
-        }
-    })
-}
 
+        dataType: 'json',
+        success: function (itemData){
+            updateTable(itemData)
+            console.log("table loaded")
+        },
+        error: function (errorInfo){
+            console.log("error while uploading file" + errorInfo)
+        }
+    })
+}
 function updateTable(table){
     $("#tableBody").empty()
     $.each(table || [], updateTableSingleEntry)
 }
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -80,5 +63,4 @@ function GetURLParameter(sParam) {
             return sParameterName[1];
         }
     }
-}
-
+}​
