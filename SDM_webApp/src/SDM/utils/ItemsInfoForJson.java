@@ -13,8 +13,10 @@ public class ItemsInfoForJson {
     private int  amountOfStoresSelling;
     private float averagePrice;
     private float numberOfTimesItemWasSold;
+    private String isOwner;
+    private String userName;
 
-    public ItemsInfoForJson(Item item, StoreManager storeManager) {
+    public ItemsInfoForJson(Item item, StoreManager storeManager, String isOwner, String userName) {
         final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
         this.itemID = item.getId();
@@ -23,6 +25,8 @@ public class ItemsInfoForJson {
         this.amountOfStoresSelling = storeManager.NumberOfStoresSellingItem(item);
         this.averagePrice = Float.parseFloat(decimalFormat.format(storeManager.getAveragePrice(item)));
         this.numberOfTimesItemWasSold = item.getAmountSold();
+        this.isOwner = isOwner;
+        this.userName = userName;
     }
 
 }

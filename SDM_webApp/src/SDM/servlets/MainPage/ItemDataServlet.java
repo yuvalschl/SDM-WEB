@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import static SDM.Constants.Constants.USERNAME;
+
 public class ItemDataServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
@@ -24,7 +26,9 @@ public class ItemDataServlet extends HttpServlet {
             String zoneName = req.getParameter("zonename");
             StoreManager currZoneManager = allZonesManager.getStoreMangerForZone(zoneName);
             ArrayList<ItemsInfoForJson> itemInfoToConvertToJson = new ArrayList<>();
-            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemsInfoForJson(item, currZoneManager));});
+            String userName = req.getSession(false).getAttribute(USERNAME).toString();
+            String isOwner = req.getSession(false).getAttribute("isOwner").toString();
+            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemsInfoForJson(item, currZoneManager, isOwner,userName));});
             String json = gson.toJson(itemInfoToConvertToJson);
             out.println(json);
             out.flush();

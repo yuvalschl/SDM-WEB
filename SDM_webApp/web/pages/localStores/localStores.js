@@ -1,25 +1,15 @@
 var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
-
+var userName;
+var userType;
 $(document).ready(function() {
     ajaxItemTableData();
 
 });
 
-function checkIfCustomer() {
-   /* $.ajax({
-        url: GET_ITEM_DATA,
-        dataType: 'json',
-        data: "zonename=" + zone,
-        success: function (itemData){
-            updateTable(itemData)
-            console.log("table loaded")
-        },
-        error: function (errorInfo){
-            console.log("error while uploading file" + errorInfo)
-        }
-    })*/
-}
+
 function updateTableSingleEntry(index, itemInfo){
+    userName = itemInfo.userName
+    userType = itemInfo.isOwner
     var itemID = itemInfo.itemID
     var itemName = itemInfo.itemName
     var sellBy = itemInfo.sellBy
@@ -36,9 +26,7 @@ function updateTableSingleEntry(index, itemInfo){
         "</tr>");
 }
 
-function ajaxGetUser(){
 
-}
 function ajaxItemTableData(){
     var zone = GetURLParameter("zonename");
     $.ajax({
@@ -47,6 +35,7 @@ function ajaxItemTableData(){
         data: "zonename=" + zone,
         success: function (itemData){
             updateTable(itemData)
+            lodUserUi()
             console.log("table loaded")
         },
         error: function (errorInfo){
@@ -54,6 +43,32 @@ function ajaxItemTableData(){
         }
     })
 }
+
+function checkIfCustomer() {
+    if (userType === "false")
+        return true;
+    else
+        return false;
+}
+function lodUserUi(){
+    if (checkIfCustomer()){
+        loadCustomerUi();
+    }
+    else{
+        loadOwnerUi();
+    }
+}
+function loadCustomerUi(){
+    $("#firstBtnText").text("Place an order");
+    $("#secondBtnText").text("Rate a store");
+    $("#thirdBtnText").text("Your orders");
+}
+function loadOwnerUi(){
+    $("#firstBtnText").text("You store orders");
+    $("#secondBtnText").text("Show feedbacks");
+    $("#thirdBtnText").text("Open a new store");
+}
+
 function updateTable(table){
     $("#tableBody").empty()
     $.each(table || [], updateTableSingleEntry)
