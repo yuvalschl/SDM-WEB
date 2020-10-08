@@ -25,6 +25,11 @@
         <servlet-class>SDM.servlets.StoresAndContent.ZoneDataServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>ItemDataServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.ItemDataServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
         <url-pattern>/userData</url-pattern>
@@ -44,6 +49,11 @@
     <servlet-mapping>
         <servlet-name>ZoneDataServlet</servlet-name>
         <url-pattern>/getZoneData</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ItemDataServlet</servlet-name>
+        <url-pattern>/getItemData</url-pattern>
     </servlet-mapping>
 
 </web-app>

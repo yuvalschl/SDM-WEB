@@ -20,7 +20,7 @@ $(document).ready(function (){
         if (pickedup != null) {
             $("#"+pickedup).css( "background-color", "#f8f9fa");
         }
-/*        $("#fillname").val($(this).find("td").eq(0).html());*/
+       //$("#fillname").val($(this).find("td").eq(0).html());
         $(this).css( "background-color", "#17a2b8");
         pickedup = $(this).attr("id")
     });

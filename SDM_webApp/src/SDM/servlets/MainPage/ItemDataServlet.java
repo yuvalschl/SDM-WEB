@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.StoreManager.StoreManager;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ public class ItemDataServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             Gson gson = new Gson();
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
-            String zoneName = req.getParameter("zoneNAme");
+            String zoneName = req.getParameter("zoneName");
             StoreManager currZoneManager = allZonesManager.getStoreMangerForZone(zoneName);
             ArrayList<ItemsInfoForJson> itemInfoToConvertToJson = new ArrayList<>();
             currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemsInfoForJson(item, currZoneManager));});
@@ -28,5 +29,9 @@ public class ItemDataServlet extends HttpServlet {
             out.println(json);
             out.flush();
         }
+    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
     }
 }

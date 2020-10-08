@@ -11,24 +11,24 @@
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
 </head>
 <body>
+<!--item table-->
     <div class="row">
         <div class="col-lg-12">
-            <table class="table">
+            <table class="table" id="itemTable">
                 <h1>Zone</h1>
                 <h3>All items in this zone:</h3>
                 <thead class="thead-dark">
-                <tr data-href ="google.com">
+                <tr>
                     <th scope="col">Item ID</th>
                     <th scope="col">Item name</th>
                     <th scope="col">Sell by</th>
                     <th scope="col">Number of stores selling</th>
                     <th scope="col">Average price</th>
                     <th scope="col">Number of times item was sold</th>
-
                 </tr>
                 </thead>
                 <tbody>
-                <tr data-href ="google.com">
+                <tr>
                     <th scope="row">1</th>
                     <td>Mark</td>
                     <td>Otto</td>
@@ -36,22 +36,6 @@
                     <td>sd</td>
                     <td>sabih</td>
                 </tr>
-                <tr data-href ="google.com">
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>sd</td>
-                    <td>sabih</td>
-                </tr>
-                <tr data-href ="google.com">
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>celery</td>
-                    <td>sd</td></tr>
-
                 </tbody>
             </table>
         </div>
@@ -60,38 +44,51 @@
     <h3>Stores by name:</h3>
     <div class="row">
         <div class="col-lg-1">
-    <table class="table" id="sourcetable">
-        <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
+<!--
+            store name Table
+-->
+            <table class="table" id="storesNameTable">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
 
-        <tbody>
-        <tr>
-            <td>Name 1</td>
-        </tr>
-        <tr>
-            <td>Name 2</td>
-        </tr>
-        <tr>
-            <td>Name 3</td>
-        </tr>
-        <tr>
-            <td>Name 4</td>
-        </tr>
-        <tr>
-            <td>Name 5</td>
-            </tr>
-        </tbody>
-    </table>
+                <tbody>
+                <tr>
+                    <td>Name 1</td>
+                </tr>
+                <tr>
+                    <td>Name 2</td>
+                </tr>
+                <tr>
+                    <td>Name 3</td>
+                </tr>
+                <tr>
+                    <td>Name 4</td>
+                </tr>
+                <tr>
+                    <td>Name 5</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>The field :</h3>
+            <input type="text" id="fillname" value="" />
 
 
-    <h3>The field :</h3>
-
-     <input type="text" id="fillname" value="" />
         </div>
     </div>
 
+    <div class="row">
+        <div class="row">
+            <section class="page-element col-xs-9 col-sm-9 col-md-9 col-lg-7">
+                <div class="page-element">part1</div>
+            </section>
+
+            <section class="page-element col-xs-3 col-sm-3 col-md-3 col-lg-5">
+                <div class="page-element">part2</div>
+            </section>
+        </div>
+    </div>
 </body>
 </html>
