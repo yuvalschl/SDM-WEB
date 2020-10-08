@@ -4,13 +4,9 @@ $(document).ready(function() {
     ajaxItemTableData();
     ajaxGetStores();
 
-    $(document).on('change', ".btn btn-secondary[name=storesDropDown]", function(){
-        alert($(this).val())
+    $(document).on('change', "select[name=storesDropDown]", function(){
+       //TODO: update the items table
     });
-
-/*    $("#storesDropDown li a").click(function() {
-        console.log( $(this).value);
-    });*/
 });
 
 function checkIfCustomer() {
