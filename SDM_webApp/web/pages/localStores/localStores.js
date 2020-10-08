@@ -1,4 +1,3 @@
-const GET_ITEM_DATA = buildUrlWithContextPath("getItemData");
 const GET_STORES_DATA = buildUrlWithContextPath("getStoresData");
 var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
 var userName;
