@@ -13,16 +13,16 @@
         <servlet-class>SDM.servlets.StoresAndContent.UploadFileServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>StoresAreaAndContentServlet</servlet-name>
-        <servlet-class>SDM.servlets.StoresAndContent.StoresAreaAndContentServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UsersListServlet</servlet-name>
         <servlet-class>SDM.servlets.StoresAndContent.UserListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ZoneDataServlet</servlet-name>
         <servlet-class>SDM.servlets.StoresAndContent.ZoneDataServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>moveToZonePageServlet</servlet-name>
+        <servlet-class>SDM.servlets.StoresAndContent.MoveToZonePageServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -34,16 +34,16 @@
         <url-pattern>/pages/signup/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>StoresAreaAndContentServlet</servlet-name>
-        <url-pattern>/pages/storesAreaAndContent/storesAreaAndContent</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UploadFileServlet</servlet-name>
         <url-pattern>/uploadFile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ZoneDataServlet</servlet-name>
         <url-pattern>/getZoneData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>moveToZonePageServlet</servlet-name>
+        <url-pattern>/zonePage</url-pattern>
     </servlet-mapping>
 
 </web-app>

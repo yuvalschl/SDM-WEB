@@ -1,8 +1,9 @@
 var USER_DATA_URL = buildUrlWithContextPath("userData")
 var UPLOAD_FILE_URL = buildUrlWithContextPath("uploadFile")
 var GET_ZONE_DATA = buildUrlWithContextPath("getZoneData")
+var ZONE_PAGE_URL = buildUrlWithContextPath("zonePage")
 var refreshRate = 1000; //milli seconds
-var pickedup
+var pickedUp
 
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
@@ -15,14 +16,19 @@ $(document).ready(function (){
         $("#fileChooserLabel").text($("#fileChooser").val())
     })
 
+    /**
+     * chenges the selected row color
+     * saves the selected row id in pickUp var
+     */
     $( "#zoneTable").on( "click", "tr", function( event ) {
         // get back to where it was before if it was selected :
-        if (pickedup != null) {
-            $("#"+pickedup).css( "background-color", "#f8f9fa");
+        if (pickedUp != null) {
+            $("#"+pickedUp).css( "background-color", "#f8f9fa");
         }
-/*        $("#fillname").val($(this).find("td").eq(0).html());*/
+/*        var buttonText = $(this).find("td").eq(1).html()
+        $("#nextButton").html(buttonText);*/
         $(this).css( "background-color", "#17a2b8");
-        pickedup = $(this).attr("id")
+        pickedUp = $(this).attr("id")
     });
 });
 
@@ -79,7 +85,7 @@ function updateTableSingleEntry(index, zoneInfo){
         "<td>" + amountOfOrders + "</td>" +
         "<td>" + averagePriceOfOrders + "</td>" +
         "</tr>");
-    $("#"+pickedup).css( "background-color", "#17a2b8");
+    $("#"+pickedUp).css( "background-color", "#17a2b8");
 }
 
 
@@ -146,7 +152,8 @@ function ajaxUsersList() {
  * pass the zone name
  */
 function nextPage(){
-
+/*    $.redirect("/SDM/pages/localStores/localStores.html", {zoneName : pickedUp}, "POST", "MoveToZonePageServlet")*/
+    window.location = "/SDM/pages/localStores/localStores.html?zonename=" + pickedUp
 }
 
 
