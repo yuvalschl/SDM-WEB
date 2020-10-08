@@ -1,5 +1,5 @@
 var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
-
+var GET_STORES_DATA = buildUrlWithContextPath("getStoresData")
 $(document).ready(function() {
     ajaxItemTableData();
 
@@ -67,4 +67,21 @@ function GetURLParameter(sParam) {
             return sParameterName[1];
         }
     }
+}
+
+function ajaxGetStores(){
+    var zoneName = GetURLParameter("zonename")
+    $.ajax({
+        url: GET_STORES_DATA,
+        dataType: 'json',
+        success: function (stores){
+            $.each(stores || [], addStoresToDropDown)
+        }
+    })
+}
+
+function addStoresToDropDown(store){
+    $("#storesDropDown").append("<button class='dropdown-item' type='button'>" +
+    store.prop("storeName") +
+    "</button>")
 }
