@@ -36,9 +36,9 @@ function updateTableSingleEntry(index, itemInfo){
 }
 
 function ajaxItemTableData(){
+    var zone = GetURLParameter("zonename")
     $.ajax({
         url: GET_ITEM_DATA,
-
         dataType: 'json',
         success: function (itemData){
             updateTable(itemData)
@@ -63,4 +63,4 @@ function GetURLParameter(sParam) {
             return sParameterName[1];
         }
     }
-}​
+}
