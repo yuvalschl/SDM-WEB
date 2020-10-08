@@ -27,7 +27,7 @@ public class ZoneDataServlet extends HttpServlet {
             Map<String, StoreManager> allZones = allZonesManager.getAllZones();
             ArrayList<ZoneInfo> zoneInfoArrayList = new ArrayList<>();
             allZones.forEach((id, zone) -> { zoneInfoArrayList.add(new ZoneInfo(zone)); });
-            String json = gson.toJson(zoneInfoArrayList);;
+            String json = gson.toJson(zoneInfoArrayList);
             out.println(json);
             out.flush();
         }
