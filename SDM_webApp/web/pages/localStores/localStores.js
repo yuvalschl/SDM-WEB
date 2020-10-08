@@ -62,6 +62,8 @@ function lodUserUi(){
     else{
         loadOwnerUi();
     }
+    $("#userNameText").text(userName);
+
 }
 function loadCustomerUi(){
     $("#firstBtnText").text("Place an order");
