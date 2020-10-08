@@ -1,8 +1,16 @@
-var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
-var GET_STORES_DATA = buildUrlWithContextPath("getStoresData")
+const GET_ITEM_DATA = buildUrlWithContextPath("getItemData");
+const GET_STORES_DATA = buildUrlWithContextPath("getStoresData");
 $(document).ready(function() {
     ajaxItemTableData();
+    ajaxGetStores();
 
+    $(document).on('change', ".btn btn-secondary[name=storesDropDown]", function(){
+        alert($(this).val())
+    });
+
+/*    $("#storesDropDown li a").click(function() {
+        console.log( $(this).value);
+    });*/
 });
 
 function checkIfCustomer() {
@@ -74,14 +82,18 @@ function ajaxGetStores(){
     $.ajax({
         url: GET_STORES_DATA,
         dataType: 'json',
+        data: {'zoneName': zoneName},
         success: function (stores){
             $.each(stores || [], addStoresToDropDown)
         }
     })
 }
 
-function addStoresToDropDown(store){
-    $("#storesDropDown").append("<button class='dropdown-item' type='button'>" +
-    store.prop("storeName") +
-    "</button>")
+function addStoresToDropDown(index, store){
+    $("#storesDropDown").append("<option>" + store.storeName + "</option")
 }
+
+function dropDownOnClick(){
+    var i = $(this)
+}
+
