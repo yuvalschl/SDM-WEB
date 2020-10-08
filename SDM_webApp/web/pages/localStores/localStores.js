@@ -1,13 +1,15 @@
 const GET_STORES_DATA = buildUrlWithContextPath("getStoresData");
-var GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
+const GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
+const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
 var userName;
 var userType;
 $(document).ready(function() {
     ajaxItemTableData();
     ajaxGetStores();
 
-    $(document).on('change', "select[name=storesDropDown]", function(){
-       //TODO: update the items table
+    $(document).on('change', "#storesDropDown", function(){
+        var temp = $(this).children(":selected").prop("value");
+        ajaxGetStoreItems(temp)
     });
 });
 
@@ -104,10 +106,16 @@ function ajaxGetStores(){
 }
 
 function addStoresToDropDown(index, store){
-    $("#storesDropDown").append("<option>" + store.storeName + "</option")
+    $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
 }
 
-function dropDownOnClick(){
-    var i = $(this)
+function ajaxGetStoreItems(storeId){
+    $.ajax({
+        url: GET_STORE_ITEMS_DATA,
+        dataType: 'json',
+        data: {'storeId' : storeId},
+        success : function (data){
+            console.log(data)
+        }
+    })
 }
-
