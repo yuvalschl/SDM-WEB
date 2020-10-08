@@ -21,13 +21,16 @@ public class ItemDataServlet extends HttpServlet {
         try (PrintWriter out = res.getWriter()) {
             Gson gson = new Gson();
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
-            String zoneName = req.getParameter("zoneName");
+            String zoneName = req.getParameter("zonename");
             StoreManager currZoneManager = allZonesManager.getStoreMangerForZone(zoneName);
             ArrayList<ItemsInfoForJson> itemInfoToConvertToJson = new ArrayList<>();
             currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemsInfoForJson(item, currZoneManager));});
             String json = gson.toJson(itemInfoToConvertToJson);
             out.println(json);
             out.flush();
+        }
+        catch (Exception e){
+            System.out.println("error");
         }
     }
     @Override
