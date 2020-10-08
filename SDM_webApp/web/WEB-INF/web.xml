@@ -6,23 +6,23 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>SDM.servlets.LoginServlet</servlet-class>
+        <servlet-class>SDM.servlets.Login.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UploadFileServlet</servlet-name>
-        <servlet-class>SDM.servlets.UploadFileServlet</servlet-class>
+        <servlet-class>SDM.servlets.StoresAndContent.UploadFileServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>StoresAreaAndContentServlet</servlet-name>
-        <servlet-class>SDM.servlets.StoresAreaAndContentServlet</servlet-class>
+        <servlet-class>SDM.servlets.StoresAndContent.StoresAreaAndContentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UsersListServlet</servlet-name>
-        <servlet-class>SDM.servlets.UserListServlet</servlet-class>
+        <servlet-class>SDM.servlets.StoresAndContent.UserListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ZoneDataServlet</servlet-name>
-        <servlet-class>SDM.servlets.ZoneDataServlet</servlet-class>
+        <servlet-class>SDM.servlets.StoresAndContent.ZoneDataServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

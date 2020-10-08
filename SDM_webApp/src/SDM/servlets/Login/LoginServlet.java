@@ -1,4 +1,4 @@
-package SDM.servlets;
+package SDM.servlets.Login;
 
 import SDM.utils.ServletUtils;
 import SDM.utils.SessionUtils;

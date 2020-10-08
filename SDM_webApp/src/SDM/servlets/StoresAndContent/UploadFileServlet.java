@@ -1,4 +1,4 @@
-package SDM.servlets;
+package SDM.servlets.StoresAndContent;
 
 ;
 import SDM.utils.ServletUtils;

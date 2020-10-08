@@ -1,4 +1,4 @@
-package SDM.servlets;
+package SDM.servlets.MainPage;
 
 import SDM.utils.ItemsInfoForJson;
 import SDM.utils.ServletUtils;

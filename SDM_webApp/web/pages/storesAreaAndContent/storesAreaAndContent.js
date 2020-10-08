@@ -2,7 +2,7 @@ var USER_DATA_URL = buildUrlWithContextPath("userData")
 var UPLOAD_FILE_URL = buildUrlWithContextPath("uploadFile")
 var GET_ZONE_DATA = buildUrlWithContextPath("getZoneData")
 var refreshRate = 1000; //milli seconds
-var pickedup;
+var pickedup
 
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
@@ -18,11 +18,11 @@ $(document).ready(function (){
     $( "#zoneTable").on( "click", "tr", function( event ) {
         // get back to where it was before if it was selected :
         if (pickedup != null) {
-            pickedup.css( "background-color", "#f8f9fa");
+            $("#"+pickedup).css( "background-color", "#f8f9fa");
         }
 /*        $("#fillname").val($(this).find("td").eq(0).html());*/
         $(this).css( "background-color", "#17a2b8");
-        pickedup = $(this);
+        pickedup = $(this).attr("id")
     });
 });
 
@@ -71,7 +71,7 @@ function updateTableSingleEntry(index, zoneInfo){
     var amountOfOrders = zoneInfo.amountOfOrders
     var averagePriceOfOrders = zoneInfo.averagePriceOfOrders
     var zoneId = zoneName.replace(/\s+/g, '')
-    $("#zoneTable").append("<tr>" +
+    $("#zoneTable").append("<tr id=" + zoneId + ">" +
         "<td>" + ownerName + "</td>" +
         "<td>" + zoneName + "</td>" +
         "<td>" + amountOfItems + "</td>" +
@@ -79,11 +79,9 @@ function updateTableSingleEntry(index, zoneInfo){
         "<td>" + amountOfOrders + "</td>" +
         "<td>" + averagePriceOfOrders + "</td>" +
         "</tr>");
+    $("#"+pickedup).css( "background-color", "#17a2b8");
 }
 
-function zoneRadioOnClick(selected){
-    selectedZone = selected.id
-}
 
 /**
  *

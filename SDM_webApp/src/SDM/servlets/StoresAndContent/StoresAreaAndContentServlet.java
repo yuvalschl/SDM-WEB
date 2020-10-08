@@ -1,4 +1,4 @@
-package SDM.servlets;
+package SDM.servlets.StoresAndContent;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
