@@ -153,7 +153,7 @@ function ajaxUsersList() {
  */
 function nextPage(){
 /*    $.redirect("/SDM/pages/localStores/localStores.html", {zoneName : pickedUp}, "POST", "MoveToZonePageServlet")*/
-    window.location = "/SDM/pages/localStores/localStores.html?zonename=" + pickedUp
+    window.location= "/SDM/pages/localStores/localStores.html?zonename=" + pickedUp
 }
 
 

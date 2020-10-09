@@ -39,19 +39,26 @@
         </div>
     </nav>
 </div>
-
 <div class="row order-info">
+    <span id="enter-location">location:</span>
+    <label id="choose-date-label">choose a date</label>
+</div>
+<div class="row order-info">
+
     <div class="row coordinate-x-y">
         <div class="row">
-            <div>
-                <p id="enter-location">location</p>
+            <div class="col-1">
+                <span>X:</span>
             </div>
-        </div>
-        <div class="col-2">
-            <input type="number" value="0" min="0" max="50" step="10"/>
-        </div>
-        <div class="col-2">
-            <input type="number" value="0" min="0" max="50" step="10"/>
+            <div class="col-1" id="div-x">
+                <input id="x-cor" type="number" value="0" min="0" max="50" step="10"/>
+            </div>
+            <div class="col-1">
+                <span id="y-span">Y:</span>
+            </div>
+            <div class="col-1">
+                <input id="y-cor" type="number" value="0" min="0" max="50" step="10"/>
+            </div>
         </div>
     </div>
 </div>

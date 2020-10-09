@@ -105,15 +105,34 @@ span.price {
    color: #aaa8a8;
 }
 #content-row{
-    margin-top:70px;
+    margin-top:50px;
 }
 .order-info{
     background-color: #afafaf;
 }
 #enter-location{
-    margin-left: 10%;
+    margin-left: 2%;
 }
 .coordinate-x-y{
-    margin-left: 5%;
+    margin-left: 2%;
+
+}
+
+#x-cor{
+    padding-left: 0;
+    width: 45px;
+}
+#y-cor{
+    width: 45px;
+
+}
+#y-span{
+    margin-left: 15px;
+}
+#div-x{
+    padding-left: 0;
+
+}
+#choose-date-label{
 
 }
