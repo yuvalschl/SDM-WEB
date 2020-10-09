@@ -14,6 +14,7 @@
 -->
     <script src="../../common/bootstrap-4.3.1-dist/js/bootstrap.bundle.js"></script>
     <script src="../../common/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../../common/table.css">
 
 </head>
 <body>
@@ -43,7 +44,7 @@
             <h1>item list</h1>
             <table class="table" id="itemTable">
                 <h3>All items in this zone:</h3>
-                <thead class="thead-dark">
+                <thead>
                 <tr>
                     <th scope="col">Item ID</th>
                     <th scope="col">Item name</th>
@@ -59,6 +60,9 @@
         </div >
     </div>
     <hr class="solid">
+    <div class="row">
+        <h4>Pick a store to view</h4>
+    </div>
     <div class="row">
         <select class='btn btn-secondary' id="storesDropDown" name="storesDropDown">
             <option id="pickAStore" value="pickAStore">Pick a store</option>
