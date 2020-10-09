@@ -17,6 +17,7 @@ $(document).ready(function() {
             $("#storesDropDown option[value=pickAStore]").remove();
             ajaxGetStoreItems(storeId)
             ajaxGetStoreInfo(storeId)
+            ajaxGetStoreInfo(storeId)
         }
     });
 
@@ -112,6 +113,9 @@ function ajaxGetStores(){
         data: {'zoneName': zoneName},
         success: function (stores){
             $.each(stores || [], addStoresToDropDown)
+        },
+        error : function (){
+            console.log("dani zion")
         }
     })
 }
@@ -161,8 +165,19 @@ function ajaxGetStoreInfo(storeId){
         url: GET_STORE_DATA,
         dataType: 'json',
         data: {'storeId' : storeId, 'zoneName' : zoneName},
-        success:function (){
-
+        success:function (store){
+            updateStoreInfoLabels(store)
         }
     })
+}
+
+function updateStoreInfoLabels(store){
+    $("#storeNameInfoLabel").text(store.storeName)
+    $("#storeIdInfoLabel").text(store.storeId)
+    $("#storeOwnerInfoLabel").text(store.storeOwnerName)
+    $("#itemsSoldCostInfoLabel").text(store.paymentForItems)
+    $("#storeLocationInfoLabel").text(store.x + ',' + store.y)
+    $("#storePpkInfoLabel").text(store.PPK)
+    $("#orderMadeInfoLabel").text(store.numberOfOrderMade)
+    $("#shippingMadeCostInfoLabel").text(store.paymentForShipments)
 }

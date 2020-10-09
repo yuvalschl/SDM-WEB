@@ -31,7 +31,7 @@ public class JaxbClassToStoreManager {
         try{
 
             Map<Integer, Item> allItems = createAllItemsMap(xmlStore.getSDMItems().getSDMItem());
-            Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems);
+            Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems, ownerName);
             HashSet<Integer> notSoldItems = checkIfAllTheItemsFromTheFileAreSold(allItems);
             String zoneName = xmlStore.getSDMZone().getName();
             if(!notSoldItems.isEmpty()){
@@ -59,7 +59,7 @@ public class JaxbClassToStoreManager {
         return allItems;
     }
 
-    private Map<Integer, Store> createAllStoresMap(List<SDMStore> sdmStores, Map<Integer, Item> allItems) throws DuplicateValueException, InvalidValueException {
+    private Map<Integer, Store> createAllStoresMap(List<SDMStore> sdmStores, Map<Integer, Item> allItems, String ownerName) throws DuplicateValueException, InvalidValueException {
         Map<Integer, Store> allStores = new HashMap<Integer, Store>();
         for(SDMStore store : sdmStores){
             if(allStores.containsKey(store.getId())){
@@ -74,7 +74,7 @@ public class JaxbClassToStoreManager {
             if(!isLocationValid(currentStoreLocation)){
                 throw new InvalidValueException(store.getId() + "has invalid location");
             }
-            Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount);
+            Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount, ownerName);
             allStores.put(store.getId(), currentStore);
         }
         return allStores;

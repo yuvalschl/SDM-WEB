@@ -11,6 +11,7 @@ public class StoreInfo {
     private int x;
     private int y;
     private int numberOfOrderMade;
+    private float paymentForItems;
     private int PPK;
     private float paymentForShipments;
 
@@ -25,7 +26,7 @@ public class StoreInfo {
      * @param PPK
      * @param paymentForShipments
      */
-    public StoreInfo(String storeName, int storeId, String storeOwnerName, int x, int y, int numberOfOrderMade, int PPK, float paymentForShipments) {
+    public StoreInfo(String storeName, int storeId, String storeOwnerName, int x, int y, int numberOfOrderMade, int PPK, float paymentForShipments, float totalPayment) {
         this.storeName = storeName;
         this.storeId = storeId;
         this.storeOwnerName = storeOwnerName;
@@ -34,6 +35,7 @@ public class StoreInfo {
         this.numberOfOrderMade = numberOfOrderMade;
         this.PPK = PPK;
         this.paymentForShipments = paymentForShipments;
+        this.paymentForItems = totalPayment - paymentForShipments;
     }
 
     /**

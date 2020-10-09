@@ -18,6 +18,12 @@ import static SDM.Constants.Constants.USERNAME;
 
 public class ItemDataServlet extends HttpServlet {
 
+    /**
+     * servlet for getting all the items sold in a zone
+     * @param req
+     * @param res
+     * @throws IOException
+     */
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("application/json");
         try (PrintWriter out = res.getWriter()) {
