@@ -3,13 +3,19 @@ const GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
 const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
 var userName;
 var userType;
+var zoneName
+
 $(document).ready(function() {
+    zoneName = GetURLParameter("zonename");
     ajaxItemTableData();
     ajaxGetStores();
 
     $(document).on('change', "#storesDropDown", function(){
-        var temp = $(this).children(":selected").prop("value");
-        ajaxGetStoreItems(temp)
+        var storeId = $(this).children(":selected").prop("value");
+        if(storeId !== 'pickAStore'){
+            $("#storesDropDown option[value=pickAStore]").remove();
+            ajaxGetStoreItems(storeId, zoneName)
+        }
     });
 });
 
@@ -52,11 +58,10 @@ function ajaxItemTableData(){
 }
 
 function checkIfCustomer() {
-    if (userType === "false")
-        return true;
-    else
-        return false;
+    return userType === "false";
 }
+
+
 function lodUserUi(){
     if (checkIfCustomer()){
         loadCustomerUi();
@@ -107,13 +112,35 @@ function addStoresToDropDown(index, store){
     $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
 }
 
-function ajaxGetStoreItems(storeId){
+function ajaxGetStoreItems(storeId, zoneName){
     $.ajax({
         url: GET_STORE_ITEMS_DATA,
         dataType: 'json',
-        data: {'storeId' : storeId},
+        data: {'storeId' : storeId, 'zoneName' : zoneName},
         success : function (data){
-            console.log(data)
+            $("#storeItemsTable > tbody").empty()
+            $.each(data || [], updateStoreItemsTable)
         }
     })
+}
+
+
+/**
+ * function to update the items table of a specific store
+ * @param item
+ */
+function updateStoreItemsTable(index, item){
+
+    var id = item.id
+    var name = item.name
+    var sellBy = item.sellBy
+    var pricePerUnit = item.pricePerUnit
+    var amountSold = item.amountSold
+    $("#storeItemsTable").append("<tr>" +
+        "<td>" + id + "</td>" +
+        "<td>" + name + "</td>" +
+        "<td>" + sellBy + "</td>" +
+        "<td>" + pricePerUnit + "</td>" +
+        "<td>" + amountSold + "</td>" +
+        "</tr>")
 }

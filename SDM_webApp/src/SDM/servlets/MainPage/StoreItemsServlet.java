@@ -24,8 +24,9 @@ public class StoreItemsServlet extends HttpServlet {
         resp.setContentType("application/json");
         try(PrintWriter out = resp.getWriter()){
             String storeId = req.getParameter("storeId");
+            String zoneName = req.getParameter("zoneName");
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
-            StoreManager storeManager = allZonesManager.getAllZones().get(storeId);
+            StoreManager storeManager = allZonesManager.getAllZones().get(zoneName);
             Store store = storeManager.getAllStores().get(Integer.parseInt(storeId));
             Map<Integer, Item> itemHashMap = store.getInventory();
             ArrayList<StoreItemInfo> storeItemInfos = new ArrayList<>();
