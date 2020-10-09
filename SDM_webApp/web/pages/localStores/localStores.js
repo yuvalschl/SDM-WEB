@@ -1,6 +1,7 @@
-const GET_STORES_DATA = buildUrlWithContextPath("getStoresData");
+const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemData")
 const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
+const GET_STORE_DATA = buildUrlWithContextPath("getStoreData")
 var userName;
 var userType;
 var zoneName
@@ -14,7 +15,8 @@ $(document).ready(function() {
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
-            ajaxGetStoreItems(storeId, zoneName)
+            ajaxGetStoreItems(storeId)
+            ajaxGetStoreInfo(storeId)
         }
     });
 
@@ -105,7 +107,7 @@ function GetURLParameter(sParam) {
 function ajaxGetStores(){
     var zoneName = GetURLParameter("zonename")
     $.ajax({
-        url: GET_STORES_DATA,
+        url: GET_ALL_STORES_DATA,
         dataType: 'json',
         data: {'zoneName': zoneName},
         success: function (stores){
@@ -118,7 +120,7 @@ function addStoresToDropDown(index, store){
     $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
 }
 
-function ajaxGetStoreItems(storeId, zoneName){
+function ajaxGetStoreItems(storeId){
     $.ajax({
         url: GET_STORE_ITEMS_DATA,
         dataType: 'json',
@@ -133,7 +135,6 @@ function placeOrderPage(){
     window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName
 
 }
-
 
 /**
  * function to update the items table of a specific store
@@ -153,4 +154,15 @@ function updateStoreItemsTable(index, item){
         "<td>" + pricePerUnit + "</td>" +
         "<td>" + amountSold + "</td>" +
         "</tr>")
+}
+
+function ajaxGetStoreInfo(storeId){
+    $.ajax({
+        url: GET_STORE_DATA,
+        dataType: 'json',
+        data: {'storeId' : storeId, 'zoneName' : zoneName},
+        success:function (){
+
+        }
+    })
 }

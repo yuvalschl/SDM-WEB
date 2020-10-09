@@ -2,7 +2,6 @@ package SDM.servlets.MainPage;
 
 import SDM.utils.ServletUtils;
 import SDM.utils.StoreInfo;
-import SDM.utils.ZoneInfo;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.StoreManager.StoreManager;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-public class storesDataServlet extends HttpServlet {
+public class StoreInfoServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         try(PrintWriter out = resp.getWriter()){
@@ -30,7 +29,6 @@ public class storesDataServlet extends HttpServlet {
             out.flush();
         }
     }
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

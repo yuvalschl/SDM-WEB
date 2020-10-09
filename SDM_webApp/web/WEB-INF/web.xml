@@ -25,8 +25,8 @@
         <servlet-class>SDM.servlets.StoresAndContent.MoveToZonePageServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>storesDataServlet</servlet-name>
-        <servlet-class>SDM.servlets.MainPage.storesDataServlet</servlet-class>
+        <servlet-name>ZoneStoresDataServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.ZoneStoresDataServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ItemDataServlet</servlet-name>
@@ -35,6 +35,10 @@
     <servlet>
         <servlet-name>StoreItemsServlet</servlet-name>
         <servlet-class>SDM.servlets.MainPage.StoreItemsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreInfoServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.StoreInfoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -62,12 +66,16 @@
         <url-pattern>/getItemData</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>storesDataServlet</servlet-name>
+        <servlet-name>ZoneStoresDataServlet</servlet-name>
         <url-pattern>/getStoresData</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>StoreItemsServlet</servlet-name>
         <url-pattern>/getStoreItemsData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoreInfoServlet</servlet-name>
+        <url-pattern>/getStoreData</url-pattern>
     </servlet-mapping>
 
 </web-app>
