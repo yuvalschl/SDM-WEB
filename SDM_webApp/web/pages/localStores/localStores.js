@@ -11,6 +11,10 @@ $(document).ready(function() {
         var temp = $(this).children(":selected").prop("value");
         ajaxGetStoreItems(temp)
     });
+
+    $(document).on('click', "#firstBtnText", function(){
+        placeOrderPage()
+    });
 });
 
 
@@ -118,4 +122,8 @@ function ajaxGetStoreItems(storeId){
             console.log(data)
         }
     })
+}
+function placeOrderPage(){
+    window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName
+
 }
