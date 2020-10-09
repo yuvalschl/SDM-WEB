@@ -9,27 +9,30 @@
     <script src="../../common/jquery-2.0.3.min.js"></script>
     <script src="../../common/context-path-helper.js"></script>
     <script src="signup.js"></script>
-    <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.css">
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/js/bootstrap.js">
     <!-- Link jQuery JavaScript library in order to use the $ (jQuery) method-->
 
     <!-- and\or any other scripts you might need to operate the JSP file behind the scene once it arrives to the client-->
 </head>
 <body>
-<div class="container">
-    <h1>Welcome to the Online Chat</h1>
-    <br/>
-    <h2>Please enter a unique user name:</h2>
-    <form method="GET" action="login">
-        <input type="text" name="username" class=""/>
-        <input type="submit" value="Login"/>
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input"  name="customerCB" id="customer">
-            <label class="custom-control-label" for="customer">Customer</label>
-            <input type="checkbox" class="custom-control-input" name="store_owner" id="store_owner">
-            <label class="custom-control-label" for="store_owner">Store owner</label>
-        </div>
-    </form>
+<div class=”row align-items-center”>
+    <div class= ”col-6”>
+        <form method="GET" action="login" class="form-signin col-4 align-self-center">
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                <label type ="text" class="sr-only">Enter your name</label>
+                <input type="text" id="nameText" name="username" class="form-control" placeholder="Enter your name" required autofocus>
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" id="customer" name="customerCB"> Customer
+                    </label>
+                    <label>
+                        <input type="checkbox" id="store_owner" name="store_owner"> Store owner
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

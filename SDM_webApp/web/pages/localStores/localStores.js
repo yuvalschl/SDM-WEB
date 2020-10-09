@@ -17,6 +17,10 @@ $(document).ready(function() {
             ajaxGetStoreItems(storeId, zoneName)
         }
     });
+
+    $(document).on('click', "#firstBtnText", function(){
+        placeOrderPage()
+    });
 });
 
 
@@ -124,6 +128,10 @@ function ajaxGetStoreItems(storeId, zoneName){
             $.each(data || [], updateStoreItemsTable)
         }
     })
+}
+function placeOrderPage(){
+    window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName
+
 }
 
 
