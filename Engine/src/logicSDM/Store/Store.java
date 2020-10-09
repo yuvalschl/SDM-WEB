@@ -49,7 +49,7 @@ public class Store {
         this.numberOfItemsSold = numberOfItemsSold;
     }
 
-    public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders, Point location, float PPK, Set<Discount> discounts) {
+    public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders, Point location, float PPK, Set<Discount> discounts, String ownerName) {
         this.name = name;
         this.serialNumber = serialNumber;
         this.inventory = inventory;
@@ -59,6 +59,7 @@ public class Store {
         this.PPK = PPK;
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = discounts;
+        this.storeOwner = new Owner(ownerName);
         allDiscounts.stream().forEach(discount -> discount.setStoreId(serialNumber));
     }
 

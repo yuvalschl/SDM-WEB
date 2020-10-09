@@ -26,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>ZoneStoresDataServlet</servlet-name>
-        <servlet-class>SDM.servlets.MainPage.ZoneStoresDataServlet</servlet-class>
+        <servlet-class>SDM.servlets.MainPage.ZoneStoresInfoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ItemDataServlet</servlet-name>
