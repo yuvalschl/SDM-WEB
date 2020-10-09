@@ -1,7 +1,6 @@
 var USER_DATA_URL = buildUrlWithContextPath("userData")
 var UPLOAD_FILE_URL = buildUrlWithContextPath("uploadFile")
 var GET_ZONE_DATA = buildUrlWithContextPath("getZoneData")
-var ZONE_PAGE_URL = buildUrlWithContextPath("zonePage")
 var refreshRate = 1000; //milli seconds
 var pickedUp
 
@@ -56,7 +55,6 @@ function uploadFile(){
     })
 }
 
-
 /**
  *
  * recives a zone info json with:
@@ -87,7 +85,6 @@ function updateTableSingleEntry(index, zoneInfo){
         "</tr>");
     $("#"+pickedUp).css( "background-color", "#17a2b8");
 }
-
 
 /**
  *
@@ -145,6 +142,12 @@ function ajaxUsersList() {
             updateUsersList(users);
         },
     });
+}
+
+function getUserType(){
+    $.ajax({
+        url:
+    })
 }
 
 /**
