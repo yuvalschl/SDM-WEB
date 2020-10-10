@@ -75,7 +75,8 @@ function updateTableSingleEntry(index, zoneInfo){
     var amountOfOrders = zoneInfo.amountOfOrders
     var averagePriceOfOrders = zoneInfo.averagePriceOfOrders
     var zoneId = zoneName.replace(/\s+/g, '')
-    $("#zoneTable").append("<tr id=" + zoneId + ">" +
+    $("#zoneTable").append(
+        "<tr id=" + zoneId + ">" +
         "<td>" + ownerName + "</td>" +
         "<td>" + zoneName + "</td>" +
         "<td>" + amountOfItems + "</td>" +
@@ -144,11 +145,7 @@ function ajaxUsersList() {
     });
 }
 
-function getUserType(){
-    $.ajax({
-        url:
-    })
-}
+
 
 /**
  * the on click for the next page button

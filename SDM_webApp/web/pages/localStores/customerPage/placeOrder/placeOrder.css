@@ -117,4 +117,13 @@ span.price {
 .location-input{
     padding-left: 0;
     width: 34px;!important;
+    height: 24px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.date-col{
+    margin-left: 20px;
 }
