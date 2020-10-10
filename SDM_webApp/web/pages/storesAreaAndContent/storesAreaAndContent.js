@@ -91,7 +91,6 @@ function updateTableSingleEntry(index, zoneInfo){
         "<td>" + amountOfOrders + "</td>" +
         "<td>" + averagePriceOfOrders + "</td>" +
         "</tr>");
-    $("#"+pickedUp).html(zoneName)
     $("#"+pickedUp).find('input[type=radio]').prop('checked', true);
 }
 
@@ -201,7 +200,7 @@ function addUploadFileWindow(){
  */
 function nextPage(){
     if(pickedUp !== undefined){
-        var zoneName = $("#" + pickedUp).html()
+        var zoneName = $("#" + pickedUp).find('td')[2].textContent
         window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zoneName
     }
 }
