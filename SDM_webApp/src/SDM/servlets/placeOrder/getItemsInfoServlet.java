@@ -1,6 +1,6 @@
-package SDM.servlets.MainPage;
+package SDM.servlets.placeOrder;
 
-import SDM.utils.ItemsInfoForJson;
+import SDM.utils.placeOrderutils.ItemNamePriceAndId;
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
@@ -16,14 +16,8 @@ import java.util.ArrayList;
 
 import static SDM.Constants.Constants.USERNAME;
 
-public class ItemDataServlet extends HttpServlet {
+public class getItemsInfoServlet extends HttpServlet {
 
-    /**
-     * servlet for getting all the items sold in a zone
-     * @param req
-     * @param res
-     * @throws IOException
-     */
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("application/json");
         try (PrintWriter out = res.getWriter()) {
@@ -31,10 +25,10 @@ public class ItemDataServlet extends HttpServlet {
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String zoneName = req.getParameter("zonename");
             StoreManager currZoneManager = allZonesManager.getStoreMangerForZone(zoneName);
-            ArrayList<ItemsInfoForJson> itemInfoToConvertToJson = new ArrayList<>();
+            ArrayList<ItemNamePriceAndId> itemInfoToConvertToJson = new ArrayList<>();
             String userName = req.getSession(false).getAttribute(USERNAME).toString();
             String isOwner = req.getSession(false).getAttribute("isOwner").toString();
-            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemsInfoForJson(item, currZoneManager, isOwner,userName));});
+            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemNamePriceAndId(item.getName(), item.getPrice(), item.getId()));});
             String json = gson.toJson(itemInfoToConvertToJson);
             out.println(json);
             out.flush();
@@ -43,6 +37,7 @@ public class ItemDataServlet extends HttpServlet {
             System.out.println("error in itemDataServlet");
         }
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);

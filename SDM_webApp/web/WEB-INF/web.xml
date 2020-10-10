@@ -44,6 +44,17 @@
         <servlet-name>getUserServlet</servlet-name>
         <servlet-class>SDM.servlets.StoresAndContent.getUserServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>ItemNamePriceAndId</servlet-name>
+        <servlet-class>SDM.servlets.placeOrder.getItemsInfoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ItemNamePriceAndId</servlet-name>
+        <url-pattern>/getItemNamePriceAndID</url-pattern>
+    </servlet-mapping>
+
+
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
         <url-pattern>/userData</url-pattern>

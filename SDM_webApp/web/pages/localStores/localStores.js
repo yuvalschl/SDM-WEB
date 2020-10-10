@@ -22,7 +22,9 @@ $(document).ready(function() {
     });
 
     $(document).on('click', "#firstBtnText", function(){
-        placeOrderPage()
+        if(checkIfCustomer())
+            placeOrderPage()
+
     });
 });
 
@@ -136,7 +138,7 @@ function ajaxGetStoreItems(storeId){
     })
 }
 function placeOrderPage(){
-    window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName
+    window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName+"&zonename="+zoneName;
 
 }
 

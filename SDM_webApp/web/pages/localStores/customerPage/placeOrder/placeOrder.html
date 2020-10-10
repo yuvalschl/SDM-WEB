@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="../../../../common/navBar.css">
     <link rel="stylesheet" href="../../../../common/jquery-ui.css">
     <link rel="stylesheet" href="../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.css">
+    <link rel="stylesheet" href="../../../../common/table.css">
+
 
     <!--
         <link href="../../common/bootstrap-4.3.1-dist/fontAesome/font-awesome.css" rel="stylesheet">
@@ -104,40 +106,53 @@
         </div>
     </div>
     <div class="row content">
-
+<!--items container-->
         <div class="col-75 ">
             <div class="container">
-                <form >
+                <div class="row ">
+                        <h1 class="text-center">item list</h1>
+                        <table class="table" id="itemTable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item ID</th>
+                                    <th scope="col">Item name</th>
+                                    <th scope="col">price</th>
 
-                    <div class="row">
-                        <div class="col-100">
-                            <h3>Payment</h3>
-
-                            <div class="row">
-                                <div class="col-50">
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <label>
-                        <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                    </label>
-                    <input type="submit" value="Continue to checkout" class="btn">
-                </form>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                </div>
             </div>
         </div>
-        <div class="col-25">
+        <div class="col-25 row">
             <div class="container">
-                <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-                <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-                <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-                <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-                <p><a href="#">Product 4</a> <span class="price">$2</span></p>
-
+                <h4>Cart </h4>
+                <table class="table" id="cartTable">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item name</th>
+                        <th scope="col">amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name of a prod</td>
+                            <td>34</td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>34</td>
+                        </tr>
+                        <tr>
+                            <td>name of a prod</td>
+                            <td>34</td>
+                        </tr>
+                    </tbody>
+                </table>
                 <hr>
-                <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+                <input class="btn btn-primary " type="button" value="Place order">
             </div>
         </div>
     </div>

@@ -127,3 +127,10 @@ input::-webkit-inner-spin-button {
 .date-col{
     margin-left: 20px;
 }
+.addBtn{
+    width: 64px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color: #5ed6f6;
+
+}
