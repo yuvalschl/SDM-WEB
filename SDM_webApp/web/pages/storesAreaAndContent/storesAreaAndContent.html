@@ -8,23 +8,29 @@
     <script src="../../common/context-path-helper.js"></script>
     <script src="storesAreaAndContent.js"></script>
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="uploadFile.css">
 </head>
 <body style="margin-left: 20px;">
 <!--first row-->
 
     <div class="row">
         <div class="col-lg-7">
-            <span id="uploadFileSpan"></span>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <button type="button" class="btn" id="uploadButton" onclick="uploadFile()">upload file</button>
+            <div class="file-upload">
+                <button class="file-upload-btn" type="button" onclick="uploadFile()">Upload file</button>
+                <div class="image-upload-wrap">
+                    <input class="file-upload-input" type='file' onchange="readURL(this)" id="fileChooser"/>
+                    <div class="drag-text">
+                        <h3>Drag and drop a file or click here</h3>
+                    </div>
                 </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="fileChooser"
-                           aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="fileChooser" id="fileChooserLabel">Choose file</label>
+                <div class="file-upload-content">
+                    <img class="file-upload-image" src="#" alt="your image" />
+                    <div class="image-title-wrap">
+                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded file</span></button>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 

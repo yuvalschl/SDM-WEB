@@ -40,7 +40,10 @@
         <servlet-name>StoreInfoServlet</servlet-name>
         <servlet-class>SDM.servlets.MainPage.StoreInfoServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>getUserServlet</servlet-name>
+        <servlet-class>SDM.servlets.StoresAndContent.getUserServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
         <url-pattern>/userData</url-pattern>
@@ -77,5 +80,8 @@
         <servlet-name>StoreInfoServlet</servlet-name>
         <url-pattern>/getStoreData</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>getUserServlet</servlet-name>
+        <url-pattern>/getCurrentUser</url-pattern>
+    </servlet-mapping>
 </web-app>

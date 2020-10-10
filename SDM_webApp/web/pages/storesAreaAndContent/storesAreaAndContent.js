@@ -1,12 +1,14 @@
 var USER_DATA_URL = buildUrlWithContextPath("userData")
 var UPLOAD_FILE_URL = buildUrlWithContextPath("uploadFile")
 var GET_ZONE_DATA = buildUrlWithContextPath("getZoneData")
+var GET_CURRENT_USER = buildUrlWithContextPath("getCurrentUser")
 var refreshRate = 1000; //milli seconds
 var pickedUp
 
 $(document).ready(function (){
     setInterval(ajaxUsersList, refreshRate);
     setInterval(ajaxZoneTableData, refreshRate);
+    getUserType()
 
     /**
      * update the file name in the label after a file is chosen
@@ -146,7 +148,22 @@ function ajaxUsersList() {
 
 function getUserType(){
     $.ajax({
-        url:
+        url: GET_CURRENT_USER,
+        dataType: 'json',
+        success : function (user){
+            if(user.isOwner === 'true'){
+                $("#uploadFileSpan").append("<div class=\"input-group\">\n" +
+                    "<div class=\"input-group-prepend\">\n" +
+                    "<button type=\"button\" class=\"btn\" id=\"uploadButton\" onclick=\"uploadFile()\">upload file</button>\n" +
+                    "</div>\n" +
+                    "<div class=\"custom-file\">\n" +
+                    "<input type=\"file\" class=\"custom-file-input\" id=\"fileChooser\"\n" +
+                    "aria-describedby=\"inputGroupFileAddon01\">\n" +
+                    "<label class=\"custom-file-label\" for=\"fileChooser\" id=\"fileChooserLabel\">Choose file</label>\n" +
+                    "</div>\n" +
+                    "</div>")
+            }
+        }
     })
 }
 
@@ -157,6 +174,27 @@ function getUserType(){
 function nextPage(){
 /*    $.redirect("/SDM/pages/localStores/localStores.html", {zoneName : pickedUp}, "POST", "MoveToZonePageServlet")*/
     window.location= "/SDM/pages/localStores/localStores.html?zonename=" + pickedUp
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('.image-upload-wrap').hide();
+
+           /* $('.file-upload-image').attr('src', e.target.result);*/
+            $('.file-upload-content').show();
+
+            $('.image-title').html(input.files[0].name);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+
+    } else {
+        removeUpload();
+    }
 }
 
 
