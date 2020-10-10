@@ -8,6 +8,8 @@ var StoresToPresentInDropDown
 const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
 var isDynamicOrder =true
+
+
 $(document).ready(function() {
     $('#x-cor').keyup(function() {
         //this part check if the number is above 0 or under 50
@@ -28,10 +30,19 @@ $(document).ready(function() {
         autoclose: true,
     };
     date_input.datepicker(options);
-    ajaxItemTableData();
+    ajaxItemTableData();    //this loads all the items in the zone to the table
     $('#dynamicRadioButton').prop("checked", true);
     $('#staticRadioButton').on("click", showDropDown);
     $('#dynamicRadioButton').on("click", hideDropDown);
+    ////
+    document.body.addEventListener("click", clickButtons);
+    function clickButtons(evt) {
+        const from = evt.target;
+        if (from.classList[2] === "addBtn") { evt.v; return; }
+        // ^check if the element clicked is one of the elements you want to handle
+        //  if it's not one of the 'buttons', do nothing
+        ;
+    }
 
 })
 // Data Picker Initialization
@@ -92,11 +103,13 @@ function updateTableSingleEntry(index, zoneInfo){
     var rowToAppend = "<tr>" +
         "<td>" + ID + "</td>" +
         "<td>" + itemName + "</td>";
-    if (!isDynamicOrder){
-        addToCartBtn =="<input class=\"btn btn-primary addBtn float-right\" type=\"button\" value=\"Add\">\n";
+    /*if (!isDynamicOrder){//TODO: this if is not good
+        addToCartBtn ="<input class=\"btn btn-primary addBtn  float-right\" type=\"button\" value=\"Add\">\n" +
+        "<input  type=\"number\" maxlength=\"2\"  name=\"username\" class=\"form-control float-right amountText\">";
         rowToAppend + "<td>" + itemPrice + addToCartBtn+ "</td>"
-    }
-    addToCartBtn ="<input class=\"btn btn-primary addBtn float-left\" type=\"button\" value=\"Add\">\n";
+    }*/
+    addToCartBtn ="<input class=\"btn btn-primary addBtn  float-right\" type=\"button\" value=\"Add\">\n" +
+        "<input  type=\"number\" maxlength=\"2\"  name=\"username\" class=\"form-control float-right amountText\">";
     rowToAppend += "<td>" + addToCartBtn + "</td>";
 
     rowToAppend+"</tr>";
