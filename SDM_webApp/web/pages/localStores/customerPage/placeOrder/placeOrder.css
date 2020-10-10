@@ -110,43 +110,11 @@ span.price {
 .order-info{
     background-color: #afafaf;
 }
-#enter-location{
-    margin-left: 2%;
-}
-.coordinate-x-y{
-    margin-left: 2%;
 
-}
-
-#x-cor{
-    padding-left: 0;
-    width: 45px;
-}
-#y-cor{
-    width: 45px;
-
-}
-#y-span{
-    margin-left: 15px;
-}
-#div-x{
-    padding-left: 0;
-
-}
 #choose-date-label{
 
 }
-.my-navbar{
-
-    background-color: #343a40 !important;
-
-
-}
-
-body{
-    padding: 1px !important;
-}
-.nav-contanier{
-    border: 0px;
-    margin: 0;
+.location-input{
+    padding-left: 0;
+    width: 34px;!important;
 }

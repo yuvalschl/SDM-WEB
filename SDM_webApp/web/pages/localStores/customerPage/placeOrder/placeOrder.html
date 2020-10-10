@@ -8,8 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../../../common/jquery-2.0.3.min.js"></script>
     <script src="../../../../common/context-path-helper.js"></script>
+    <script src="placeOrder.js"></script>
     <link rel="stylesheet" href="../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../../../../common/navBar.css">
 
     <!--
         <link href="../../common/bootstrap-4.3.1-dist/fontAesome/font-awesome.css" rel="stylesheet">
@@ -17,71 +19,29 @@
     <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap.bundle.js"></script>
     <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
     <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap-input-spinner.js"></script>
-    <script>
-        $("input[type='number']").inputSpinner()
-    </script>
     <link rel="stylesheet" href="placeOrder.css">
 </head>
-<nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
-
-    <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="container-fluid my-navbar nav-contanier">
-        <div class="collapse navbar-collapse" id="navbarDiv">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <h1 class="nav-link">Place an order</h1>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" id="userNameText" href="#">user Name</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-    <!--<nav  class="my-navbar   navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
+    <nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
 
         <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="container">
-            <div class="my-navbar collapse navbar-collapse">
-                <div class="navbar-nav mr-auto">
-                    <ul class="navbar-nav mr-auto">
-                        <li id="place-order" class="nav-item">
-                            <h3>Place order</h3>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" id="userNameText" href="#"></a>
-                        </li>
-                    </ul>
-                </div>
+        <div class="container-fluid my-navbar nav-contanier">
+            <div class="collapse navbar-collapse" id="navbarDiv">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <h1>Place an order</h1>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a id="userNameText">user Name</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    </nav>-->
-<!--<div id= "content-row" class="row">
-    <nav class="navbar fixed-top navbar-dark  navbar-expand-lg navbar-dark bg-dark ">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li id="place-order" class="nav-item">
-                    <h3>Place order</h3>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" id="userNameText" href="#"></a>
-                </li>
-            </ul>
-        </div>
     </nav>
-</div>-->
     <div class="order-info">
         <div class="row">
             <div class="col">
@@ -108,49 +68,65 @@
                 <span><b>PPK: </b><span id="storePpkInfoLabel"></span></span>
             </div>
             <div class="col">
-                <span><b>Shipping made cost: </b><span id="shippingMadeCostInfoLabel"></span></span>
+                <div class="row">
+                    <div class="col-1">
+                        <span type="text">X:</span>
+                    </div>
+                    <div class="col-1 location-input">
+                        <input  maxlength="2"  id="x-cor" name="username" class="form-control location-input">
+                    </div>
+                    <div class="col-1">
+                        <span type="text">Y:</span>
+                    </div>
+                    <div class="col-1 location-input">
+                        <input  maxlength="2" id="y-cor" name="username" class="form-control location-input">
+                    </div>
+                    <div class="col-8 location-input">
+                        <label id="warning-label" style="color: red; padding-left: 5px;"></label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-<hr class="solid">
-<div class="row content">
+    <hr class="solid">
+    <div class="row content">
 
-    <div class="col-75 ">
-        <div class="container">
-            <form >
+        <div class="col-75 ">
+            <div class="container">
+                <form >
 
-                <div class="row">
-                    <div class="col-100">
-                        <h3>Payment</h3>
+                    <div class="row">
+                        <div class="col-100">
+                            <h3>Payment</h3>
 
-                        <div class="row">
-                            <div class="col-50">
+                            <div class="row">
+                                <div class="col-50">
 
+                                </div>
                             </div>
                         </div>
+
                     </div>
+                    <label>
+                        <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                    </label>
+                    <input type="submit" value="Continue to checkout" class="btn">
+                </form>
+            </div>
+        </div>
+        <div class="col-25">
+            <div class="container">
+                <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
+                <p><a href="#">Product 1</a> <span class="price">$15</span></p>
+                <p><a href="#">Product 2</a> <span class="price">$5</span></p>
+                <p><a href="#">Product 3</a> <span class="price">$8</span></p>
+                <p><a href="#">Product 4</a> <span class="price">$2</span></p>
 
-                </div>
-                <label>
-                    <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                </label>
-                <input type="submit" value="Continue to checkout" class="btn">
-            </form>
+                <hr>
+                <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+            </div>
         </div>
     </div>
-    <div class="col-25">
-        <div class="container">
-            <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
-            <p><a href="#">Product 1</a> <span class="price">$15</span></p>
-            <p><a href="#">Product 2</a> <span class="price">$5</span></p>
-            <p><a href="#">Product 3</a> <span class="price">$8</span></p>
-            <p><a href="#">Product 4</a> <span class="price">$2</span></p>
-
-            <hr>
-            <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>

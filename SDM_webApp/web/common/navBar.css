@@ -1,0 +1,13 @@
+.my-navbar{
+
+    background-color: #343a40 !important;
+    color: rgba(255,255,255,.5);
+
+}
+body{
+    padding: 1px !important;
+}
+.nav-contanier{
+    border: 0px;
+    margin: 0;
+}
