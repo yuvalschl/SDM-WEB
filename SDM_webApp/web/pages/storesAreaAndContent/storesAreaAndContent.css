@@ -1,3 +1,7 @@
+body{
+    margin: 15px;
+}
+
 table {
     border     : 1px solid gray;
     width      : 50%;
@@ -10,4 +14,12 @@ table#sourcetable tbody tr {
 
 table#sourcetable tbody  tr {
     cursor : pointer;
+}
+
+#tablesRow{
+    margin-top: 10px;
+}
+
+#nextButton{
+    float: right;
 }

@@ -1,12 +1,18 @@
 var USER_DATA_URL = buildUrlWithContextPath("userData")
 var UPLOAD_FILE_URL = buildUrlWithContextPath("uploadFile")
 var GET_ZONE_DATA = buildUrlWithContextPath("getZoneData")
-var refreshRate = 1000; //milli seconds
+var GET_CURRENT_USER = buildUrlWithContextPath("getCurrentUser")
+var refreshRate = 3000; //milli seconds
+var userName
+var isOwner
 var pickedUp
 
 $(document).ready(function (){
-    setInterval(ajaxUsersList, refreshRate);
+    ajaxGetAllUsers()
+    ajaxZoneTableData()
+    setInterval(ajaxGetAllUsers, refreshRate);
     setInterval(ajaxZoneTableData, refreshRate);
+    getCurrentUser()
 
     /**
      * update the file name in the label after a file is chosen
@@ -20,13 +26,13 @@ $(document).ready(function (){
      * saves the selected row id in pickUp var
      */
     $( "#zoneTable").on( "click", "tr", function( event ) {
+
+
         // get back to where it was before if it was selected :
         if (pickedUp != null) {
-            $("#"+pickedUp).css( "background-color", "#f8f9fa");
+            $("#"+pickedUp).find('input[type=radio]').prop('checked', false);
         }
-/*        var buttonText = $(this).find("td").eq(1).html()
-        $("#nextButton").html(buttonText);*/
-        $(this).css( "background-color", "#17a2b8");
+        $(this).find('input[type=radio]').prop('checked', true);
         pickedUp = $(this).attr("id")
     });
 });
@@ -48,6 +54,7 @@ function uploadFile(){
         processData : false,
         success : function (response){
             console.log("file uploaded")
+            removeUpload()
         },
         error : function (message){
             console.log("error while uploading file: " + message)
@@ -75,8 +82,8 @@ function updateTableSingleEntry(index, zoneInfo){
     var amountOfOrders = zoneInfo.amountOfOrders
     var averagePriceOfOrders = zoneInfo.averagePriceOfOrders
     var zoneId = zoneName.replace(/\s+/g, '')
-    $("#zoneTable").append(
-        "<tr id=" + zoneId + ">" +
+    $("#zoneTable").append("<tr id=" + zoneId + " >" +
+        "<td><input type='radio' name='zoneRadios' id=" + zoneId + "radio" + "/></td>" +
         "<td>" + ownerName + "</td>" +
         "<td>" + zoneName + "</td>" +
         "<td>" + amountOfItems + "</td>" +
@@ -84,7 +91,8 @@ function updateTableSingleEntry(index, zoneInfo){
         "<td>" + amountOfOrders + "</td>" +
         "<td>" + averagePriceOfOrders + "</td>" +
         "</tr>");
-    $("#"+pickedUp).css( "background-color", "#17a2b8");
+    $("#"+pickedUp).html(zoneName)
+    $("#"+pickedUp).find('input[type=radio]').prop('checked', true);
 }
 
 /**
@@ -119,41 +127,109 @@ function ajaxZoneTableData(){
  * @param index = id of the user
  * @param entry = user info
  */
-function addToUsersList(index, entry){
+function addToUsersTable(index, entry){
     var isOwner = entry.isOwner ? 'Owner' : 'Customer'
-    var entryElement = entry.name + isOwner
-    $("#userslist").append(entryElement).append("<br>");
+    var name = entry.name
+    $("#usersTable").append("<tr>" +
+        "<td>" + name + "</td>" +
+        "<td>" + isOwner + "</td>" +
+        "</tr>")
 }
 
 /**
  * updates the user list every refreshRate
  * @param entries = all the users info
  */
-function updateUsersList(entries) {
-    $("#userslist").empty()
+function updateUsersTable(entries) {
+    $("#usersTable > tbody").empty()
     // add the relevant entries
-    $.each(entries || [], addToUsersList);
+    $.each(entries || [], addToUsersTable);
 }
 
-function ajaxUsersList() {
+function ajaxGetAllUsers() {
     $.ajax({
         url: USER_DATA_URL,
         dataType: 'json',
         success: function(users) {
-            updateUsersList(users);
+            updateUsersTable(users);
         },
     });
 }
 
+/**
+ * returns a json with fileds:
+ * isOwner
+ * userName
+ * and updates global variables
+ */
+function getCurrentUser(){
+    $.ajax({
+        url: GET_CURRENT_USER,
+        dataType: 'json',
+        success : function (user){
+            userName = user.userName
+            isOwner = user.isOwner
+            if(isOwner === 'true'){
+                addUploadFileWindow()
+                $("#userNameText").text(userName);
+            }
+        }
+    })
+}
 
+function addUploadFileWindow(){
+    $("#uploadFileSpan").append("<h3>Store owner?</h3>\n" +
+        "<h4>you can have your own zone</h4><div class='file-upload'>\n" +
+        "<button class='file-upload-btn' type='button' onclick='uploadFile()'>Upload file</button>\n" +
+        "<div class='image-upload-wrap'>\n" +
+        "<input class='file-upload-input' type='file' onchange='readURL(this)' id='fileChooser' style='left: 0px' />\n" +
+        "<div class='drag-text'>\n" +
+        "<h3>Drag and drop a file or click here</h3>\n" +
+        "</div>\n" +
+        "</div>\n" +
+        "<div class='file-upload-content'>\n" +
+        "<div class='image-title-wrap'>\n" +
+        "<button type='button' onclick='removeUpload()' class='remove-image'>Remove <span class='image-title'>Uploaded file</span></button>\n" +
+        "</div>\n" +
+        "</div>\n" +
+        " </div>")
+}
 
 /**
  * the on click for the next page button
  * pass the zone name
  */
 function nextPage(){
-/*    $.redirect("/SDM/pages/localStores/localStores.html", {zoneName : pickedUp}, "POST", "MoveToZonePageServlet")*/
-    window.location= "/SDM/pages/localStores/localStores.html?zonename=" + pickedUp
+    if(pickedUp !== undefined){
+        var zoneName = $("#" + pickedUp).html()
+        window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zoneName
+    }
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('.image-upload-wrap').hide();
+
+           /* $('.file-upload-image').attr('src', e.target.result);*/
+            $('.file-upload-content').show();
+
+            $('.image-title').html(input.files[0].name);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+
+    } else {
+        removeUpload();
+    }
+}
+
+function removeUpload(){
+    $("#uploadFileSpan").empty()
+    addUploadFileWindow()
 }
 
 

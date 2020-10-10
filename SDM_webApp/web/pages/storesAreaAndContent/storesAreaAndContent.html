@@ -8,41 +8,54 @@
     <script src="../../common/context-path-helper.js"></script>
     <script src="storesAreaAndContent.js"></script>
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="uploadFile.css">
+    <link rel="stylesheet" href="../../common/table.css">
+    <link rel="stylesheet" href="../../common/navBar.css">
+    <link rel="stylesheet" href="storesAreaAndContent.css">
 </head>
-<body style="margin-left: 20px;">
-<!--first row-->
+<body>
 
-    <div class="row">
-        <div class="col-lg-7">
-            <span id="uploadFileSpan"></span>
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <button type="button" class="btn" id="uploadButton" onclick="uploadFile()">upload file</button>
-                </div>
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="fileChooser"
-                           aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="fileChooser" id="fileChooserLabel">Choose file</label>
-                </div>
-            </div>
+<nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
+
+    <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid my-navbar nav-contanier">
+        <div class="collapse navbar-collapse" id="navbarDiv">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h1>Zones</h1>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="userNameText" href="#"></a>
+                </li>
+            </ul>
         </div>
     </div>
-
-<!--second row-->
-    <div class="row">
-        <div class="col-lg">
-            <div class="row">
-                <div class="input">
-                    <label>users list</label>
-                    <ul id="userslist">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg">
-            <table class="table table-striped" id="zoneTable">
+</nav>
+    <div class="row" id="tablesRow">
+        <div class="col-lg-3 text-center">
+            <h4><b><i>Users</i></b></h4>
+            <table class="table" id="usersTable">
                 <thead>
                 <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-9 text-center">
+            <h4><b><i>Zones</i></b>:</h4>
+            <table class="table" id="zoneTable">
+                <thead>
+                <tr>
+                    <th scope="col">Selection</th>
                     <th scope="col">Owner name</th>
                     <th scope="col">Zone name</th>
                     <th scope="col">Total items</th>
@@ -57,9 +70,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg">
-            <button type="button" class="btn btn-primary" onclick="nextPage()" id="nextButton">next</button>
+        <div class="col-lg text-center">
+            <span id="uploadFileSpan"></span>
         </div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-dark" onclick="nextPage()" id="nextButton">Next</button>
     </div>
 </body>
 </html>
