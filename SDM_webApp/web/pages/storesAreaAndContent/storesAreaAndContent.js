@@ -6,9 +6,14 @@ var refreshRate = 1000; //milli seconds
 var pickedUp
 
 $(document).ready(function (){
-    setInterval(ajaxUsersList, refreshRate);
+    ajaxGetAllUsers()
+    ajaxZoneTableData()
+    setInterval(ajaxGetAllUsers, refreshRate);
     setInterval(ajaxZoneTableData, refreshRate);
     getUserType()
+    $('#myCarousel').carousel({
+        pause: 'none'
+    })
 
     /**
      * update the file name in the label after a file is chosen
@@ -120,28 +125,31 @@ function ajaxZoneTableData(){
  * @param index = id of the user
  * @param entry = user info
  */
-function addToUsersList(index, entry){
+function addToUsersTable(index, entry){
     var isOwner = entry.isOwner ? 'Owner' : 'Customer'
-    var entryElement = entry.name + isOwner
-    $("#userslist").append(entryElement).append("<br>");
+    var name = entry.name
+    $("#usersTable").append("<tr>" +
+        "<td>" + name + "</td>" +
+        "<td>" + isOwner + "</td>" +
+        "</tr>")
 }
 
 /**
  * updates the user list every refreshRate
  * @param entries = all the users info
  */
-function updateUsersList(entries) {
-    $("#userslist").empty()
+function updateUsersTable(entries) {
+    $("#usersTable > tbody").empty()
     // add the relevant entries
-    $.each(entries || [], addToUsersList);
+    $.each(entries || [], addToUsersTable);
 }
 
-function ajaxUsersList() {
+function ajaxGetAllUsers() {
     $.ajax({
         url: USER_DATA_URL,
         dataType: 'json',
         success: function(users) {
-            updateUsersList(users);
+            updateUsersTable(users);
         },
     });
 }
@@ -152,16 +160,22 @@ function getUserType(){
         dataType: 'json',
         success : function (user){
             if(user.isOwner === 'true'){
-                $("#uploadFileSpan").append("<div class=\"input-group\">\n" +
-                    "<div class=\"input-group-prepend\">\n" +
-                    "<button type=\"button\" class=\"btn\" id=\"uploadButton\" onclick=\"uploadFile()\">upload file</button>\n" +
+                $("#uploadFileSpan").append("<h3>Store owner?</h3>\n" +
+                    "<h4>you can have your own zone</h4><div class=\"file-upload\">\n" +
+                    "<button class=\"file-upload-btn\" type=\"button\" onclick=\"uploadFile()\">Upload file</button>\n" +
+                    "<div class=\"image-upload-wrap\">\n" +
+                    "<input class=\"file-upload-input\" type='file' onchange=\"readURL(this)\" id=\"fileChooser\"/>\n" +
+                    "<div class=\"drag-text\">\n" +
+                    "<h3>Drag and drop a file or click here</h3>\n" +
                     "</div>\n" +
-                    "<div class=\"custom-file\">\n" +
-                    "<input type=\"file\" class=\"custom-file-input\" id=\"fileChooser\"\n" +
-                    "aria-describedby=\"inputGroupFileAddon01\">\n" +
-                    "<label class=\"custom-file-label\" for=\"fileChooser\" id=\"fileChooserLabel\">Choose file</label>\n" +
                     "</div>\n" +
-                    "</div>")
+                    "<div class=\"file-upload-content\">\n" +
+                    "<img class=\"file-upload-image\" src=\"#\" alt=\"your image\" />\n" +
+                    "<div class=\"image-title-wrap\">\n" +
+                    "<button type=\"button\" onclick=\"removeUpload()\" class=\"remove-image\">Remove <span class=\"image-title\">Uploaded file</span></button>\n" +
+                    "</div>\n" +
+                    "</div>\n" +
+                    " </div>")
             }
         }
     })

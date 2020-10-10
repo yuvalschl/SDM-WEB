@@ -9,44 +9,26 @@
     <script src="storesAreaAndContent.js"></script>
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="uploadFile.css">
+    <link rel="stylesheet" href="../../common/table.css">
 </head>
 <body style="margin-left: 20px;">
-<!--first row-->
-
     <div class="row">
-        <div class="col-lg-7">
-            <div class="file-upload">
-                <button class="file-upload-btn" type="button" onclick="uploadFile()">Upload file</button>
-                <div class="image-upload-wrap">
-                    <input class="file-upload-input" type='file' onchange="readURL(this)" id="fileChooser"/>
-                    <div class="drag-text">
-                        <h3>Drag and drop a file or click here</h3>
-                    </div>
-                </div>
-                <div class="file-upload-content">
-                    <img class="file-upload-image" src="#" alt="your image" />
-                    <div class="image-title-wrap">
-                        <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded file</span></button>
-                    </div>
-                </div>
-            </div>
-
+        <div class="col-lg-3 text-center">
+            <h4>Users:</h4>
+            <table class="table" id="usersTable">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
-    </div>
-
-<!--second row-->
-    <div class="row">
-        <div class="col-lg">
-            <div class="row">
-                <div class="input">
-                    <label>users list</label>
-                    <ul id="userslist">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg">
-            <table class="table table-striped" id="zoneTable">
+        <div class="col-lg-9 text-center">
+            <h4>Zones:</h4>
+            <table class="table" id="zoneTable">
                 <thead>
                 <tr>
                     <th scope="col">Owner name</th>
@@ -63,10 +45,15 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-lg text-center">
+            <span id="uploadFileSpan"></span>
+        </div>
+    </div>
+   <!-- <div class="row">
         <div class="col-lg">
             <button type="button" class="btn btn-primary" onclick="nextPage()" id="nextButton">next</button>
         </div>
-    </div>
+    </div>-->
 </body>
 </html>
 
