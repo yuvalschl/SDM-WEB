@@ -11,7 +11,9 @@ of the user of this class to handle the synchronization of isUserExists with oth
 public class UserManager {
 
     private final Map<Integer,SingelUserEntry> usersSet;
+    private HashSet<String> userNameSet = new HashSet<>();
     private static int userID =0;
+
     public UserManager() {
         usersSet = new HashMap<>();
     }
@@ -25,6 +27,7 @@ public class UserManager {
            Clinet clinet = new Clinet(username);
             usersSet.put(++userID,clinet);
         }
+        userNameSet.add(username.toLowerCase());
     }
 
     public synchronized void removeUser(String username) {
@@ -36,6 +39,7 @@ public class UserManager {
     }
 
     public boolean isUserExists(String username) {
-        return usersSet.containsValue(username);
+        username = username.toLowerCase();
+        return userNameSet.contains(username);
     }
 }

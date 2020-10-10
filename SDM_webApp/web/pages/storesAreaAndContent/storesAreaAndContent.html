@@ -10,11 +10,35 @@
     <link rel="stylesheet" href="../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="uploadFile.css">
     <link rel="stylesheet" href="../../common/table.css">
+    <link rel="stylesheet" href="../../common/navBar.css">
+    <link rel="stylesheet" href="storesAreaAndContent.css">
 </head>
-<body style="margin-left: 20px;">
-    <div class="row">
+<body>
+
+<nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
+
+    <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid my-navbar nav-contanier">
+        <div class="collapse navbar-collapse" id="navbarDiv">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h1>Zones</h1>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="userNameText" href="#"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="row" id="tablesRow">
         <div class="col-lg-3 text-center">
-            <h4>Users:</h4>
+            <h4><b><i>Users</i></b></h4>
             <table class="table" id="usersTable">
                 <thead>
                 <tr>
@@ -27,10 +51,11 @@
             </table>
         </div>
         <div class="col-lg-9 text-center">
-            <h4>Zones:</h4>
+            <h4><b><i>Zones</i></b>:</h4>
             <table class="table" id="zoneTable">
                 <thead>
                 <tr>
+                    <th scope="col">Selection</th>
                     <th scope="col">Owner name</th>
                     <th scope="col">Zone name</th>
                     <th scope="col">Total items</th>
@@ -49,11 +74,9 @@
             <span id="uploadFileSpan"></span>
         </div>
     </div>
-   <!-- <div class="row">
-        <div class="col-lg">
-            <button type="button" class="btn btn-primary" onclick="nextPage()" id="nextButton">next</button>
-        </div>
-    </div>-->
+    <div>
+        <button type="button" class="btn btn-dark" onclick="nextPage()" id="nextButton">Next</button>
+    </div>
 </body>
 </html>
 
