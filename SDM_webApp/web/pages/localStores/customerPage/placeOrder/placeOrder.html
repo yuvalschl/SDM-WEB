@@ -8,10 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="../../../../common/jquery-2.0.3.min.js"></script>
     <script src="../../../../common/context-path-helper.js"></script>
+    <script src="../../../../common/jquery-ui.js"></script>
+
     <script src="placeOrder.js"></script>
     <link rel="stylesheet" href="../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.min.css">
     <link rel="stylesheet" href="../../../../common/navBar.css">
+    <link rel="stylesheet" href="../../../../common/jquery-ui.css">
+    <link rel="stylesheet" href="../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.css">
 
     <!--
         <link href="../../common/bootstrap-4.3.1-dist/fontAesome/font-awesome.css" rel="stylesheet">
@@ -42,53 +46,63 @@
             </div>
         </div>
     </nav>
+</div>
     <div class="order-info">
         <div class="row">
-            <div class="col">
-                <span><b>Name: </b><span id="storeNameInfoLabel"></span></span>
-            </div>
-            <div class="col">
-                <span><b>ID: </b><span id="storeIdInfoLabel"></span></span>
-            </div>
-            <div class="col">
-                <span><b>Owner: </b><span id="storeOwnerInfoLabel"></span></span>
-            </div>
-            <div class="col">
-                <span><b>Location: </b><span id="storeLocationInfoLabel"></span></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <span><b>Orders Made: </b><span id="orderMadeInfoLabel"></span></span>
-            </div>
-            <div class="col">
-                <span><b>Items sold cost: </b><span id="itemsSoldCostInfoLabel"></span></span>
-            </div>
-            <div class="col">
-                <span><b>PPK: </b><span id="storePpkInfoLabel"></span></span>
-            </div>
-            <div class="col">
+            <!-- Date col -->
+            <div class="col date-col">
+                <span><b>Choose a date: </b><span id="storeIdInfoLabel"></span></span>
                 <div class="row">
+                    <form method="post">
+                        <div class="form-group">
+                            <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--type of order col-->
+            <div class="col ">
+                <span><b>Choose type of order: </b><span id="typeOfOrder"></span></span>
+                <div class="row">
+                    <form>
+                        <div class="row">
+                            <div class="radio col-6">
+                                <label style="padding-right: 10px;width: 160px;">
+                                <input id="dynamicRadioButton" type="radio" name="orderType" >Dynamic order</label>
+                            </div>
+                            <div class="radio col">
+                                <label><input type="radio" id="staticRadioButton" name="orderType">Static order</label>
+                                <div id = "dropDownRow" class="row ">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--location col-->
+            <div class="col ">
+                <span><b>Location: </b><span id="storeLocationInfoLabel"></span></span>
+                <div class="row ">
                     <div class="col-1">
                         <span type="text">X:</span>
                     </div>
                     <div class="col-1 location-input">
-                        <input  maxlength="2"  id="x-cor" name="username" class="form-control location-input">
+                        <input  type="number" maxlength="2"  id="x-cor" name="username" class="form-control location-input">
                     </div>
                     <div class="col-1">
                         <span type="text">Y:</span>
                     </div>
                     <div class="col-1 location-input">
-                        <input  maxlength="2" id="y-cor" name="username" class="form-control location-input">
+                        <input  type="number" maxlength="2" id="y-cor" name="username" class="form-control location-input">
                     </div>
                     <div class="col-8 location-input">
-                        <label id="warning-label" style="color: red; padding-left: 5px;"></label>
+                        <span id="warning-label" style="color: red; padding-left: 4px;"></span>
                     </div>
                 </div>
             </div>
+            </div>
         </div>
     </div>
-    <hr class="solid">
     <div class="row content">
 
         <div class="col-75 ">
