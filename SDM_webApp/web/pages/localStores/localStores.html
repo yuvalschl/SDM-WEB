@@ -16,11 +16,39 @@
     <script src="localStores.js"></script>
 
     <link rel="stylesheet" href="../../common/table.css">
+    <link rel="stylesheet" href="localStores.css">
 
 </head>
 <body>
 <!--item table-->
-<nav class="navbar fixed-top navbar-dark  navbar-expand-lg navbar-dark bg-dark ">
+<nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
+
+    <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid my-navbar nav-contanier">
+        <div class="collapse navbar-collapse" id="navbarDiv">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="firstBtnText" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="secondBtnText" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="thirdBtnText" href="#"></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="userNameText" href="#"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!--<nav class="navbar fixed-top navbar-dark  navbar-expand-lg navbar-dark bg-dark ">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
@@ -39,7 +67,7 @@
             </li>
         </ul>
     </div>
-</nav>
+</nav>-->
     <div class="row">
         <div class="col-lg-9">
             <h1>item list</h1>

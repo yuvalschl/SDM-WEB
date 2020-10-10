@@ -136,3 +136,17 @@ span.price {
 #choose-date-label{
 
 }
+.my-navbar{
+
+    background-color: #343a40 !important;
+
+
+}
+
+body{
+    padding: 1px !important;
+}
+.nav-contanier{
+    border: 0px;
+    margin: 0;
+}

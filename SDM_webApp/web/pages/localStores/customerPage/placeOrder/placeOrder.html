@@ -22,8 +22,51 @@
     </script>
     <link rel="stylesheet" href="placeOrder.css">
 </head>
+<nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
 
-<div id= "content-row" class="row">
+    <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid my-navbar nav-contanier">
+        <div class="collapse navbar-collapse" id="navbarDiv">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h1 class="nav-link">Place an order</h1>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="userNameText" href="#">user Name</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <!--<nav  class="my-navbar   navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
+
+        <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="container">
+            <div class="my-navbar collapse navbar-collapse">
+                <div class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto">
+                        <li id="place-order" class="nav-item">
+                            <h3>Place order</h3>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" id="userNameText" href="#"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>-->
+<!--<div id= "content-row" class="row">
     <nav class="navbar fixed-top navbar-dark  navbar-expand-lg navbar-dark bg-dark ">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -38,31 +81,38 @@
             </ul>
         </div>
     </nav>
-</div>
-<div class="row order-info">
-    <span id="enter-location">location:</span>
-    <label id="choose-date-label">choose a date</label>
-</div>
-<div class="row order-info">
-
-    <div class="row coordinate-x-y">
+</div>-->
+    <div class="order-info">
         <div class="row">
-            <div class="col-1">
-                <span>X:</span>
+            <div class="col">
+                <span><b>Name: </b><span id="storeNameInfoLabel"></span></span>
             </div>
-            <div class="col-1" id="div-x">
-                <input id="x-cor" type="number" value="0" min="0" max="50" step="10"/>
+            <div class="col">
+                <span><b>ID: </b><span id="storeIdInfoLabel"></span></span>
             </div>
-            <div class="col-1">
-                <span id="y-span">Y:</span>
+            <div class="col">
+                <span><b>Owner: </b><span id="storeOwnerInfoLabel"></span></span>
             </div>
-            <div class="col-1">
-                <input id="y-cor" type="number" value="0" min="0" max="50" step="10"/>
+            <div class="col">
+                <span><b>Location: </b><span id="storeLocationInfoLabel"></span></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span><b>Orders Made: </b><span id="orderMadeInfoLabel"></span></span>
+            </div>
+            <div class="col">
+                <span><b>Items sold cost: </b><span id="itemsSoldCostInfoLabel"></span></span>
+            </div>
+            <div class="col">
+                <span><b>PPK: </b><span id="storePpkInfoLabel"></span></span>
+            </div>
+            <div class="col">
+                <span><b>Shipping made cost: </b><span id="shippingMadeCostInfoLabel"></span></span>
             </div>
         </div>
     </div>
-</div>
-</div>
+<hr class="solid">
 <div class="row content">
 
     <div class="col-75 ">

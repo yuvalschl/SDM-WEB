@@ -12,3 +12,13 @@ table#sourcetable tbody  tr {
     cursor : pointer;
 }
 
+.my-navbar{
+
+    background-color: #343a40 !important;
+
+
+}
+
+body{
+    padding: 1px !important;
+}
