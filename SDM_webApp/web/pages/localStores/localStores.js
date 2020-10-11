@@ -11,7 +11,7 @@ $(document).ready(function() {
     ajaxItemTableData();
     ajaxGetStores();
 
-    $(document).on('change', "#storesDropDown", function(){
+    $(document).on('click', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();

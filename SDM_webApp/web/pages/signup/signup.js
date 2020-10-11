@@ -6,6 +6,7 @@ $(document).ready(function() {
     $('input[type="text"]').keyup(function() {
         if($(this).val() != '') {
             nameEntered = true;
+
         }
         else{
             nameEntered = false;

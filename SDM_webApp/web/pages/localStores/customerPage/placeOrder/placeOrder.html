@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.min.css">
     <link rel="stylesheet" href="../../../../common/navBar.css">
-    <link rel="stylesheet" href="../../../../common/jquery-ui.css">
+    <link rel="stylesheet" href="../../../../common/jquery-ui-1.12.1.custom/jquery-ui.css">
     <link rel="stylesheet" href="../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.css">
     <link rel="stylesheet" href="../../../../common/table.css">
 
@@ -55,11 +55,7 @@
             <div class="col date-col">
                 <span><b>Choose a date: </b><span id="storeIdInfoLabel"></span></span>
                 <div class="row">
-                    <form method="post">
-                        <div class="form-group">
-                            <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/>
-                        </div>
-                    </form>
+                    <input id="datepicker" width="276" readonly="true"/>
                 </div>
             </div>
             <!--type of order col-->
@@ -121,21 +117,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td id="nameOfProd1">name of a prod</td>
-                                    <td>34<input class="btn btn-primary addBtn  float-right" type="button" value="Add" id="btnID1"><input  type="number" maxlength="2"  name="username" id="amountInput1" class="form-control float-right amountText"></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td id="nameOfProd2">name</td>
-                                    <td>34<input class="btn btn-primary addBtn  float-right" type="button" value="Add" id="btnID2"><input  type="number" maxlength="2"  name="username" id="amountInput2" class="form-control float-right amountText"></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td id="nameOfProd3">name of a prod</td>
-                                    <td>34 <input class="btn btn-primary addBtn  float-right" type="button" value="Add" id="btnID3"><input  type="number" maxlength="2"  name="username" id="amountInput3" class="form-control float-right amountText"></td>
-                                </tr>
                             </tbody>
                         </table>
                 </div>
@@ -152,22 +133,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>name of a prod</td>
-                            <td>34</td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>34</td>
-                        </tr>
-                        <tr>
-                            <td>name of a prod</td>
-                            <td>34 </td>
-                        </tr>
                     </tbody>
                 </table>
                 <hr>
-                <input class="btn btn-primary " type="button" value="Place order">
+                <input class="btn btn-primary " type="button" value="Submit order" id="submitOrder">
             </div>
         </div>
     </div>
