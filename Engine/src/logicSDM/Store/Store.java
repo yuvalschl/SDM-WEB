@@ -25,7 +25,7 @@ public class Store {
     private float totalDeliveriesCost;
     private float totalPayment;
     private int numberOfItemsSold;
-    private Map<Integer, Feedback> feedbacks;
+    private ArrayList<Feedback> feedbacks;
 
     /**
      * constructor used in the addNewStore method
@@ -41,7 +41,7 @@ public class Store {
         this.numberOfItemsSold = 0;
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = new HashSet<Discount>();
-        this.feedbacks = new HashMap<>();
+        this.feedbacks = new ArrayList<>();
     }
 
     /**
@@ -58,6 +58,7 @@ public class Store {
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = discounts;
         this.storeOwner = new Owner(ownerName);
+        this.feedbacks = new ArrayList<>();
         allDiscounts.stream().forEach(discount -> discount.setStoreId(serialNumber));
     }
 
@@ -82,11 +83,11 @@ public class Store {
         return location.y;
     }
 
-    public Map<Integer, Feedback> getFeedbacks() {
+    public ArrayList<Feedback> getFeedbacks() {
         return feedbacks;
     }
 
-    public void setFeedbacks(Map<Integer, Feedback> feedbacks) {
+    public void setFeedbacks(ArrayList<Feedback> feedbacks) {
         this.feedbacks = feedbacks;
     }
 
@@ -183,6 +184,10 @@ public class Store {
     @XmlTransient
     public void setTotalDeliveryCost(float deliveryCost) {
         this.totalDeliveriesCost = deliveryCost;
+    }
+
+    public synchronized void addFeedback(Feedback feedback){
+        this.feedbacks.add(feedback);
     }
 
 }

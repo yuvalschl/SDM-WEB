@@ -9,6 +9,13 @@ public class Feedback {
         this.feedback = feedback;
     }
 
+    /**
+     * used in the AddFeedback servlet
+     */
+    public Feedback() {
+
+    }
+
     public int getRating() {
         return rating;
     }

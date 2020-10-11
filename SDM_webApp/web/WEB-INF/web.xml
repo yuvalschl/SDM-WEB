@@ -52,6 +52,10 @@
         <servlet-name>GetStoresById</servlet-name>
         <servlet-class>SDM.servlets.MainPage.Feedback.GetStoresById</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddFeedback</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.Feedback.AddFeedback</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
@@ -100,6 +104,10 @@
     <servlet-mapping>
         <servlet-name>GetStoresById</servlet-name>
         <url-pattern>/getStoresById</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFeedback</servlet-name>
+        <url-pattern>/sendFeedback</url-pattern>
     </servlet-mapping>
 
 </web-app>
