@@ -35,17 +35,28 @@ $(document).ready(function() {
     $('#staticRadioButton').on("click", showDropDown);
     $('#dynamicRadioButton').on("click", hideDropDown);
     ////
-    document.body.addEventListener("click", clickButtons);
-    function clickButtons(evt) {
-        const from = evt.target;
-        if (from.classList[2] === "addBtn") { evt.v; return; }
-        // ^check if the element clicked is one of the elements you want to handle
-        //  if it's not one of the 'buttons', do nothing
-        ;
-    }
+    $(".addBtn").click(function() {
+        var id = $(this).attr('id'); // $(this) refers to button that was clicked
+        var name = $(nameOfProd1).val()
+        updateCart(id[id.length-1])
+    });
 
 })
-// Data Picker Initialization
+
+
+function updateCart(id) {
+    var itemNameID = "#nameOfProd"+id
+    var inputID = "#amountInput"+id
+    var itemAmount = $(inputID).val()
+    var itemName =$(itemNameID).val()
+
+    var rowToAppend =      "<tr>" +
+        "<td>" + itemName + "</td>" +
+        "<td>" + itemAmount + "</td>"
+                        +"</tr>";
+    $("#cartTable").append(rowToAppend)
+    console.log("btn ID "+id+" amount "+ $(inputID).val())
+}
 
 function showDropDown() {
        var isRadioBtnOn =$("input[name='orderType']:checked").val();
