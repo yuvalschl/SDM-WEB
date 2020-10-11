@@ -48,6 +48,10 @@
         <servlet-name>LoginErrorServlet</servlet-name>
         <servlet-class>SDM.servlets.Login.LoginErrorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetStoresById</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.Feedback.GetStoresById</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
@@ -92,6 +96,10 @@
     <servlet-mapping>
         <servlet-name>LoginErrorServlet</servlet-name>
         <url-pattern>/loginError</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetStoresById</servlet-name>
+        <url-pattern>/getStoresById</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -1,4 +1,4 @@
-package logicSDM.Store;
+package logicSDM.Store.Discount;
 
 public class MyIfYouBuy {
     private int itemId;

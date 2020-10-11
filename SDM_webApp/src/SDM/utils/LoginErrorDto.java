@@ -6,12 +6,10 @@ package SDM.utils;
  */
 public class LoginErrorDto {
     private String userName;
-    private String userName2;
     private String errorMsg;
 
-    public LoginErrorDto(String userName, String userName2, String errorMsg) {
+    public LoginErrorDto(String userName, String errorMsg) {
         this.userName = userName;
-        this.userName2 = userName2;
         this.errorMsg = errorMsg;
     }
 
@@ -21,14 +19,6 @@ public class LoginErrorDto {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getUserName2() {
-        return userName2;
-    }
-
-    public void setUserName2(String userName2) {
-        this.userName2 = userName2;
     }
 
     public String getErrorMsg() {

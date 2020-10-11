@@ -1,4 +1,4 @@
-package logicSDM.Store;
+package logicSDM.Store.Discount;
 
 import java.util.Set;
 

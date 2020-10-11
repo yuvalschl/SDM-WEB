@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static SDM.Constants.Constants.*;
+
 public class LoginErrorServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try (PrintWriter out = resp.getWriter()){
-            String usernameFromSession = SessionUtils.getUsername(req);
-            String usernameFromParameter = req.getParameter(Constants.USERNAME) != null ? req.getParameter(Constants.USERNAME) : "";
-            Object errorMessage = req.getAttribute(Constants.ERROR_MSG);
+            String userName = req.getSession(false).getAttribute(USER_NAME_ERROR).toString();
+            String errorMessage = req.getSession(false).getAttribute(ERROR_MSG).toString();
             Gson gson = new Gson();
-/*            LoginErrorDto loginErrorDto = new LoginErrorDto(usernameFromSession, usernameFromParameter, errorMessage);
-            out.println(gson.toJson(loginErrorDto))*/;
+            LoginErrorDto loginErrorDto = new LoginErrorDto(userName, errorMessage);
+            out.println(gson.toJson(loginErrorDto));
         }
     }
 

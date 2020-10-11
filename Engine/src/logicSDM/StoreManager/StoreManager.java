@@ -1,14 +1,12 @@
 package logicSDM.StoreManager;
-import logicSDM.Store.Offer;
-import logicSDM.Costumer.Customer;
+import logicSDM.Store.Discount.Offer;
 import logicSDM.Exceptions.InvalidValueException;
 import logicSDM.Item.*;
 import logicSDM.ItemPair.ItemAmountAndStore;
 import logicSDM.Order.*;
 import logicSDM.Store.Store;
 import logicSDM.Jaxb.XmlToObject;
-import logicSDM.Store.Discount;
-import javafx.concurrent.Task;
+import logicSDM.Store.Discount.Discount;
 import users.Clinet;
 import users.Owner;
 
