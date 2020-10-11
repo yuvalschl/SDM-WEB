@@ -11,6 +11,7 @@ import java.io.IOException;
 import SDM.Constants.Constants;
 import users.UserManager;
 
+import static SDM.Constants.Constants.ERROR_MSG;
 import static SDM.Constants.Constants.USERNAME;
 
 public class LoginServlet extends HttpServlet {
@@ -22,7 +23,7 @@ public class LoginServlet extends HttpServlet {
     // Each method with it's pros and cons...
     private final String STORES_AREA_AND_CONTENT_URL = "../storesAreaAndContent/storesAreaAndContent.html";
     private final String SIGN_UP_URL = "../signup/signup.html";
-    private final String LOGIN_ERROR_URL = "/pages/loginerror/loginerror.jsp";  // must start with '/' since will be used in request dispatcher...
+    private final String LOGIN_ERROR_URL = "../loginerror/loginError.html";  // must start with '/' since will be used in request dispatcher...
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -76,8 +77,9 @@ public class LoginServlet extends HttpServlet {
                         // and is relative to the web app root
                         // see this link for more details:
                         // http://timjansen.github.io/jarfiller/guide/servlet25/requestdispatcher.xhtml
-                        request.setAttribute(Constants.USER_NAME_ERROR, errorMessage);
-                        getServletContext().getRequestDispatcher(LOGIN_ERROR_URL).forward(request, response);
+                        request.getSession(true).setAttribute(Constants.USER_NAME_ERROR, usernameFromParameter);
+                        request.getSession(true).setAttribute(ERROR_MSG, errorMessage);
+                        response.sendRedirect(LOGIN_ERROR_URL);
                     } else {
                         //add the new user to the users list
                         userManager.addUser(usernameFromParameter, isOwner);

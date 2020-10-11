@@ -2,6 +2,8 @@ package logicSDM.Store;
 
 import logicSDM.Item.*;
 import logicSDM.Order.*;
+import logicSDM.Store.Discount.Discount;
+import logicSDM.Store.Feedback.Feedback;
 import users.Owner;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -23,6 +25,7 @@ public class Store {
     private float totalDeliveriesCost;
     private float totalPayment;
     private int numberOfItemsSold;
+    private ArrayList<Feedback> feedbacks;
 
     /**
      * constructor used in the addNewStore method
@@ -38,17 +41,12 @@ public class Store {
         this.numberOfItemsSold = 0;
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = new HashSet<Discount>();
-
+        this.feedbacks = new ArrayList<>();
     }
 
-    public int getNumberOfItemsSold() {
-        return numberOfItemsSold;
-    }
-
-    public void setNumberOfItemsSold(int numberOfItemsSold) {
-        this.numberOfItemsSold = numberOfItemsSold;
-    }
-
+    /**
+     * constractor for a new store from xml file
+     */
     public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders, Point location, float PPK, Set<Discount> discounts, String ownerName) {
         this.name = name;
         this.serialNumber = serialNumber;
@@ -60,7 +58,16 @@ public class Store {
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = discounts;
         this.storeOwner = new Owner(ownerName);
+        this.feedbacks = new ArrayList<>();
         allDiscounts.stream().forEach(discount -> discount.setStoreId(serialNumber));
+    }
+
+    public int getNumberOfItemsSold() {
+        return numberOfItemsSold;
+    }
+
+    public void setNumberOfItemsSold(int numberOfItemsSold) {
+        this.numberOfItemsSold = numberOfItemsSold;
     }
 
 
@@ -74,6 +81,14 @@ public class Store {
 
     public int getY(){
         return location.y;
+    }
+
+    public ArrayList<Feedback> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(ArrayList<Feedback> feedbacks) {
+        this.feedbacks = feedbacks;
     }
 
     public Store(){}
@@ -146,26 +161,6 @@ public class Store {
         this.totalPayment = totalPayment;
     }
 
-   /* public HashMap<Integer, logicSDM.Item> getDtoInventory() {
-        HashMap<Integer, logicSDM.Item> dtoInventory = new HashMap<>();
-        for (Map.Entry<Integer, logicSDM.Item> item : inventory.entrySet()) {
-            logicSDM.Item currentItem = item.getValue();
-            dtoInventory.put(item.getKey(), currentItem);
-        }
-        return dtoInventory;
-    }*/
-
-/*    public Set<DStoreOrder> getDtoStoreOrders(){
-        Set<DtoStoreOrder> dtoStoreOrders = new HashSet<>();
-        for(StoreOrder order : allOrders.values()){
-            dtoStoreOrders.add(DtoConvertor.storeOrderToDtoStoreOrder(order));
-        }
-
-        return dtoStoreOrders;
-    }*/
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -189,6 +184,10 @@ public class Store {
     @XmlTransient
     public void setTotalDeliveryCost(float deliveryCost) {
         this.totalDeliveriesCost = deliveryCost;
+    }
+
+    public synchronized void addFeedback(Feedback feedback){
+        this.feedbacks.add(feedback);
     }
 
 }
