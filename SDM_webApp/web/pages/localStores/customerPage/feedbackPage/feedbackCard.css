@@ -13,7 +13,7 @@
 }
 
 .comment-box {
-    padding: 5px
+    padding: 5px;
 }
 
 .comment-area textarea {
@@ -39,6 +39,12 @@
     color: #fff;
     background-color: #f50202;
     border-color: #f50202
+}
+
+.send:disabled{
+    color: #ffffff;
+    background-color: #5a6268;
+    border-color: #5a6268;
 }
 
 .rating {

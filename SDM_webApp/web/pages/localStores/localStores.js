@@ -7,7 +7,7 @@ var userType;
 var zoneName
 
 $(document).ready(function() {
-    zoneName = GetURLParameter("zonename");
+    zoneName = decodeURI(GetURLParameter("zonename"))
     ajaxItemTableData();
     ajaxGetStores();
 
@@ -16,7 +16,6 @@ $(document).ready(function() {
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
             ajaxGetStoreItems(storeId)
-            ajaxGetStoreInfo(storeId)
             ajaxGetStoreInfo(storeId)
         }
     });
@@ -106,11 +105,11 @@ function GetURLParameter(sParam) {
 }
 
 function ajaxGetStores(){
-    var zoneName = GetURLParameter("zonename")
+    var zone = GetURLParameter("zonename");
     $.ajax({
         url: GET_ALL_STORES_DATA,
         dataType: 'json',
-        data: {'zoneName': zoneName},
+        data: "zonename=" + zone,
         success: function (stores){
             $.each(stores || [], addStoresToDropDown)
         },
@@ -128,7 +127,7 @@ function ajaxGetStoreItems(storeId){
     $.ajax({
         url: GET_STORE_ITEMS_DATA,
         dataType: 'json',
-        data: {'storeId' : storeId, 'zoneName' : zoneName},
+        data: {'storeId' : storeId, 'zonename' : zoneName},
         success : function (data){
             $("#storeItemsTable > tbody").empty()
             $.each(data || [], updateStoreItemsTable)
@@ -164,7 +163,7 @@ function ajaxGetStoreInfo(storeId){
     $.ajax({
         url: GET_STORE_DATA,
         dataType: 'json',
-        data: {'storeId' : storeId, 'zoneName' : zoneName},
+        data: {'storeId' : storeId, 'zonename' : zoneName},
         success:function (store){
             updateStoreInfoLabels(store)
         }

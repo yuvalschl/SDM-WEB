@@ -201,6 +201,7 @@ function addUploadFileWindow(){
 function nextPage(){
     if(pickedUp !== undefined){
         var zoneName = $("#" + pickedUp).find('td')[2].textContent
+/*        zoneName = zoneName.replace(/\s+/g, '') //removes the spces from the zone name*/
         window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zoneName
     }
 }

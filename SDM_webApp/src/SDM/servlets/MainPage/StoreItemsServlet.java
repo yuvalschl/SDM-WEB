@@ -27,7 +27,7 @@ public class StoreItemsServlet extends HttpServlet {
         resp.setContentType("application/json");
         try(PrintWriter out = resp.getWriter()){
             String storeId = req.getParameter("storeId");
-            String zoneName = req.getParameter("zoneName");
+            String zoneName = req.getParameter("zonename");
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             StoreManager storeManager = allZonesManager.getAllZones().get(zoneName);
             Store store = storeManager.getAllStores().get(Integer.parseInt(storeId));

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <script src="../../../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../../../common/context-path-helper.js"></script>
+    <link rel="stylesheet" href="../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap.bundle.js"></script>
+    <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+    <script src="feedback.js"></script>
+    <link rel="stylesheet" href="../../../../common/navBar.css">
+    <link rel="stylesheet" href="../../../../common/table.css">
+    <link rel="stylesheet" href="feedbackCard.css">
+    <link rel="stylesheet" href="feedback.css">
+
+</head>
+<body>
+<nav class=" my-navbar navbar navbar-toggleable-md navbar-expand-lg navbar-dark bg-info navbar-inverse" style="padding: 1px; width: 100%">
+
+    <button id="nav-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarDiv" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid my-navbar nav-contanier">
+        <div class="collapse navbar-collapse" id="navbarDiv">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <h1>Feedback</h1>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a id="userNameText">user Name</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    <div class="container" id="cardsContainer"></div>
+    <div><button class="btn btn-dark" id="backToMainPage">Done</button></div>
+</body>
+</html>

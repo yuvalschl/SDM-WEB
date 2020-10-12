@@ -24,7 +24,7 @@ public class StoreInfoServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         try(PrintWriter out = resp.getWriter()){
-            String zoneName = req.getParameter("zoneName");
+            String zoneName = req.getParameter("zonename");
             String storeId = req.getParameter("storeId");
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             StoreManager storeManager = allZonesManager.getAllZones().get(zoneName);

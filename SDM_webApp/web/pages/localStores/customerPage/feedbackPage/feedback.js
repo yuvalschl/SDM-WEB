@@ -6,6 +6,8 @@ const zone = 'Hasharon'
 $(document).ready(function () {
     getStoresById()
 
+    $("#backToMainPage").on('click', goToMainPage)
+
     $(document).on('click', '.addFeedback', addFeedback)
 })
 
@@ -57,5 +59,8 @@ function addFeedback(){
             buttonPressed.attr('disabled', true)
         }
     })
+}
 
+function goToMainPage(){
+    window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zone
 }
