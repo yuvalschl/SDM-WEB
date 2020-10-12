@@ -1,5 +1,6 @@
 var maxLength = 2;
 var btnsID =0;
+var zone = decodeURI(GetURLParameter("zonename"))
 var dropdownHappend = false;
 var xCoordinateValid = false
 var yCoordinateValid = false
@@ -396,10 +397,12 @@ function ajaxCreatOrder() {
     var xcor = $("#x-cor").val()
     var ycor = $("#y-cor").val()
     var location = new Point(xcor,ycor)
+    location = JSON.stringify(location)
+    var items = JSON.stringify(currentOrder)
     $.ajax({
         url: CREAT_ORDER,
         dataType: 'json',
-        data: {'zonename': zoneName, },
+        data: {'zonename': zone, 'location': location, 'items': items },
         success: function (stores){
             $.each(stores || [], addStoresToDropDown)
         },
