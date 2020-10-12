@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>approve order</title>
+
+    <script src="../../../../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../../../../common/context-path-helper.js"></script>
+    <script src="../../../../../common/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../common/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" href="../../../../../common/fontawesome-free-5.15.1-web/css/fontawesome.css">
+    <link rel="stylesheet" href="approveOrder.css">
+</head>
+<body>
+<div class="px-4 px-lg-0">
+    <!-- For demo purpose -->
+    <div class="container text-white py-5 text-center">
+        <h1 class="display-4">Checkout</h1>
+    </div>
+    <!-- End -->
+
+    <div class="pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+                    <!-- Shopping cart table -->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="p-2 px-3 text-uppercase">Store Name</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Store ID</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">PPK</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Distance to client</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Shipping cost</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <div class="p-2">
+                                        <div class="ml-3 d-inline-block align-middle">
+                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="align-middle">2</td>
+                                <td class="align-middle">3</td>
+                                <td class="align-middle">20</td>
+                                <td class="align-middle">10</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <div class="p-2">
+                                        <div class="ml-3 d-inline-block align-middle">
+                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Yoari picker</a></h5>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="align-middle">2</td>
+                                <td class="align-middle">3</td>
+                                <td class="align-middle">20</td>
+                                <td class="align-middle">10</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <div class="p-2">
+                                        <div class="ml-3 d-inline-block align-middle">
+                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="align-middle">2</td>
+                                <td class="align-middle">3</td>
+                                <td class="align-middle">20</td>
+                                <td class="align-middle">10</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <div class="p-2">
+                                        <div class="ml-3 d-inline-block align-middle">
+                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="align-middle">2</td>
+                                <td class="align-middle">3</td>
+                                <td class="align-middle">20</td>
+                                <td class="align-middle">10</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End -->
+                </div>
+            </div>
+            <!--item section-->
+            <div class="row py-5 p-4 bg-white rounded shadow-sm">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="border-0 bg-light">
+                            <div class="p-2 px-3 text-uppercase">Item Name</div>
+                        </th>
+                        <th scope="col" class="border-0 bg-light">
+                            <div class="py-2 text-uppercase">Item ID</div>
+                        </th>
+                        <th scope="col" class="border-0 bg-light">
+                            <div class="py-2 text-uppercase">Sell by</div>
+                        </th>
+                        <th scope="col" class="border-0 bg-light">
+                            <div class="py-2 text-uppercase">Amount</div>
+                        </th>
+                        <th scope="col" class="border-0 bg-light">
+                            <div class="py-2 text-uppercase">total item cost</div>
+                        </th>
+                        <th scope="col" class="border-0 bg-light">
+                            <div class="py-2 text-uppercase">Part of a sale</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">
+                            <div class="p-2">
+                                <div class="ml-3 d-inline-block align-middle">
+                                    <h5 class="mb-0">Yarom</h5>
+                                </div>
+                            </div>
+                        </th>
+                        <td class="align-middle">2</td>
+                        <td class="align-middle">3</td>
+                        <td class="align-middle">20</td>
+                        <td class="align-middle">10</td>
+                        <td class="align-middle">No</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="p-2">
+                                <div class="ml-3 d-inline-block align-middle">
+                                    <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Yoari picker</a></h5>
+                                </div>
+                            </div>
+                        </th>
+                        <td class="align-middle">2</td>
+                        <td class="align-middle">3</td>
+                        <td class="align-middle">20</td>
+                        <td class="align-middle">10</td>
+                        <td class="align-middle">No</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="p-2">
+                                <div class="ml-3 d-inline-block align-middle">
+                                    <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
+                                </div>
+                            </div>
+                        </th>
+                        <td class="align-middle">2</td>
+                        <td class="align-middle">3</td>
+                        <td class="align-middle">20</td>
+                        <td class="align-middle">10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <div class="p-2">
+                                <div class="ml-3 d-inline-block align-middle">
+                                    <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
+                                </div>
+                            </div>
+                        </th>
+                        <td class="align-middle">2</td>
+                        <td class="align-middle">3</td>
+                        <td class="align-middle">20</td>
+                        <td class="align-middle">10</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!--order summery-->
+            <div class="row py-5 p-4 bg-white rounded shadow-sm order-summery">
+                <div class="sumerryTable">
+                    <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+                    <div class="p-4">
+                        <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+                        <ul class="list-unstyled mb-4">
+                            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal </strong><strong>$390.00</strong></li>
+                            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping total</strong><strong>$10.00</strong></li>
+                            <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
+                                <h5 class="font-weight-bold">$400.00</h5>
+                            </li>
+                        </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Approve <order></order></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

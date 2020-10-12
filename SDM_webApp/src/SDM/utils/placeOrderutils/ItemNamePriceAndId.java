@@ -6,18 +6,16 @@ import java.text.DecimalFormat;
  * this class is built to get the information needed to fill the items table in the place order page
  */
 public class ItemNamePriceAndId {
-    private String itemName;
-    private float price;
-    private int itemID;
-    /*id: 5
-    name: "Tomato"
-    pricePerUnit: 3
-    sellBy: "WEIGHT"*/
-    public ItemNamePriceAndId(String name, float price, int id) {
+    private String name;
+    private float pricePerUnit;
+    private int id;
+    private String sellBy;
+    public ItemNamePriceAndId(String name, float price, int id, String sellBy) {
         final DecimalFormat decimalFormat = new DecimalFormat("0.00");
-        this.itemName = name;
-        this.price = Float.parseFloat(decimalFormat.format(price)) ;
-        this.itemID = id;
+        this.name = name;
+        this.pricePerUnit = Float.parseFloat(decimalFormat.format(price)) ;
+        this.id = id;
+        this.sellBy = sellBy;
     }
 
 }

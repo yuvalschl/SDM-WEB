@@ -112,7 +112,7 @@
                                 <tr id ="itemTableRowHeader">
                                     <th scope="col">Item ID</th>
                                     <th id="itemNameCol" scope="col">Item name</th>
-                                    <th id="priceCol"  scope="col">price</th>
+                                    <th id="amountCol"  scope="col">Amount</th>
                                 </tr>
                             </thead>
                             <tbody id ="itemTableBody">
@@ -122,18 +122,22 @@
             </div>
         </div>
         <div class="col-25 row">
+
+            <!--cart container-->
             <div class="container">
                 <h4>Cart </h4>
-                <table class="table" id="cartTable">
-                    <thead>
-                    <tr>
-                        <th scope="col">Item name</th>
-                        <th scope="col">amount</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <form id="myForm">
+                     <table class="table" id="cartTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">Item name</th>
+                            <th scope="col">amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </form>
                 <hr>
                 <input class="btn btn-primary " type="button" value="Submit order" id="submitOrder">
             </div>

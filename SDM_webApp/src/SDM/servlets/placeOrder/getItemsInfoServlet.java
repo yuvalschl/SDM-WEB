@@ -28,7 +28,7 @@ public class getItemsInfoServlet extends HttpServlet {
             ArrayList<ItemNamePriceAndId> itemInfoToConvertToJson = new ArrayList<>();
             String userName = req.getSession(false).getAttribute(USERNAME).toString();
             String isOwner = req.getSession(false).getAttribute("isOwner").toString();
-            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemNamePriceAndId(item.getName(), item.getPrice(), item.getId()));});
+            currZoneManager.getAllItems().forEach((key, item)->{itemInfoToConvertToJson.add(new ItemNamePriceAndId(item.getName(), item.getPrice(), item.getId(), item.getSellBy().toString()));});
             String json = gson.toJson(itemInfoToConvertToJson);
             out.println(json);
             out.flush();

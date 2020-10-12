@@ -4,6 +4,9 @@ var dropdownHappend = false;
 var xCoordinateValid = false
 var yCoordinateValid = false
 var pickedDate = false;
+var itemHeaderForStaticOrderAdded = false//this varibale detrmins if the price header is added to the items table
+var itemHeaderForDynamicOrderAdded = false//this varibale detrmins if the price header is added to the items table
+
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
     "          <div class='dropdown-divider'></div>" +
@@ -25,8 +28,11 @@ $(document).ready(function() {
             xCoordinateValid = false;
         }
         else{
-            if(val <1 || val >50)//pop warning if invalid value
+            if(val <1 || val >50) {//pop warning if invalid value
                 $("#warning-label").text("number must be between 1-50");
+                xCoordinateValid = false
+                disableSubmitBtn()
+            }
             else {
                 $("#warning-label").empty()
                 xCoordinateValid = true;
@@ -48,6 +54,8 @@ $(document).ready(function() {
             else{
                 if(val <1 || val >50){//pop warning if invalid value
                     $("#warning-label").text("number must be between 1-50");
+                    yCoordinateValid = false
+                    disableSubmitBtn()
                 }
                 else {
                     $("#warning-label").empty()
@@ -68,9 +76,10 @@ $(document).ready(function() {
             pickedDate =true;
             enableSubmitBtn()
         }
-    else
+    else{
             pickedDate = false
             disableSubmitBtn()
+    }
     })
 
     //disable submit btn on load
@@ -79,8 +88,8 @@ $(document).ready(function() {
 
     ajaxItemTableData();    //this loads all the items in the zone to the table
     $('#dynamicRadioButton').prop("checked", true);
-    $('#staticRadioButton').on("click", showDropDown);
-    $('#dynamicRadioButton').on("click", hideDropDown);
+    $('#staticRadioButton').on("click", showDropDown);//set a listener to the static order radio button and initalize the items table accordingly
+    $('#dynamicRadioButton').on("click", hideDropDown);//set a listener to the static order radio button and initalize the items table accordingly
     ////
     //$('#submitOrder').on("click", ajaxCreatOrder());
 
@@ -91,6 +100,7 @@ $(document).ready(function() {
         updateCart(rowID)
     });
 
+
     $(document).on('click', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
@@ -98,11 +108,24 @@ $(document).ready(function() {
             ajaxGetStoreItems(storeId)
         }
     });
+
+    $(document).on('click', "#submitOrder", function(){
+        checkForDiscount()
+        goToOrderSummeryPg()
+    });
 })
 //end of onload
 
+function goToOrderSummeryPg() {
+    console.log($("#myForm").serializeArray());
+    //window.location = "approveOrder/approveOrder.html";
+}
+function checkForDiscount() {
+
+}
 function ajaxGetStoreItems(storeId){
-    var zoneName = GetURLParameter("zonename")
+    isDynamicOrder = false
+    var zoneName = decodeURI(GetURLParameter("zonename"))
     $.ajax({
         url: GET_STORE_ITEMS_DATA,
         dataType: 'json',
@@ -132,7 +155,7 @@ function disableSubmitBtn(){
 
 function enableSubmitBtn() {
     if(pickedDate && xCoordinateValid && yCoordinateValid){
-        $('#submitOrder').attr("disabled", false);
+    $('#submitOrder').attr("disabled", false);
     $('#submitOrder').css("color"," #fff");
     $('#submitOrder').css("background-color","#007bff");
     $('#submitOrder').css("border-color","  #007bff");
@@ -148,24 +171,24 @@ function updateCart(rowID, isPartOfSale) {
     if(isPartOfSale){
         cartRowClass = "class = partOfSale"
     }
-    if(!checkIfItemExistInCart(itemID)){
-        var cartTableRowId = "id = cartRowItemId"+itemID
-        var rowToAppend =      "<tr "+cartTableRowId+">" +
-            "<td >" + itemName + "</td>" +
-            "<td>" + itemAmount + "</td>"
-            +"</tr>";
-        $("#cartTable").append(rowToAppend)
+    if(itemAmount !== "0") {
+        if (!checkIfItemExistInCart(itemID)) {
+            var cartTableRowId = "id = cartRowItemId" + itemID
+            var rowToAppend = "<tr " + cartTableRowId + ">" +
+                "<td >" + itemName + "</td>" +
+                "<td>" + itemAmount + "</td>"
+                + "</tr>";
+            $("#cartTable").append(rowToAppend)
+        } else
+            addToCartAmount(itemID, itemAmount)
     }
-    else
-        addToCartAmount(itemID, itemAmount)
-
 }
 
 function addToCartAmount(itemID, amountToAddString) {
     var cartTableRowId= "#cartRowItemId"+itemID
     var currAmountString =  $(cartTableRowId).find('td')[1].textContent
-    var amountToAdd = parseInt(amountToAddString)
-    var currAmount = parseInt(currAmountString)
+    var amountToAdd = parseFloat(amountToAddString)
+    var currAmount = parseFloat(currAmountString)
     amountToAdd += currAmount;
     $(cartTableRowId).find('td')[1].innerHTML =amountToAdd;
 }
@@ -188,16 +211,16 @@ function showDropDown() {
             $("#dropDownRow").append(dropdown);
             ajaxGetStores()
             isDynamicOrder = false
-            //ajaxItemTableData()
         }
 }
 function hideDropDown() {
     $("#dropDownRow").empty();
     dropdownHappend = false;
+    ajaxItemTableData();
 }
 
 function ajaxGetStores(){
-    var zoneName = GetURLParameter("zonename")
+    var zoneName = decodeURI(GetURLParameter("zonename"))
     $.ajax({
         url: GET_ALL_STORES_DATA,
         dataType: 'json',
@@ -212,6 +235,7 @@ function ajaxGetStores(){
 }
 
 function ajaxItemTableData(){
+    isDynamicOrder = true
     var zone = GetURLParameter("zonename");
     $.ajax({
         url: GET_ITEM_DATA,
@@ -228,41 +252,71 @@ function ajaxItemTableData(){
 }
 function updateTable(table){
     $("#itemTableBody").empty()
+    if(itemHeaderForStaticOrderAdded){
+    $("tr").each(function() {
+        $(this).children("td:eq(2)").remove();
+    });
+    $("th").eq(2).remove()
+    btnsID = 0;
+    itemHeaderForStaticOrderAdded=false
+        isDynamicOrder = true
+    }
     $.each(table || [], updateTableSingleEntryDynamicOrder)
 }
 
-function updateTableSingleEntryDynamicOrder(index, zoneInfo) {
+function updateTableSingleEntryDynamicOrder(index, itemInfo) {
     btnsID++
     var StringbtnID = "btnID" + btnsID.toString()
     var stringRowID = "tableRow" + btnsID.toString()
     var nameColID = "nameOfProd" + btnsID.toString()
     var stringAmountInput = "amountInput" + btnsID.toString()
     var addToCartBtn
-    var itemName = zoneInfo.itemName
-    var itemPrice = zoneInfo.price
-    var ID = zoneInfo.itemID
+    var itemName = itemInfo.name
+    var itemPrice = itemInfo.pricePerUnit
+    var ID = itemInfo.id
 
     var rowToAppend = "<tr" + " id =" + "\"" + stringRowID + "\"" + " >" +
         "<td>" + ID + "</td>" +
         "<td" + " id =" + "\"" + nameColID + "\"" + ">" + itemName + "</td>";
     if (isDynamicOrder) {//if it is a dynamic order set the right col text to price
-        $("#priceCol").html("Amount")
+        itemHeaderForStaticOrderAdded = false;
     }
     else{
         addTableHeaderRow();
+        rowToAppend+="<td>"+itemPrice +"</td>"
     }
     addToCartBtn ="<input class=\"btn btn-primary addBtn   float-right\"" +
         " id ="+ "\"" + StringbtnID+ "\""
         +" type=\"button\" value=\"Add\">\n" +
-        "<input"+ " id ="+ "\"" + stringAmountInput+ "\"" +"  type=\"number\" maxlength=\"2\"  name=\"username\" class=\"form-control float-right amountText\">";
+        "<input"+ " id ="+ "\"" + stringAmountInput+ "\"" +"  type=\"number\" min=\"0\" maxlength=\"2\"  name=\"username\" class=\"form-control float-right amountText\">";
     rowToAppend += "<td>" + addToCartBtn + "</td>";
-
+    setInputMinVal()
     rowToAppend+"</tr>";
-    $("#itemTable").append(rowToAppend);
+    $("#itemTableBody").append("");
+    $("#itemTableBody").append(rowToAppend);
 }
 
+function setInputMinVal(){
+    $(function () {
+        $("input").keydown(function () {
+            // Save old value.
+            if (!$(this).val() || ( parseInt($(this).val()) >= 0))
+                $(this).data("old", $(this).val());
+        });
+        $("input").keyup(function () {
+            // Check correct, else revert back to old value.
+            if (!$(this).val() || ( parseInt($(this).val()) >= 0))
+                ;
+            else
+                $(this).val($(this).data("old"));
+        });
+    });
+}
 function addTableHeaderRow() {
-    $("#itemNameCol").after("<th>Price</th>")
+    if(!itemHeaderForStaticOrderAdded) {//add the price table header in case that it hadn't been added yet
+        $("#itemNameCol").after("<th id= \" priceCol\">Price</th>")
+        itemHeaderForStaticOrderAdded = true;
+    }
 }
 function addStoresToDropDown(index, store){
     $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")

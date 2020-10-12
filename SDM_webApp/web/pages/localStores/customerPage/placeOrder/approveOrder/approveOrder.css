@@ -1,0 +1,15 @@
+body {
+    background: -webkit-linear-gradient(to right, #e8e5e0, #cbc1c5);
+    background: linear-gradient(to right, #e8e5e0, #cbc1c5);
+    min-height: 100vh;
+}
+
+td{
+    padding-left: 10px;
+}
+.order-summery{
+    margin-top: 45px;
+}
+.sumerryTable{
+    padding-left: 250px;
+}
