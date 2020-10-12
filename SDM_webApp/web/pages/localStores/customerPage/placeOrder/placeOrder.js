@@ -27,7 +27,6 @@ var isDynamicOrder =true
 
 
 $(document).ready(function() {
-    createDiscountSelectionWindow()
     currentOrder = new order()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
         //this part check if the number is above 0 or under 50
