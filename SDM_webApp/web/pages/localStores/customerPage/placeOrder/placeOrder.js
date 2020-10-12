@@ -399,7 +399,7 @@ function ajaxCreatOrder() {
     $.ajax({
         url: CREAT_ORDER,
         dataType: 'json',
-        data: {'zonename': zoneName},
+        data: {'zonename': zoneName, },
         success: function (stores){
             $.each(stores || [], addStoresToDropDown)
         },
