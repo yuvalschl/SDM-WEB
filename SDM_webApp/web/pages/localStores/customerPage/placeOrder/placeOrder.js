@@ -140,7 +140,7 @@ function ajaxGetStoreItems(storeId){
         data: {'storeId' : storeId, 'zonename' : zoneName},
         success : function (data){
             $("#storeItemsTable > tbody").empty()
-            $.each(data || [], updateTable(data))
+            $.each(data || [], updateTable)
         },
         error: function (errorInfo){
             console.log("error on getStoreItem ajax call")
