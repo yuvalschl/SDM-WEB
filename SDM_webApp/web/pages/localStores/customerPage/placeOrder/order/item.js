@@ -6,7 +6,7 @@ class item {
     }
 
     addToAmount(amountToAdd){
-        this._amount += amountToAdd
+        this._amount = parseInt(this._amount) + parseInt(amountToAdd)
     }
 
     get name() {

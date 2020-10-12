@@ -6,7 +6,7 @@ var yCoordinateValid = false
 var pickedDate = false;
 var itemHeaderForStaticOrderAdded = false//this variable determine if the price header is added to the items table
 var itemHeaderForDynamicOrderAdded = false//this variable determine if the price header is added to the items table
-
+var currentOrder
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
     "          <div class='dropdown-divider'></div>" +
@@ -26,6 +26,7 @@ var isDynamicOrder =true
 
 
 $(document).ready(function() {
+    currentOrder = new order()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
         //this part check if the number is above 0 or under 50
         var val = parseInt($(this).val());
@@ -107,7 +108,7 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click', "#storesDropDown", function(){
+    $(document).on('change', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
@@ -135,7 +136,7 @@ function ajaxGetStoreItems(storeId){
     $.ajax({
         url: GET_STORE_ITEMS_DATA,
         dataType: 'json',
-        data: {'storeId' : storeId, 'zoneName' : zoneName},
+        data: {'storeId' : storeId, 'zonename' : zoneName},
         success : function (data){
             $("#storeItemsTable > tbody").empty()
             $.each(data || [], updateTable(data))
@@ -185,10 +186,10 @@ function updateCart(rowID, isPartOfSale) {
                 "<td>" + itemAmount + "</td>"
                 + "</tr>";
             $("#cartTable").append(rowToAppend)
-            order[itemID] = new item(itemName, itemID, itemAmount)
+            currentOrder[itemID] = new item(itemName, itemID, itemAmount)
         } else{
             addToCartAmount(itemID, itemAmount)
-            order[itemID].addToAmount(itemAmount)
+            currentOrder[itemID].addToAmount(itemAmount)
         }
     }
 }
@@ -342,14 +343,16 @@ function GetURLParameter(sParam) {
     }
 }
 
+function createDiscountSelectionWindow(){
+
+}
+
 
 function ajaxCreatOrder() {
     var date = $("#datepicker").val()
     var xcor = $("#x-cor").val()
     var ycor = $("#y-cor").val()
     var location = new Point(xcor,ycor)
-
-
 }
 
 /*
