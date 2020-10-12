@@ -4,7 +4,9 @@ var dropdownHappend = false;
 var xCoordinateValid = false
 var yCoordinateValid = false
 var pickedDate = false;
-var itemHeaderForStaticOrderAdded = false//this varibale detrmins if the price header is added to the items table
+var itemHeaderForStaticOrderAdded = false//this variable determine if the price header is added to the items table
+var itemHeaderForDynamicOrderAdded = false//this variable determine if the price header is added to the items table
+const order = new order();
 
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
@@ -183,8 +185,11 @@ function updateCart(rowID, isPartOfSale) {
                 "<td>" + itemAmount + "</td>"
                 + "</tr>";
             $("#cartTable").append(rowToAppend)
-        } else
+            order[itemID] = new item(itemName, itemID, itemAmount)
+        } else{
             addToCartAmount(itemID, itemAmount)
+            order[itemID].addToAmount(itemAmount)
+        }
     }
 }
 
