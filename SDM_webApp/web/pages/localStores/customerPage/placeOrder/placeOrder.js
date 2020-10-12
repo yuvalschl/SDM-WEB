@@ -96,8 +96,8 @@ $(document).ready(function() {
     $('#dynamicRadioButton').prop("checked", true);
     $('#staticRadioButton').on("click", showDropDown);//set a listener to the static order radio button and initalize the items table accordingly
     $('#dynamicRadioButton').on("click", hideDropDown);//set a listener to the static order radio button and initalize the items table accordingly
-    ////
-    $('#submitOrder').on("click", ajaxCreatOrder());
+
+    $('#submitOrder').on("click", ajaxCreatOrder);//add listner to the submit butten
 
 
     $(document).on('click', '.addBtn', function(){
@@ -107,7 +107,7 @@ $(document).ready(function() {
     });
 
 
-    $(document).on('click', "#storesDropDown", function(){
+    $(document).on('change', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
@@ -135,7 +135,7 @@ function ajaxGetStoreItems(storeId){
     $.ajax({
         url: GET_STORE_ITEMS_DATA,
         dataType: 'json',
-        data: {'storeId' : storeId, 'zoneName' : zoneName},
+        data: {'storeId' : storeId, 'zonename' : zoneName},
         success : function (data){
             $("#storeItemsTable > tbody").empty()
             $.each(data || [], updateTable(data))
@@ -261,7 +261,7 @@ function ajaxItemTableData(){
 }
 function updateTable(table){
     $("#itemTableBody").empty()
-    if(itemHeaderForStaticOrderAdded){
+    if(itemHeaderForStaticOrderAdded && isDynamicOrder){
     $("tr").each(function() {
         $(this).children("td:eq(2)").remove();
     });
@@ -348,7 +348,17 @@ function ajaxCreatOrder() {
     var xcor = $("#x-cor").val()
     var ycor = $("#y-cor").val()
     var location = new Point(xcor,ycor)
-
+    $.ajax({
+        url: CREAT_ORDER,
+        dataType: 'json',
+        data: {'zonename': zoneName},
+        success: function (stores){
+            $.each(stores || [], addStoresToDropDown)
+        },
+        error : function (){
+            console.log("dani zion")
+        }
+    })
 
 }
 
