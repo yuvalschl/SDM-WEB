@@ -22,7 +22,7 @@ public class ZoneStoresInfoServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         try(PrintWriter out = resp.getWriter()){
-            String zoneName = req.getParameter("zoneName");
+            String zoneName = req.getParameter("zonename");
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             StoreManager storeManager = allZonesManager.getAllZones().get(zoneName);
             HashMap<Integer, StoreInfo> storesInfo = new HashMap<>();

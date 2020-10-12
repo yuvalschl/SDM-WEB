@@ -1,3 +1,7 @@
 #cardsContainer{
     max-width: 800px;
 }
+
+#backToMainPage{
+    float: right;
+}
