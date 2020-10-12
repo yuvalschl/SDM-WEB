@@ -6,7 +6,7 @@ var yCoordinateValid = false
 var pickedDate = false;
 var itemHeaderForStaticOrderAdded = false//this variable determine if the price header is added to the items table
 var itemHeaderForDynamicOrderAdded = false//this variable determine if the price header is added to the items table
-
+var currentOrder
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
     "          <div class='dropdown-divider'></div>" +
@@ -26,6 +26,7 @@ var isDynamicOrder =true
 
 
 $(document).ready(function() {
+    currentOrder = new order()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
         //this part check if the number is above 0 or under 50
         var val = parseInt($(this).val());
@@ -185,10 +186,10 @@ function updateCart(rowID, isPartOfSale) {
                 "<td>" + itemAmount + "</td>"
                 + "</tr>";
             $("#cartTable").append(rowToAppend)
-            order[itemID] = new item(itemName, itemID, itemAmount)
+            currentOrder[itemID] = new item(itemName, itemID, itemAmount)
         } else{
             addToCartAmount(itemID, itemAmount)
-            order[itemID].addToAmount(itemAmount)
+            currentOrder[itemID].addToAmount(itemAmount)
         }
     }
 }
@@ -340,6 +341,10 @@ function GetURLParameter(sParam) {
             return sParameterName[1];
         }
     }
+}
+
+function createDiscountSelectionWindow(){
+
 }
 
 
