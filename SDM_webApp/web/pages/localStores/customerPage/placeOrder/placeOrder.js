@@ -5,7 +5,6 @@ var xCoordinateValid = false
 var yCoordinateValid = false
 var pickedDate = false;
 var itemHeaderForStaticOrderAdded = false//this varibale detrmins if the price header is added to the items table
-var itemHeaderForDynamicOrderAdded = false//this varibale detrmins if the price header is added to the items table
 
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
@@ -15,8 +14,13 @@ var StoresToPresentInDropDown
 const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
 const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
-
-var isDynamicOrder =true
+const CREAT_ORDER= buildUrlWithContextPath("creatOrder")
+/*class Point {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }*/
+    var isDynamicOrder =true
 
 
 $(document).ready(function() {
@@ -333,6 +337,11 @@ function GetURLParameter(sParam) {
     }
 }
 
+
+/*function ajaxCreatOrder() {
+    var date = $("#datepicker").val()
+    var
+}*/
 
 /*
 location must be between 1-50*/
