@@ -6,7 +6,6 @@ var yCoordinateValid = false
 var pickedDate = false;
 var itemHeaderForStaticOrderAdded = false//this variable determine if the price header is added to the items table
 var itemHeaderForDynamicOrderAdded = false//this variable determine if the price header is added to the items table
-const order = new order();
 
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
@@ -17,12 +16,13 @@ const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
 const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
 const CREAT_ORDER= buildUrlWithContextPath("creatOrder")
-/*class Point {
+class Point {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-    }*/
-    var isDynamicOrder =true
+    }
+}
+var isDynamicOrder =true
 
 
 $(document).ready(function() {
@@ -97,7 +97,7 @@ $(document).ready(function() {
     $('#staticRadioButton').on("click", showDropDown);//set a listener to the static order radio button and initalize the items table accordingly
     $('#dynamicRadioButton').on("click", hideDropDown);//set a listener to the static order radio button and initalize the items table accordingly
     ////
-    //$('#submitOrder').on("click", ajaxCreatOrder());
+    $('#submitOrder').on("click", ajaxCreatOrder());
 
 
     $(document).on('click', '.addBtn', function(){
@@ -233,7 +233,7 @@ function ajaxGetStores(){
     $.ajax({
         url: GET_ALL_STORES_DATA,
         dataType: 'json',
-        data: {'zoneName': zoneName},
+        data: {'zonename': zoneName},
         success: function (stores){
             $.each(stores || [], addStoresToDropDown)
         },
@@ -343,10 +343,14 @@ function GetURLParameter(sParam) {
 }
 
 
-/*function ajaxCreatOrder() {
+function ajaxCreatOrder() {
     var date = $("#datepicker").val()
-    var
-}*/
+    var xcor = $("#x-cor").val()
+    var ycor = $("#y-cor").val()
+    var location = new Point(xcor,ycor)
+
+
+}
 
 /*
 location must be between 1-50*/
