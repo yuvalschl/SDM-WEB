@@ -16,6 +16,7 @@ const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
 const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
 const CREAT_ORDER= buildUrlWithContextPath("creatOrder")
+const GET_DISCOUNTS_URL = buildUrlWithContextPath("getDiscounts")
 class Point {
     constructor(x, y) {
         this.x = x;
@@ -26,6 +27,7 @@ var isDynamicOrder =true
 
 
 $(document).ready(function() {
+    createDiscountSelectionWindow()
     currentOrder = new order()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
         //this part check if the number is above 0 or under 50
@@ -186,10 +188,10 @@ function updateCart(rowID, isPartOfSale) {
                 "<td>" + itemAmount + "</td>"
                 + "</tr>";
             $("#cartTable").append(rowToAppend)
-            currentOrder[itemID] = new item(itemName, itemID, itemAmount)
+            currentOrder.items[itemID] = new item(itemName, itemID, itemAmount)
         } else{
             addToCartAmount(itemID, itemAmount)
-            currentOrder[itemID].addToAmount(itemAmount)
+            currentOrder.items[itemID].addToAmount(itemAmount)
         }
     }
 }
@@ -343,10 +345,52 @@ function GetURLParameter(sParam) {
     }
 }
 
-function createDiscountSelectionWindow(){
-
+function createDiscountSelectionWindow(discounts){
+    $("#itemTable").empty()
+    $("#itemTable").append("<table class=\"table\" id=\"zoneTable\">\n" +
+        "    <thead>\n" +
+        "    <tr>\n" +
+        "        <th scope=\"col\">Name</th>\n" +
+        "        <th scope=\"col\">Because you bought</th>\n" +
+        "        <th scope=\"col\">then you get</th>\n" +
+        "        <th scope=\"col\">for additional</th>\n" +
+        "        <th scope=\"col\">add to cart</th>\n" +
+        "    </tr>\n" +
+        "    </thead>\n" +
+        "    <tbody id=\"discountTableBody\">\n" +
+        "    </tbody>\n" +
+        "</table>")
+    $.each(discounts || [], addDiscountToTable)
 }
 
+function addDiscountToTable(discount){
+    var name = discount.name
+    var becauseYouBought = discount.becauseYouBought
+    var forAdditional = discount.forAddtional
+    var thenYouGet
+    if(discount.thenYouGet.length === 1){
+        thenYouGet = discount.thenYouGet
+    }
+    else {
+        thenYouGet = createThenYouGetDropDown(discount.thenYouGet)
+    }
+    $("#discountTableBody").append("<tr>" +
+        "<td>" + name + "</td>" +
+        "<td>" + becauseYouBought + "</td>" +
+        "<td>" + thenYouGet + "</td>" +
+        "<td>" + forAdditional + "</td>" +
+        "<td><button class='btn btn-dark' id='" + name + "button\'</td>")
+}
+
+function createThenYouGetDropDown(thenYouGet){
+    var dropDown =  "<select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
+                    "<option id='pickAStore' value='pickAStore'>Pick a store</option>" +
+                    "<div class='dropdown-divider'></div>" +
+    "</select>"
+    $.each(thenYouGet || [], function (offer){
+        dropDown += "<option value='" + offer.item + "'>" + offer.item + "</option>"
+    })
+}
 
 function ajaxCreatOrder() {
     var date = $("#datepicker").val()
