@@ -140,7 +140,7 @@ function ajaxGetStoreItems(storeId){
         data: {'storeId' : storeId, 'zonename' : zoneName},
         success : function (data){
             $("#storeItemsTable > tbody").empty()
-            $.each(data || [], updateTable)
+            $.each(data || [], updateTable(data))
         },
         error: function (errorInfo){
             console.log("error on getStoreItem ajax call")
@@ -344,7 +344,7 @@ function GetURLParameter(sParam) {
     }
 }
 
-function createDiscountSelectionWindow(discounts){
+function createDiscountSelect5ionWindow(discounts){
     $("#itemTable").empty()
     $("#itemTable").append("<table class=\"table\" id=\"zoneTable\">\n" +
         "    <thead>\n" +
