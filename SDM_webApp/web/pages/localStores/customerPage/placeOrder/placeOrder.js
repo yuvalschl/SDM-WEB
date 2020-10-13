@@ -114,18 +114,18 @@ $(document).ready(function() {
     $(document).on('change', ".discountDropDown", function (){
         $(this).find('option[value=pickAnItem]').remove();
         var rowId = 'row' + $(this).attr('id').slice(8) //generate the row id
-        var forAdditional = $(this).children(":selected").prop("value"); // $(this) refers to button that was clicked //value is the forAdditional of the discount
-        $("#"+rowId).find('td').eq(3).text(forAdditional)
+        var json = JSON.parse($(this).val()) // $(this) refers to button that was clicked //value is the forAdditional of the discount
+        $("#"+rowId).find('td').eq(3).text(json.forAdditional)
     })
 
     $(document).on('click', ".addDiscount", function (){
         var discountName = $(this).attr('id')
         var a = $(this).val()
-        var itemJson = JSON.parse($(this).val())
         if(availableDiscounts[discountName] > 0){
             $(this).prop('disabled', true)
         }
         availableDiscounts[discountName]--
+        var rowID = availableItems[itemJson.name]
         updateCart(rowID, true)
 
     })
@@ -424,7 +424,7 @@ function createThenYouGetDropDown(thenYouGet, discountName){
             'forAdditional': offer.forAdditional,
             'itemId': offer.id
         }
-        dropDown += "<option value='" + json + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
+        dropDown += "<option id='" + offer.id + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
 
     return dropDown += "</select>"
@@ -454,9 +454,10 @@ function ajaxCreatOrder() {
         url: CREAT_ORDER,
         dataType: 'json',
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
-        success: function (discounts){
-            placeOrderPage(discounts.order)
-            availableDiscounts = new EntitledDiscounts(currentOrder, discounts)
+        success: function (warper){
+            createDiscountSelectionWindow(warper.discount)
+/*            placeOrderPage(warper.discount.order)*/
+            availableDiscounts = new EntitledDiscounts(currentOrder, warper.discount)
         },
         error : function (){
             console.log("dani zion")
@@ -464,7 +465,6 @@ function ajaxCreatOrder() {
     })
 
 }
-
 
 function placeOrderPage(discounts){
     var json = JSON.stringify(discounts)
