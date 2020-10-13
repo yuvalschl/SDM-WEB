@@ -1,7 +1,8 @@
 var currOrder
 $(document).ready(function() {
+    var data= GetURLParameter("varid")
+     var disounts =  atob(data);
     creatOrderJsObject()
-
     creatStoreTable()
     createOrderSummery()
     $(document).on('click', '.storeName', function(){
@@ -9,7 +10,17 @@ $(document).ready(function() {
         console.log(rowID)
 
     });
-})
+},
+    function GetUrlValue(VarSearch) {
+        var SearchString = window.location.search.substring(1);
+        var arr = SearchString.split('&');
+        console.log(arr);
+        //Set session variables
+        var username = arr[1].split('=')[1];
+        var password = arr[2].split('=')[1];
+        document.getElementById('username').value = username;
+        document.getElementById('password').value = password;
+    })
 
 function creatOrderJsObject() {
     var stores = createStoresJsObjects()
@@ -57,5 +68,16 @@ function createOrderSummery() {//TODO:enter the real number instead of 120 121 1
     $("#Shipping-total").text(121)
     $("#total").text(122)
 
+}
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1];
+        }
+    }
 }
 

@@ -425,7 +425,7 @@ function ajaxCreatOrder() {
         dataType: 'json',
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
         success: function (discounts){
-            createDiscountSelectionWindow(discounts)
+            placeOrderPage(discounts)
         },
         error : function (){
             console.log("dani zion")
@@ -434,5 +434,10 @@ function ajaxCreatOrder() {
 
 }
 
-/*
-location must be between 1-50*/
+
+function placeOrderPage(discounts){
+    var json = JSON.stringify(discounts)
+    var dataObjectBase64 = btoa(json);
+    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone;
+}
+
