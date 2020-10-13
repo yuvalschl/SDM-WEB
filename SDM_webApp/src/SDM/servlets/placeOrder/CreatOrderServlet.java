@@ -36,6 +36,7 @@ public class CreatOrderServlet extends HttpServlet {
         try {
             PrintWriter out = res.getWriter();
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
+            String isOrderApproved = req.getParameter("approved");
             String zoneName = req.getParameter("zonename");
             String store = req.getParameter("store");
             String userName = req.getSession(false).getAttribute(USERNAME).toString();
@@ -51,7 +52,6 @@ public class CreatOrderServlet extends HttpServlet {
             LinkedHashMap itemsJSN = gson.fromJson(itemsString, LinkedHashMap.class);
             itemsJSN = (LinkedHashMap) itemsJSN.get("_items");
             HashMap<Integer, ItemAmountAndStore> items = new HashMap<Integer, ItemAmountAndStore>();
-            String key ="1";
             for (Object val: itemsJSN.values()){
                 String name = (String) ((LinkedHashMap) val).get("_name");
                 String idString = (String) ((LinkedHashMap) val).get("_id");

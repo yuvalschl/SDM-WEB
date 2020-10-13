@@ -50,58 +50,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <div class="p-2">
-                                        <div class="ml-3 d-inline-block align-middle">
-                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="align-middle">2</td>
-                                <td class="align-middle">3</td>
-                                <td class="align-middle">20</td>
-                                <td class="align-middle">10</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="p-2">
-                                        <div class="ml-3 d-inline-block align-middle">
-                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Yoari picker</a></h5>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="align-middle">2</td>
-                                <td class="align-middle">3</td>
-                                <td class="align-middle">20</td>
-                                <td class="align-middle">10</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="p-2">
-                                        <div class="ml-3 d-inline-block align-middle">
-                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="align-middle">2</td>
-                                <td class="align-middle">3</td>
-                                <td class="align-middle">20</td>
-                                <td class="align-middle">10</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">
-                                    <div class="p-2">
-                                        <div class="ml-3 d-inline-block align-middle">
-                                            <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="align-middle">2</td>
-                                <td class="align-middle">3</td>
-                                <td class="align-middle">20</td>
-                                <td class="align-middle">10</td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -110,7 +58,7 @@
             </div>
             <!--item section-->
             <div class="row py-5 p-4 bg-white rounded shadow-sm">
-                <table class="table" id ="itemsTable">
+                <table class="table" >
                     <thead>
                     <tr>
                         <th scope="col" class="border-0 bg-light">
@@ -133,62 +81,7 @@
                         </th>
                     </tr>
                     </thead>
-                    <tbody >
-                    <tr>
-                        <th scope="row">
-                            <div class="p-2">
-                                <div class="ml-3 d-inline-block align-middle">
-                                    <h5 class="mb-0">Yarom</h5>
-                                </div>
-                            </div>
-                        </th>
-                        <td class="align-middle">2</td>
-                        <td class="align-middle">3</td>
-                        <td class="align-middle">20</td>
-                        <td class="align-middle">10</td>
-                        <td class="align-middle">No</td>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="p-2">
-                                <div class="ml-3 d-inline-block align-middle">
-                                    <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Yoari picker</a></h5>
-                                </div>
-                            </div>
-                        </th>
-                        <td class="align-middle">2</td>
-                        <td class="align-middle">3</td>
-                        <td class="align-middle">20</td>
-                        <td class="align-middle">10</td>
-                        <td class="align-middle">No</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="p-2">
-                                <div class="ml-3 d-inline-block align-middle">
-                                    <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
-                                </div>
-                            </div>
-                        </th>
-                        <td class="align-middle">2</td>
-                        <td class="align-middle">3</td>
-                        <td class="align-middle">20</td>
-                        <td class="align-middle">10</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <div class="p-2">
-                                <div class="ml-3 d-inline-block align-middle">
-                                    <h5 class="mb-0"><a href="#" class="text-dark d-inline-block">Rami</a></h5>
-                                </div>
-                            </div>
-                        </th>
-                        <td class="align-middle">2</td>
-                        <td class="align-middle">3</td>
-                        <td class="align-middle">20</td>
-                        <td class="align-middle">10</td>
-                    </tr>
+                    <tbody id ="itemsTable">
                     </tbody >
                 </table>
 
@@ -198,14 +91,16 @@
                 <div class="sumerryTable">
                     <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
                     <div class="p-4">
-                        <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
+                        <p class="font-italic mb-4">Press approve to finalize order or cancel to go back to local stores page.</p>
                         <ul class="list-unstyled mb-4">
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Items total cost </strong><strong id="Order-Subtotal"></strong></li>
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Shipping total</strong><strong id = "Shipping-total"></strong></li>
                             <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Total</strong>
                                 <h5 class="font-weight-bold" id="total"></h5>
                             </li>
-                        </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Approve <order></order></a>
+                        </ul>
+                        <a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Approve</a>
+                        <a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Cancel</a>
                     </div>
                 </div>
             </div>

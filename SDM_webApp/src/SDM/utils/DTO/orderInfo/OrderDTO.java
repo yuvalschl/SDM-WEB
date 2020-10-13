@@ -1,5 +1,6 @@
 package SDM.utils.DTO.orderInfo;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class OrderDTO {
@@ -10,10 +11,11 @@ public class OrderDTO {
       private  float totalItemCost;
 
     public OrderDTO(ArrayList<StoreDTO> allStores, float orderTotal, float shippingTotal, float totalItemCost) {
+        final DecimalFormat decimalFormat = new DecimalFormat("0.00");
         this.allStores = allStores;
-        this.orderTotal = orderTotal;
-        this.shippingTotal = shippingTotal;
-        this.totalItemCost = totalItemCost;
+        this.orderTotal = Float.parseFloat(decimalFormat.format(orderTotal)) ;
+        this.shippingTotal = Float.parseFloat(decimalFormat.format(shippingTotal)) ;
+        this.totalItemCost = Float.parseFloat(decimalFormat.format(totalItemCost)) ;
     }
 
 }

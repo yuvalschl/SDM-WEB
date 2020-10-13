@@ -431,7 +431,7 @@ function ajaxCreatOrder() {
         dataType: 'json',
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
         success: function (discounts){
-            placeOrderPage(discounts)
+            placeOrderPage(discounts.order)
         },
         error : function (){
             console.log("dani zion")

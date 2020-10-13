@@ -1,51 +1,65 @@
 var currOrder
 $(document).ready(function() {
-    var data= GetURLParameter("varid")
-     var disounts =  atob(data);
-    creatOrderJsObject()
-    creatStoreTable()
+    var data = GetURLParameter("varid")
+    var jsonOrder = atob(data);
+    creatOrderJsObject(jsonOrder)
+    presentStores()
     createOrderSummery()
-    $(document).on('click', '.storeName', function(){
-        var rowID = $(this).text(); // $(this) refers to button that was clicked
-        console.log(rowID)
-
+    $(document).on('click', '.storeName', function () {
+        var storeName = $(this).text(); // $(this) refers to button that was clicked
+        var store = getStoreByName(storeName)
+        createItemsTable(store.items)
     });
-},
-    function GetUrlValue(VarSearch) {
-        var SearchString = window.location.search.substring(1);
-        var arr = SearchString.split('&');
-        console.log(arr);
-        //Set session variables
-        var username = arr[1].split('=')[1];
-        var password = arr[2].split('=')[1];
-        document.getElementById('username').value = username;
-        document.getElementById('password').value = password;
-    })
+})
 
-function creatOrderJsObject() {
-    var stores = createStoresJsObjects()
-    currOrder = new order(stores, orderTotal, shippingTotal, totalItemCost)
+function getStoreByName(storeName) {
+    for(var i=0; i< currOrder.allStores.length;i++){
+        if(currOrder.allStores[i].name === storeName){
+            return currOrder.allStores[i]
+        }
+
+    }
+}
+function creatOrderJsObject(JsonOrder) {
+   currOrder = JSON.parse(JsonOrder);
 }
 
-function createStoresJsObjects() {
-    var stores = new Map();
-    var store = new store(items, name, id, ppk, distance, shippingCost)
-    stores[id] = store
-    return stores
+function createItemsTable(items) {
+    $("#itemsTable").empty()
+    $.each(items || [], appendRowToItemstable)
 }
 
-function createItemsJsObjects() {
-    var items = new item(amount, name, id, sellBy, totalItemsCost, isPartOfDiscount)
-    return items
+function appendRowToItemstable(index, item) {
+    var rowToAppend ="      <tr>" +
+        "                        <th scope='row'>" +
+        "                            <div class='p-2'>" +
+        "                                <div class='ml-3 d-inline-block align-middle'>" +
+        "                                    <h5 class='mb-0'>"+item.name+"</h5>" +
+        "                                </div>" +
+        "                            </div>" +
+        "                        </th>" +
+        "                        <td class='align-middle'>"+item.id+"</td>" +
+        "                        <td class='align-middle'>"+item.sellBy+"</td>" +
+        "                        <td class='align-middle'>"+item.amount+"</td>" +
+        "                        <td class='align-middle'>"+item.totalItemCost+"</td>" +
+        "                        <td class='align-middle'>"+item.isPartOfSale+"</td>" +
+        "                    </tr>"
+    $("#itemsTable").append(rowToAppend)
+}
+
+function presentStores(){
+    for(var i=0; i< currOrder.allStores.length;i++){
+        var currStore = currOrder.allStores[i];
+        appendRowToStoresTable(currStore);
+    }
 }
 //creates the stores table on load
-function creatStoreTable() {
-    //TODO: give real value to the varibales below
-    var storeName = "dynamicaly added store"
-    var storeID ="9"
-    var ppk = "13"
-    var distanceToClient = "13"
-    var shippingCost = "169"
+function appendRowToStoresTable(store) {
+    var storeName = store.name
+    var storeID =store.id
+    var ppk = store.ppk
+    var distanceToClient = store.distance
+    var shippingCost = store.shippingCost
     var rowToAppend =
         "<tr> "+
         "    <th scope='row'>"+
@@ -64,10 +78,9 @@ function creatStoreTable() {
 }
 
 function createOrderSummery() {//TODO:enter the real number instead of 120 121 122
-    $("#Order-Subtotal").text(120)
-    $("#Shipping-total").text(121)
-    $("#total").text(122)
-
+    $("#Order-Subtotal").text(currOrder.totalItemCost)
+    $("#Shipping-total").text(currOrder.shippingTotal)
+    $("#total").text(currOrder.orderTotal)
 }
 
 function GetURLParameter(sParam) {
