@@ -2,7 +2,7 @@ package users;
 
 public class Clinet extends  SingelUserEntry {
 
-    Clinet(String name) {
+    public Clinet(String name) {
         super(name);
         super.setOwner(false);
     }

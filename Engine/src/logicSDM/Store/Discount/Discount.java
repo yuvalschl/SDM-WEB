@@ -6,6 +6,8 @@ public class Discount {
     private MyThenYouGet myThenYouGet;
     private int storeId;
 
+
+
     public Discount(String name, MyIfYouBuy myIfYouBuy, MyThenYouGet myThenYouGet) {
         this.myIfYouBuy = myIfYouBuy;
         this.myThenYouGet = myThenYouGet;
