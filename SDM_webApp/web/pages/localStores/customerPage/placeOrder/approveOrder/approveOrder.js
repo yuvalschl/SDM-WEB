@@ -1,8 +1,16 @@
 var currOrder
+var date
+var typeOfOrder
+var location
+var zone
 $(document).ready(function() {
-    var data = GetURLParameter("varid")
-    var jsonOrder = atob(data);
-    creatOrderJsObject(jsonOrder)
+    zone = decodeURI(GetURLParameter("zonename"))
+    date = decodeURI(GetURLParameter("date"))
+    date = decodeURI(GetURLParameter("typeOfOrder"))
+    date = decodeURI(GetURLParameter("location"))
+    var data = decodeURI(GetURLParameter("varid"))//gets the object passed from the last page
+    var jsonOrder = atob(data);//decodes it
+    creatOrderJsObject(jsonOrder)//creates a JS order object
     presentStores()
     createOrderSummery()
     $(document).on('click', '.storeName', function () {
@@ -10,9 +18,27 @@ $(document).ready(function() {
         var store = getStoreByName(storeName)
         createItemsTable(store.items)
     });
+    $(document).on('click', '#approvedBtn', function () {
+        approveOrder()
+    });
 })
 
-function getStoreByName(storeName) {
+
+function approveOrder(){
+    $.ajax({
+        url: CREAT_ORDER,
+        dataType: 'json',
+        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': typeOfOrder, 'store': store },
+        type: 'POST',
+        success: function (discounts){
+            console.log("order was good as bro")
+        },
+        error : function (){
+            console.log("dani zion")
+        }
+    })
+}
+function getStoreByName(storeName) {//gets the store object by its name
     for(var i=0; i< currOrder.allStores.length;i++){
         if(currOrder.allStores[i].name === storeName){
             return currOrder.allStores[i]
@@ -21,7 +47,7 @@ function getStoreByName(storeName) {
     }
 }
 function creatOrderJsObject(JsonOrder) {
-   currOrder = JSON.parse(JsonOrder);
+   currOrder = JSON.parse(JsonOrder); //parse the json recieved to a JS object
 }
 
 function createItemsTable(items) {

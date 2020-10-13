@@ -77,6 +77,7 @@ public class CreatOrderServlet extends HttpServlet {
             if(orderApproved){
                currZoneManager.placeOrder(order);
             }
+            else{
             ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
             ArrayList<DiscountDto> discountDtos = new ArrayList<>();
             ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
@@ -93,6 +94,8 @@ public class CreatOrderServlet extends HttpServlet {
             String json = gson.toJson(orderAndDiscountDTO);
             out.println(json);
             out.flush();
+            }
+
         }
         catch (Exception e){
             e.printStackTrace();
