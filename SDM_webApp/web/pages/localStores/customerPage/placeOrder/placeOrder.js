@@ -110,6 +110,10 @@ $(document).ready(function() {
         updateCart(rowID)
     });
 
+    $(document).on('change', ".discountDropDown", function (){
+        var rowID = $(this).attr('id'); // $(this) refers to button that was clicked
+        rowID++
+    })
 
     $(document).on('change', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
@@ -347,7 +351,7 @@ function GetURLParameter(sParam) {
     }
 }
 
-function createDiscountSelect5ionWindow(discounts){
+function createDiscountSelectionWindow(discounts){
     $("#itemTable").empty()
     $("#itemTable").append("<table class=\"table\" id=\"zoneTable\">\n" +
         "    <thead>\n" +
@@ -367,31 +371,44 @@ function createDiscountSelect5ionWindow(discounts){
 
 function addDiscountToTable(index, discount){
     var name = discount.name
-    var becauseYouBought = discount.becauseYouBought
-    var forAdditional = discount.forAddtional
+    var becauseYouBoughtItemName = discount.ifYouBuy.itemName
+    var becauseYouBoughtItemAmount = discount.ifYouBuy.amount
     var thenYouGet
-    if(discount.thenYouGet.length === 1){
-        thenYouGet = discount.thenYouGet
+    //TODO: check spelling
+    if(discount.thenYouGet.operator === 'allOrNothing' || discount.thenYouGet.operator === 'irrelevant'){
+        thenYouGet = createThenYouGetLabels(discount.thenYouGet)
     }
     else {
-        thenYouGet = createThenYouGetDropDown(discount.thenYouGet)
+        thenYouGet = createThenYouGetDropDown(discount.thenYouGet, name)
     }
     $("#discountTableBody").append("<tr>" +
         "<td>" + name + "</td>" +
-        "<td>" + becauseYouBought + "</td>" +
+        "<td>" + becauseYouBoughtItemName + "</td>" +
         "<td>" + thenYouGet + "</td>" +
-        "<td>" + forAdditional + "</td>" +
+/*        "<td>" + forAdditional + "</td>" +*/
         "<td><button class='btn btn-dark' id='" + name + "button\'</td>")
 }
 
-function createThenYouGetDropDown(thenYouGet){
-    var dropDown =  "<select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
-                    "<option id='pickAStore' value='pickAStore'>Pick a store</option>" +
-                    "<div class='dropdown-divider'></div>" +
-    "</select>"
-    $.each(thenYouGet || [], function (offer){
-        dropDown += "<option value='" + offer.item + "'>" + offer.item + "</option>"
+function createThenYouGetDropDown(thenYouGet, discountName){
+    var dropDown =  "<select class='btn btn-secondary discountDropDown' id='dropDown" + discountName + "'name='storesDropDown'>" +
+                    "<option id='pickItem' value='pickAStore'>pick an item</option>" +
+                    "<div class='dropdown-divider'></div>"
+    $.each(thenYouGet.allOffers || [], function (index, offer){
+        dropDown += "<option value='" + offer.id + "'>" + offer.itemName + "</option>"
     })
+
+    return dropDown += "</select>"
+}
+
+
+
+function createThenYouGetLabels(thenYouGet) {
+    var val = ""
+    $.each(thenYouGet.allOffers || [], function (offer){
+        val += "<span id='" + offer.id + "'>" + offer.itemName + "</span>"
+    })
+
+    return val
 }
 
 function ajaxCreatOrder() {

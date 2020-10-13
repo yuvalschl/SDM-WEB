@@ -1,8 +1,7 @@
 package SDM.servlets.MainPage.Feedback;
 
-import SDM.utils.ItemsInfoForJson;
 import SDM.utils.ServletUtils;
-import SDM.utils.StoreInfo;
+import SDM.utils.DTO.StoreInfo;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Store.Store;
@@ -17,8 +16,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
-
-import static SDM.Constants.Constants.USERNAME;
 
 public class GetStoresById extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {

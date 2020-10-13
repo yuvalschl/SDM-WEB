@@ -1,8 +1,6 @@
 package SDM.servlets.Login;
 
-import SDM.Constants.Constants;
-import SDM.utils.LoginErrorDto;
-import SDM.utils.SessionUtils;
+import SDM.utils.DTO.LoginErrorDto;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

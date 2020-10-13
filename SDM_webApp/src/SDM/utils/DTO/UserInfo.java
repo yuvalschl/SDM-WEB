@@ -1,4 +1,4 @@
-package SDM.utils;
+package SDM.utils.DTO;
 
 public class UserInfo {
     private String userName;

@@ -1,8 +1,7 @@
 package SDM.servlets.MainPage;
 
 import SDM.utils.ServletUtils;
-import SDM.utils.StoreInfo;
-import SDM.utils.ZoneInfo;
+import SDM.utils.DTO.StoreInfo;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Store.Store;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 
 
 /**

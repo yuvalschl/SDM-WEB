@@ -1,8 +1,6 @@
 package SDM.servlets.MainPage.Feedback;
 
 import SDM.utils.ServletUtils;
-import SDM.utils.StoreInfo;
-import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Store.Feedback.Feedback;
 import logicSDM.Store.Store;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class AddFeedback extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp){

@@ -1,13 +1,15 @@
 package SDM.servlets.placeOrder;
 
+import SDM.utils.DTO.discountInfo.OfferDto;
 import SDM.utils.ServletUtils;
-import SDM.utils.placeOrderutils.discountInfo.DiscountInformation;
+import SDM.utils.DTO.discountInfo.DiscountDto;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Item.Item;
 import logicSDM.ItemPair.ItemAmountAndStore;
 import logicSDM.Order.Order;
 import logicSDM.Store.Discount.Discount;
+import logicSDM.Store.Discount.Offer;
 import logicSDM.Store.Store;
 import logicSDM.StoreManager.StoreManager;
 import users.Clinet;
@@ -19,10 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 import static SDM.Constants.Constants.USERNAME;
 
@@ -67,11 +66,17 @@ public class CreatOrderServlet extends HttpServlet {
             }
             Order order = currZoneManager.createOrder(location,date, items, user);
             ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
-            ArrayList<DiscountInformation> discountInformations = new ArrayList<>();
+            ArrayList<DiscountDto> discountDtos = new ArrayList<>();
+            ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
             for (Discount discount: discounts){
-                discountInformations.add(new DiscountInformation(discount.getName(),discount.getIfYouBuy().getQuantity()));
+                Map<Integer, Item> currentStoreInventory = currZoneManager.getAllStores().get(discount.getStoreId()).getInventory();
+                for(Offer offer : discount.getThenYouGet().getAllOffers()){
+                    // getting the item name in the offer
+                    offerDto.add(new OfferDto(offer, currentStoreInventory.get(offer.getItemId()).getName()));
+                }
+                discountDtos.add(new DiscountDto(discount, offerDto, currentStoreInventory.get(discount.getIfYouBuy().getItemId()).getName()));
             }
-            String json = gson.toJson(discounts);
+            String json = gson.toJson(discountDtos);
             out.println(json);
             out.flush();
         }
