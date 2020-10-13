@@ -5,12 +5,12 @@ import logicSDM.Store.Discount.MyIfYouBuy;
 
 public class IfYouBuyDto {
     private String itemName;
-    private int id;
+    private int itemId;
     private float amount;
 
     public IfYouBuyDto(MyIfYouBuy myIfYouBuy, String itemName){
         this.itemName = itemName;
-        this.id = myIfYouBuy.getItemId();
+        this.itemId = myIfYouBuy.getItemId();
         this.amount = myIfYouBuy.getQuantity();
     }
 }
