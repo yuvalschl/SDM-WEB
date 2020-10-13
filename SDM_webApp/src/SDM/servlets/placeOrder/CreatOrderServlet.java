@@ -35,8 +35,12 @@ public class CreatOrderServlet extends HttpServlet {
         res.setContentType("application/json");
         try {
             PrintWriter out = res.getWriter();
+
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String isOrderApproved = req.getParameter("approved");
+            boolean orderApproved;
+            if(isOrderApproved.equals("yes"));
+                orderApproved =  true;
             String zoneName = req.getParameter("zonename");
             String store = req.getParameter("store");
             String userName = req.getSession(false).getAttribute(USERNAME).toString();
@@ -70,6 +74,9 @@ public class CreatOrderServlet extends HttpServlet {
                 items.put(id, currItemAmounAndStore);
             }
             Order order = currZoneManager.createOrder(location,date, items, user);
+            if(orderApproved){
+               currZoneManager.placeOrder(order);
+            }
             ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
             ArrayList<DiscountDto> discountDtos = new ArrayList<>();
             ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
