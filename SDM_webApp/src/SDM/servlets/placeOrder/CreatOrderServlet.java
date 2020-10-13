@@ -1,6 +1,11 @@
 package SDM.servlets.placeOrder;
 
+import SDM.utils.DTO.StoreInfo;
 import SDM.utils.DTO.discountInfo.OfferDto;
+import SDM.utils.DTO.orderAndDiscountWrapper.OrderAndDiscountWrapperDTO;
+import SDM.utils.DTO.orderInfo.ItemDTO;
+import SDM.utils.DTO.orderInfo.OrderDTO;
+import SDM.utils.DTO.orderInfo.StoreDTO;
 import SDM.utils.ServletUtils;
 import SDM.utils.DTO.discountInfo.DiscountDto;
 import com.google.gson.Gson;
@@ -76,7 +81,9 @@ public class CreatOrderServlet extends HttpServlet {
                 }
                 discountDtos.add(new DiscountDto(discount, offerDto, currentStoreInventory.get(discount.getIfYouBuy().getItemId()).getName()));
             }
-            String json = gson.toJson(discountDtos);
+            OrderDTO orderDTO = createOrderDTO(order,currZoneManager);
+            OrderAndDiscountWrapperDTO orderAndDiscountDTO = wrapOrderAndDiscounts(orderDTO, discountDtos);
+            String json = gson.toJson(orderAndDiscountDTO);
             out.println(json);
             out.flush();
         }
@@ -84,6 +91,44 @@ public class CreatOrderServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+    private OrderAndDiscountWrapperDTO wrapOrderAndDiscounts(OrderDTO orderDTO, ArrayList<DiscountDto> discountDto){
+        OrderAndDiscountWrapperDTO orderAndDiscountDTO = new OrderAndDiscountWrapperDTO(discountDto, orderDTO);
+        return  orderAndDiscountDTO;
+    }
+    private OrderDTO createOrderDTO(Order order, StoreManager storeManager){
+        ArrayList<StoreDTO> stores = creatStoreDTOArray(order, storeManager);
+        OrderDTO orderDTO = new OrderDTO(stores, order.getTotalCost(),order.getShippingCost(), order.getTotalPriceOfItems());
+       return orderDTO;
+    }
+
+    private ArrayList<StoreDTO> creatStoreDTOArray(Order order, StoreManager storeManager){
+        ArrayList<StoreDTO> stores = new ArrayList<StoreDTO>();
+        for(Store store: order.getStores().values()){
+           float shippingCost = order.getShippingCostByStore().get(store.getSerialNumber());
+           float distance = storeManager.distanceCalculator(store.getLocation(), order.getCustomerLocation());
+           float ppk = store.getPPK();
+           ArrayList<ItemDTO> itemsDto = creatItemDTOArray(order, store);
+           StoreDTO storeDTO = new StoreDTO(itemsDto, store.getName(), store.getSerialNumber(), ppk, distance, shippingCost);
+           stores.add(storeDTO);
+        }
+        return stores;
+    }
+    private ArrayList<ItemDTO> creatItemDTOArray(Order order, Store store) {
+        ArrayList<ItemDTO> items = new ArrayList<ItemDTO>();
+        String isPartOfSale = "NO";
+            for(ItemAmountAndStore item : order.getItemAmountAndStores().values()){
+                if(item.getStore().getSerialNumber() == store.getSerialNumber()){
+                   if(item.getIsPartOfDiscount()){
+                       isPartOfSale  = "YES";
+                   }
+                    ItemDTO dtoItem = new ItemDTO(item.getItemName(), item.getItemId(),item.getAmount(),item.getItem().getSellBy().toString(),order.getTotalCost(),isPartOfSale);
+                    items.add(dtoItem);
+                }
+            }
+
+        return items;
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
