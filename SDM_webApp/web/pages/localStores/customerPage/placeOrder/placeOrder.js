@@ -9,10 +9,13 @@ var pickedDate = false;
 var itemHeaderForStaticOrderAdded = false//this variable determine if the price header is added to the items table
 var itemHeaderForDynamicOrderAdded = false//this variable determine if the price header is added to the items table
 var currentOrder
+var availbleDiscounts
+var availableItems
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
     "          <div class='dropdown-divider'></div>" +
     "   </select>"
+
 var StoresToPresentInDropDown
 const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
@@ -25,7 +28,7 @@ class Point {
         this.y = y;
     }
 }
-var isDynamicOrder =true
+var isDynamicOrder = true
 
 
 $(document).ready(function() {
@@ -50,9 +53,7 @@ $(document).ready(function() {
                     enableSubmitBtn()
             }
         }
-
-        }
-            );
+    });
 
     $('#y-cor').keyup(function() {//add event listener to the y coodrinate
             //this part check if the number is above 0 or under 50
@@ -74,9 +75,9 @@ $(document).ready(function() {
                         enableSubmitBtn()
                 }
             }
-
         }
     );
+
     $('#datepicker').datepicker({
         uiLibrary: 'bootstrap4'
     });   //this function displays the date
@@ -107,14 +108,25 @@ $(document).ready(function() {
     $(document).on('click', '.addBtn', function(){
         var rowID = $(this).attr('id'); // $(this) refers to button that was clicked
         rowID= rowID.replace( /^\D+/g, '')//this takes only the id number from the string
-        updateCart(rowID)
+        updateCart(rowID, false)
     });
 
     $(document).on('change', ".discountDropDown", function (){
-        var forAdditional = $(this).children(":selected").prop("value"); // $(this) refers to button that was clicked
         $(this).find('option[value=pickAnItem]').remove();
-        var rowId = 'row' + $(this).attr('id').slice(8)
+        var rowId = 'row' + $(this).attr('id').slice(8) //generate the row id
+        var forAdditional = $(this).children(":selected").prop("value"); // $(this) refers to button that was clicked //value is the forAdditional of the discount
         $("#"+rowId).find('td').eq(3).text(forAdditional)
+    })
+
+    $(document).on('click', ".addDiscount", function (){
+        var discountName = $(this).attr('id')
+        var a = $(this).val()
+        var itemJson = JSON.parse($(this).val())
+        if(availbleDiscounts[discountName] > 0){
+            $(this).prop('disabled', true)
+        }
+        availbleDiscounts[discountName]--
+        updateCart(rowID, true)
 
     })
 
@@ -141,6 +153,16 @@ function goToOrderSummeryPg() {
 function checkForDiscount() {
 
 }
+
+function addToAvailableItems(index, data) {
+    availableItems[data.id] = {
+        'id': data.id,
+        'name': data.name,
+        'price': data.pricePerUnit,
+        'sellBy': data.sellBy
+    }
+}
+
 function ajaxGetStoreItems(storeId){
     isDynamicOrder = false
     var zoneName = decodeURI(GetURLParameter("zonename"))
@@ -149,8 +171,10 @@ function ajaxGetStoreItems(storeId){
         dataType: 'json',
         data: {'storeId' : storeId, 'zonename' : zoneName},
         success : function (data){
-            $("#storeItemsTable > tbody").empty()
-            $.each(data || [], updateTable(data))
+            $("#itemTableBody").empty()
+            $.each(data || [], updateTable)
+            availableItems = new AvailableItems()
+            $.each(data || [], addToAvailableItems)
         },
         error: function (errorInfo){
             console.log("error on getStoreItem ajax call")
@@ -180,15 +204,12 @@ function enableSubmitBtn() {
     }
 }
 
-function updateCart(rowID, isPartOfSale) {
+function updateCart(rowID, partOfDiscount) {
     var itemName =  $("#tableRow" + rowID ).find('td')[1].textContent
     var itemID = $("#tableRow" + rowID ).find('td')[0].textContent
     var inputID = "#amountInput"+rowID
     var itemAmount = $(inputID).val()
-    var cartRowClass;
-    if(isPartOfSale){
-        cartRowClass = "class = partOfSale"
-    }
+    var cartType = partOfDiscount === true ? currentOrder.discountItems : currentOrder.items
     if(itemAmount !== "0") {
         if (!checkIfItemExistInCart(itemID)) {
             var cartTableRowId = "id = cartRowItemId" + itemID
@@ -197,10 +218,10 @@ function updateCart(rowID, isPartOfSale) {
                 "<td>" + itemAmount + "</td>"
                 + "</tr>";
             $("#cartTable").append(rowToAppend)
-            currentOrder.items[itemID] = new item(itemName, itemID, itemAmount)
+            cartType[itemID] = new item(itemName, itemID, itemAmount)
         } else{
             addToCartAmount(itemID, itemAmount)
-            currentOrder.items[itemID].addToAmount(itemAmount)
+            cartType[itemID].addToAmount(itemAmount)
         }
     }
 }
@@ -263,7 +284,7 @@ function ajaxItemTableData(){
         dataType: 'json',
         data: "zonename=" + zone,
         success: function (itemData){
-            updateTable(itemData)
+            $.each(itemData || [], updateTable)
             console.log("table loaded")
         },
         error: function (errorInfo){
@@ -271,8 +292,7 @@ function ajaxItemTableData(){
         }
     })
 }
-function updateTable(table){
-    $("#itemTableBody").empty()
+function updateTable(index, table){
     if(itemHeaderForStaticOrderAdded && isDynamicOrder){
     $("tr").each(function() {
         $(this).children("td:eq(2)").remove();
@@ -282,10 +302,10 @@ function updateTable(table){
     itemHeaderForStaticOrderAdded=false
         isDynamicOrder = true
     }
-    $.each(table || [], updateTableSingleEntryDynamicOrder)
+    updateTableSingleEntryDynamicOrder(table)
 }
 
-function updateTableSingleEntryDynamicOrder(index, itemInfo) {
+function updateTableSingleEntryDynamicOrder(itemInfo) {
     btnsID++
     var StringbtnID = "btnID" + btnsID.toString()
     var stringRowID = "tableRow" + btnsID.toString()
@@ -391,16 +411,20 @@ function addDiscountToTable(index, discount){
         "<td>" + becauseYouBoughtItemName + "</td>" +
         "<td>" + thenYouGet + "</td>" +
         "<td>" + "</td>" +
-        "<td><button class='btn btn-dark' id='" + name + "button\'>add</button></td>")
+        "<td><button class='btn btn-dark addDiscount' id='button" + discountNameNoSpaces + "'>add</button></td>")
 }
 
 function createThenYouGetDropDown(thenYouGet, discountName){
-    var discountNameNoSpaces = discountName.replace(/\s+/g, '') //removes the spces from the zone name
+    var discountNameNoSpaces = discountName.replace(/\s+/g, '')
     var dropDown =  "<select class='btn btn-secondary discountDropDown' id='dropDown" + discountNameNoSpaces + "' name='storesDropDown'>" +
                     "<option id='pickItem' value='pickAnItem'>pick an item</option>" +
                     "<div class='dropdown-divider'></div>"
     $.each(thenYouGet.allOffers || [], function (index, offer){
-        dropDown += "<option value='" + offer.forAdditional + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
+        var json = {
+            'forAdditional': offer.forAdditional,
+            'itemId': offer.id
+        }
+        dropDown += "<option value='" + json + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
 
     return dropDown += "</select>"
@@ -432,6 +456,7 @@ function ajaxCreatOrder() {
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
         success: function (discounts){
             placeOrderPage(discounts.order)
+            availbleDiscounts = new EntitledDiscounts(currentOrder, discounts)
         },
         error : function (){
             console.log("dani zion")
