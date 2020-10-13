@@ -111,8 +111,11 @@ $(document).ready(function() {
     });
 
     $(document).on('change', ".discountDropDown", function (){
-        var rowID = $(this).attr('id'); // $(this) refers to button that was clicked
-        rowID++
+        var forAdditional = $(this).children(":selected").prop("value"); // $(this) refers to button that was clicked
+        $(this).find('option[value=pickAnItem]').remove();
+        var rowId = 'row' + $(this).attr('id').slice(8)
+        $("#"+rowId).find('td').eq(3).text(forAdditional)
+
     })
 
     $(document).on('change', "#storesDropDown", function(){
@@ -353,7 +356,7 @@ function GetURLParameter(sParam) {
 
 function createDiscountSelectionWindow(discounts){
     $("#itemTable").empty()
-    $("#itemTable").append("<table class=\"table\" id=\"zoneTable\">\n" +
+    $("#itemTable").append("<table class=\"table\" id=\"discountTable\">\n" +
         "    <thead>\n" +
         "    <tr>\n" +
         "        <th scope=\"col\">Name</th>\n" +
@@ -371,9 +374,11 @@ function createDiscountSelectionWindow(discounts){
 
 function addDiscountToTable(index, discount){
     var name = discount.name
+    var becauseYouBoughtItemId = discount.ifYouBuy.itemId
     var becauseYouBoughtItemName = discount.ifYouBuy.itemName
     var becauseYouBoughtItemAmount = discount.ifYouBuy.amount
     var thenYouGet
+    var discountNameNoSpaces = name.replace(/\s+/g, '') //removes the spces from the zone name
     //TODO: check spelling
     if(discount.thenYouGet.operator === 'allOrNothing' || discount.thenYouGet.operator === 'irrelevant'){
         thenYouGet = createThenYouGetLabels(discount.thenYouGet)
@@ -381,20 +386,21 @@ function addDiscountToTable(index, discount){
     else {
         thenYouGet = createThenYouGetDropDown(discount.thenYouGet, name)
     }
-    $("#discountTableBody").append("<tr>" +
+    $("#discountTableBody").append("<tr id='row" + discountNameNoSpaces + "'>" +
         "<td>" + name + "</td>" +
         "<td>" + becauseYouBoughtItemName + "</td>" +
         "<td>" + thenYouGet + "</td>" +
-/*        "<td>" + forAdditional + "</td>" +*/
-        "<td><button class='btn btn-dark' id='" + name + "button\'</td>")
+        "<td>" + "</td>" +
+        "<td><button class='btn btn-dark' id='" + name + "button\'>add</button></td>")
 }
 
 function createThenYouGetDropDown(thenYouGet, discountName){
-    var dropDown =  "<select class='btn btn-secondary discountDropDown' id='dropDown" + discountName + "'name='storesDropDown'>" +
-                    "<option id='pickItem' value='pickAStore'>pick an item</option>" +
+    var discountNameNoSpaces = discountName.replace(/\s+/g, '') //removes the spces from the zone name
+    var dropDown =  "<select class='btn btn-secondary discountDropDown' id='dropDown" + discountNameNoSpaces + "' name='storesDropDown'>" +
+                    "<option id='pickItem' value='pickAnItem'>pick an item</option>" +
                     "<div class='dropdown-divider'></div>"
     $.each(thenYouGet.allOffers || [], function (index, offer){
-        dropDown += "<option value='" + offer.id + "'>" + offer.itemName + "</option>"
+        dropDown += "<option value='" + offer.forAdditional + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
 
     return dropDown += "</select>"
