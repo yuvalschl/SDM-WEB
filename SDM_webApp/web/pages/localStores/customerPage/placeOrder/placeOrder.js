@@ -9,7 +9,7 @@ var pickedDate = false;
 var itemHeaderForStaticOrderAdded = false//this variable determine if the price header is added to the items table
 var itemHeaderForDynamicOrderAdded = false//this variable determine if the price header is added to the items table
 var currentOrder
-var availbleDiscounts
+var availableDiscounts
 var availableItems
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
@@ -122,10 +122,10 @@ $(document).ready(function() {
         var discountName = $(this).attr('id')
         var a = $(this).val()
         var itemJson = JSON.parse($(this).val())
-        if(availbleDiscounts[discountName] > 0){
+        if(availableDiscounts[discountName] > 0){
             $(this).prop('disabled', true)
         }
-        availbleDiscounts[discountName]--
+        availableDiscounts[discountName]--
         updateCart(rowID, true)
 
     })
@@ -456,7 +456,7 @@ function ajaxCreatOrder() {
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
         success: function (discounts){
             placeOrderPage(discounts.order)
-            availbleDiscounts = new EntitledDiscounts(currentOrder, discounts)
+            availableDiscounts = new EntitledDiscounts(currentOrder, discounts)
         },
         error : function (){
             console.log("dani zion")
