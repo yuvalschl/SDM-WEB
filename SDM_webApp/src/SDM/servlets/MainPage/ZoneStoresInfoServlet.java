@@ -1,7 +1,7 @@
 package SDM.servlets.MainPage;
 
 import SDM.utils.ServletUtils;
-import SDM.utils.StoreInfo;
+import SDM.utils.DTO.StoreInfo;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.StoreManager.StoreManager;

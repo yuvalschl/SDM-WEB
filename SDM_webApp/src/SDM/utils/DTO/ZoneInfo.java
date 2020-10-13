@@ -1,4 +1,4 @@
-package SDM.utils;
+package SDM.utils.DTO;
 
 import logicSDM.Item.Item;
 import logicSDM.Store.Store;

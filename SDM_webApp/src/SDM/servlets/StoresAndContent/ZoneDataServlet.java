@@ -1,12 +1,10 @@
 package SDM.servlets.StoresAndContent;
 
 import SDM.utils.ServletUtils;
-import SDM.utils.ZoneInfo;
+import SDM.utils.DTO.ZoneInfo;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.StoreManager.StoreManager;
-import users.SingelUserEntry;
-import users.UserManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

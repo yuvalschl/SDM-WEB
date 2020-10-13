@@ -1,6 +1,6 @@
 package SDM.servlets.MainPage;
 
-import SDM.utils.ItemsInfoForJson;
+import SDM.utils.DTO.ItemsInfoForJson;
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;

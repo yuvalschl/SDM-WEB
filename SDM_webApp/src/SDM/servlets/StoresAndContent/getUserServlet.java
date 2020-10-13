@@ -1,11 +1,7 @@
 package SDM.servlets.StoresAndContent;
 
-import SDM.utils.ItemsInfoForJson;
-import SDM.utils.ServletUtils;
-import SDM.utils.UserInfo;
+import SDM.utils.DTO.UserInfo;
 import com.google.gson.Gson;
-import logicSDM.AllZonesManager.AllZonesManager;
-import logicSDM.StoreManager.StoreManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import static SDM.Constants.Constants.USERNAME;
 

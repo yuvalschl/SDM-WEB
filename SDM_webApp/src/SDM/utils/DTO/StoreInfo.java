@@ -1,4 +1,4 @@
-package SDM.utils;
+package SDM.utils.DTO;
 
 /**
  * dto class for transfering the information about the stores

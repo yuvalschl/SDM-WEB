@@ -3,16 +3,14 @@ package SDM.servlets.StoresAndContent;
 ;
 import SDM.utils.ServletUtils;
 import SDM.utils.SessionUtils;
-import SDM.utils.ZoneInfo;
+import SDM.utils.DTO.ZoneInfo;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Exceptions.DuplicateValueException;
 import logicSDM.Exceptions.InvalidValueException;
 import logicSDM.Exceptions.ItemNotSoldException;
-import logicSDM.Item.Item;
 import logicSDM.Jaxb.JaxbClassToStoreManager;
 import logicSDM.Jaxb.XmlToObject;
-import logicSDM.Store.Store;
 import logicSDM.StoreManager.StoreManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,8 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.*;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Scanner;
 
 @MultipartConfig(fileSizeThreshold =  1024 * 1024, maxFileSize = 1024 * 1024, maxRequestSize = 1024 * 1024 * 5 * 5)
