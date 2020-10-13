@@ -37,16 +37,16 @@ public class ItemAmountAndStore {
         this.itemName = item.getName();
         this.itemId = item.getId();
         this.itemStore = store.getSerialNumber();
-        this.discountItemAmount =amount;
+        this.discountItemAmount = amount;
     }
 
-    public ItemAmountAndStore(Item item, float amount){
+   /* public ItemAmountAndStore(Item item, float amount){
         this.item = item;
         this.amount = amount;
         this.itemId = item.getId();
         this.itemName = item.getName();
         this.discountItemAmount = amount;
-    }
+    }*/
 
     public float getOfferPrice() { return offerPrice; }
 

@@ -56,16 +56,26 @@
         <servlet-name>AddFeedback</servlet-name>
         <servlet-class>SDM.servlets.MainPage.Feedback.AddFeedback</servlet-class>
     </servlet>
-
-
     <servlet>
         <servlet-name>ItemNamePriceAndId</servlet-name>
         <servlet-class>SDM.servlets.placeOrder.getItemsInfoServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CreatOrderServlet</servlet-name>
+        <servlet-class>SDM.servlets.placeOrder.CreatOrderServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>ItemNamePriceAndId</servlet-name>
         <url-pattern>/getItemNamePriceAndID</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreatOrderServlet</servlet-name>
+        <url-pattern>/creatOrder</url-pattern>
+    </servlet-mapping>
+
 
 
     <servlet-mapping>

@@ -1,5 +1,7 @@
 var maxLength = 2;
 var btnsID =0;
+var store
+var zone = decodeURI(GetURLParameter("zonename"))
 var dropdownHappend = false;
 var xCoordinateValid = false
 var yCoordinateValid = false
@@ -114,6 +116,7 @@ $(document).ready(function() {
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
             ajaxGetStoreItems(storeId)
+            store = storeId
         }
     });
 
@@ -362,7 +365,7 @@ function createDiscountSelect5ionWindow(discounts){
     $.each(discounts || [], addDiscountToTable)
 }
 
-function addDiscountToTable(discount){
+function addDiscountToTable(index, discount){
     var name = discount.name
     var becauseYouBought = discount.becauseYouBought
     var forAdditional = discount.forAddtional
@@ -396,12 +399,16 @@ function ajaxCreatOrder() {
     var xcor = $("#x-cor").val()
     var ycor = $("#y-cor").val()
     var location = new Point(xcor,ycor)
+    location = JSON.stringify(location)
+    var items = JSON.stringify(currentOrder)
+    type = isDynamicOrder === true ? "dynamic":"static"
+
     $.ajax({
         url: CREAT_ORDER,
         dataType: 'json',
-        data: {'zonename': zoneName},
-        success: function (stores){
-            $.each(stores || [], addStoresToDropDown)
+        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
+        success: function (discounts){
+            createDiscountSelectionWindow(discounts)
         },
         error : function (){
             console.log("dani zion")
@@ -410,5 +417,9 @@ function ajaxCreatOrder() {
 
 }
 
+function check(index, discount) {
+var name = discount.name
+    console.log(name)
+}
 /*
 location must be between 1-50*/
