@@ -417,9 +417,5 @@ function ajaxCreatOrder() {
 
 }
 
-function check(index, discount) {
-var name = discount.name
-    console.log(name)
-}
 /*
 location must be between 1-50*/

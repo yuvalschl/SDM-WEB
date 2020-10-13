@@ -69,7 +69,7 @@ public class CreatOrderServlet extends HttpServlet {
             ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
             ArrayList<DiscountInformation> discountInformations = new ArrayList<>();
             for (Discount discount: discounts){
-                discountInformations.add(new DiscountInformation(discount.getName(),discount.getIfYouBuy().getQuantity()));
+           //     discountInformations.add(new DiscountInformation(discount.getName(),discount.getIfYouBuy().getQuantity()));
             }
             String json = gson.toJson(discounts);
             out.println(json);

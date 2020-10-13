@@ -25,8 +25,6 @@ public class Order {
     private int orderId;
     private static int staticId = 0;
     private Clinet customer;
-
-
     private Point customerLocation;
     private HashMap<Integer, ItemAmountAndStore> itemAmountAndStores;
     private HashMap<Integer,String> storeIdAndName = new HashMap<>();
