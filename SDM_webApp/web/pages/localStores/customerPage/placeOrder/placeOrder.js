@@ -37,7 +37,7 @@ var isDynamicOrder = true
 var showedDiscounts = false
 
 $(document).ready(function() {
-    currentOrder = new order()
+    currentOrder = new order(0)
     currDiscountItem = new item()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
         //this part check if the number is above 0 or under 50
@@ -130,6 +130,8 @@ $(document).ready(function() {
 
     $(document).on('click', ".addDiscount", function (){
         var discountName = $(this).attr('id').slice(6)
+        var forAdditional = parseInt($("#"+'row'+discountName).find('td').eq(3).text())
+        currentOrder._amountAddedByDiscounts += forAdditional//add the for additional to the amount added to order by discounts
         if(availableDiscounts.entitledDiscounts[discountName] <= 0){
             $(this).prop('disabled', true)
         }else {
@@ -437,9 +439,9 @@ function createDiscountSelectionWindow(discounts){
 
 function addDiscountToTable(index, discount){
     var name = discount.name
-    var becauseYouBoughtItemId = discount.ifYouBuy.itemId
+    //var becauseYouBoughtItemId = discount.ifYouBuy.itemId
     var becauseYouBoughtItemName = discount.ifYouBuy.itemName
-    var becauseYouBoughtItemAmount = discount.ifYouBuy.amount
+    //var becauseYouBoughtItemAmount = discount.ifYouBuy.amount
     var thenYouGet
     var forAdditional = ""
     var discountNameNoSpaces = name.replace(/\s+/g, '') //removes the spces from the zone name
@@ -462,7 +464,6 @@ function addDiscountToTable(index, discount){
 }
 
 function createThenYouGetDropDown(thenYouGet, discountName){
-    //discountsArray[0]
     var discountNameNoSpaces = discountName.replace(/\s+/g, '')
     var dropDown =  "<select class='btn btn-secondary discountDropDown' id='dropDown" + discountNameNoSpaces + "' name='storesDropDown'>" +
                     "<option id='pickItem' value='pickAnItem'>pick an item</option>" +
@@ -476,7 +477,6 @@ function createThenYouGetDropDown(thenYouGet, discountName){
         })
         dropDown += "<option id='" + discountNameNoSpaces + "-" + offer.id +"' value='" + json + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
-    //numberOfDiscounts++
     return dropDown += "</select>"
 }
 
@@ -513,7 +513,6 @@ function ajaxCreatOrder() {
             else{
                 showedDiscounts = true
                 goToOrderApprovePg(wrapper)
-
                 }
 
             }else {
@@ -527,14 +526,13 @@ function ajaxCreatOrder() {
 
 }
 
-function goToOrderApprovePg(discounts){
-    var json = JSON.stringify(discounts)
+function goToOrderApprovePg(order){
+    var json = JSON.stringify(order)
     var dataObjectBase64 = btoa(json);
     var date = $("#datepicker").val()
-    var location = new Point(xcor,ycor)
-    location = JSON.stringify(location)
-    var location = btoa(location);
+    var stringOrderAfterDiscount = JSON.stringify(currentOrder);
+    var orderAfterDiscount = btoa(stringOrderAfterDiscount);
     var type = isDynamicOrder === true ? "dynamic":"static"
-    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor;
+    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor+"&orderAfterDiscount="+orderAfterDiscount;
 }
 

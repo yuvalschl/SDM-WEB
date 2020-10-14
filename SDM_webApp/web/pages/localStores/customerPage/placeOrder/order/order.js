@@ -1,7 +1,15 @@
 class order {
-    constructor() {
+    get amountAddedByDiscounts() {
+        return this._amountAddedByDiscounts;
+    }
+
+    set amountAddedByDiscounts(value) {
+        this._amountAddedByDiscounts = value;
+    }
+    constructor(amountAddedByDiscounts) {
         this._items = new Map();
         this._discountItems = new Map();
+        this._amountAddedByDiscounts = amountAddedByDiscounts;
     }
 
 
