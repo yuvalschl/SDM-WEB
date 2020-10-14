@@ -103,7 +103,8 @@ function appendRowToStoresTable(store) {
     $("#storeTable").append(rowToAppend)
 }
 
-function createOrderSummery() {//TODO:enter the real number instead of 120 121 122
+//TODO:enter the real number instead of 120 121 122
+function createOrderSummery() {
     $("#Order-Subtotal").text(currOrder.totalItemCost)
     $("#Shipping-total").text(currOrder.shippingTotal)
     $("#total").text(currOrder.orderTotal)

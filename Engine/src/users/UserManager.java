@@ -10,36 +10,34 @@ of the user of this class to handle the synchronization of isUserExists with oth
  */
 public class UserManager {
 
-    private final Map<Integer,SingelUserEntry> usersSet;
-    private HashSet<String> userNameSet = new HashSet<>();
-    private static int userID =0;
+    private final Map<String,SingelUserEntry> usersMap;
+    private static int userID = 0;
 
     public UserManager() {
-        usersSet = new HashMap<>();
+        usersMap = new HashMap<>();
     }
 
     public synchronized void addUser(String username, Boolean isOwner) {
         if (isOwner){
            Owner owner = new Owner(username);
-            usersSet.put(++userID,owner);
+            usersMap.put(username,owner);
         }
         else{
            Clinet clinet = new Clinet(username);
-            usersSet.put(++userID,clinet);
+            usersMap.put(username,clinet);
         }
-        userNameSet.add(username.toLowerCase());
     }
 
     public synchronized void removeUser(String username) {
-        usersSet.remove(username);
+        usersMap.remove(username);
     }
 
-    public synchronized Map<Integer,SingelUserEntry> getUsers() {
-        return Collections.unmodifiableMap(usersSet);
+    public synchronized Map<String,SingelUserEntry> getUsers() {
+        return usersMap;
     }
 
     public boolean isUserExists(String username) {
         username = username.toLowerCase();
-        return userNameSet.contains(username);
+        return usersMap.containsKey(username);
     }
 }

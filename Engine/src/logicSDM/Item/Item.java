@@ -43,6 +43,7 @@ public class Item {
         this.sellBy = sellBy;
     }
 
+
     public int getMaxID() { return maxID; }
 
     public void setMaxID(int maxID) { this.maxID = maxID; }

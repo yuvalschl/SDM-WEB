@@ -1,6 +1,5 @@
 package logicSDM.Order;
 
-import logicSDM.Costumer.Customer;
 import logicSDM.Store.*;
 import logicSDM.ItemPair.*;
 import users.Clinet;
