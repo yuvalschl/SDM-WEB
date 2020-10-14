@@ -38,9 +38,10 @@ public class CreatOrderServlet extends HttpServlet {
 
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String isOrderApproved = req.getParameter("approved");
-            boolean orderApproved;
-            if(isOrderApproved.equals("yes"));
-                orderApproved =  true;
+            boolean orderApproved = false;
+            if(isOrderApproved != null) {
+                orderApproved = true;
+            }
             String zoneName = req.getParameter("zonename");
             String store = req.getParameter("store");
             String userName = req.getSession(false).getAttribute(USERNAME).toString();

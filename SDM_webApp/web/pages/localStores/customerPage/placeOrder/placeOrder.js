@@ -424,7 +424,8 @@ function createThenYouGetDropDown(thenYouGet, discountName){
             'forAdditional': offer.forAdditional,
             'itemId': offer.id
         }
-        dropDown += "<option id='" + offer.id + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
+        discountNameNoSpaces += offer.id;
+        dropDown += "<option id='" + discountNameNoSpaces + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
 
     return dropDown += "</select>"
