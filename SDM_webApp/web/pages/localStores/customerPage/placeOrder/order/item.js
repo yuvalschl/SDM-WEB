@@ -3,6 +3,7 @@ class item {
         this._name = name;
         this._id = id;
         this._amount = amount;
+
     }
 
     addToAmount(amountToAdd){

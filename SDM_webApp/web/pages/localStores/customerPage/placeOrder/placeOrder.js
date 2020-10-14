@@ -11,6 +11,7 @@ var itemHeaderForDynamicOrderAdded = false//this variable determine if the price
 var currentOrder
 var availableDiscounts
 var availableItems
+var currDiscountItem
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
     "          <div class='dropdown-divider'></div>" +
@@ -33,6 +34,7 @@ var isDynamicOrder = true
 
 $(document).ready(function() {
     currentOrder = new order()
+    currDiscountItem = new item()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
         //this part check if the number is above 0 or under 50
         var val = parseInt($(this).val());
@@ -116,19 +118,20 @@ $(document).ready(function() {
         var rowId = 'row' + $(this).attr('id').slice(8) //generate the row id
         var json = JSON.parse($(this).val()) // $(this) refers to button that was clicked //value is the forAdditional of the discount
         $("#"+rowId).find('td').eq(3).text(json.forAdditional)
+        currDiscountItem.amount = json.itemAmount
+        currDiscountItem.name = json.itemName
+        currDiscountItem.id = json.itemId
     })
 
     $(document).on('click', ".addDiscount", function (){
-        var discountName = $(this).attr('id')
-        var a = $(this).val()
-        if(availableDiscounts.discountMap[discountName] > 0){
+        var discountName = $(this).attr('id').slice(6)
+        if(availableDiscounts.entitledDiscounts[discountName] === 0){
             $(this).prop('disabled', true)
+        }else {
+            availableDiscounts.entitledDiscounts[discountName]--
+            var rowId = 'row' + $(this).attr('id').slice(6) //generate the row id
+            discountUpdateCart(currDiscountItem.amount, currDiscountItem.id, currDiscountItem.name)
         }
-        availableDiscounts[discountName]--
-        var rowId = 'row' + $(this).attr('id').slice(6) //generate the row id
-        var itemInfo = $("#"+rowId).find('td').eq(3).val()
-        updateCart(rowID, true)
-
     })
 
     $(document).on('change', "#storesDropDown", function(){
@@ -204,6 +207,26 @@ function enableSubmitBtn() {
     $('#submitOrder').css("border-color","  #007bff");
     }
 }
+function discountUpdateCart(amount, id, name) {
+    var itemAmount = amount
+    var itemID = id
+    var itemName = name
+   // var cartTableRowId = "id = cartRowItemId" + itemID
+    if (!checkIfItemExistInCart(itemID, true)) {
+        var cartTableRowId = "id = cartRowItemIdDiscount" + itemID
+        var rowToAppend = "<tr " + cartTableRowId + ">" +
+            "<td >" + itemName + "</td>" +
+            "<td>" + itemAmount + "</td>"
+            + "</tr>";
+        $("#cartTable").append(rowToAppend)
+        currentOrder.discountItems[itemID] = new item(itemName, itemID, itemAmount)
+    }
+    else{
+        addToCartAmount(itemID, itemAmount, true)
+        currentOrder.discountItems[itemID].addToAmount(itemAmount)
+    }
+}
+
 
 function updateCart(rowID, partOfDiscount) {
     var itemName =  $("#tableRow" + rowID ).find('td')[1].textContent
@@ -212,7 +235,7 @@ function updateCart(rowID, partOfDiscount) {
     var itemAmount = $(inputID).val()
     var cartType = partOfDiscount === true ? currentOrder.discountItems : currentOrder.items
     if(itemAmount !== "0") {
-        if (!checkIfItemExistInCart(itemID)) {
+        if (!checkIfItemExistInCart(itemID, false)) {
             var cartTableRowId = "id = cartRowItemId" + itemID
             var rowToAppend = "<tr " + cartTableRowId + ">" +
                 "<td >" + itemName + "</td>" +
@@ -221,14 +244,20 @@ function updateCart(rowID, partOfDiscount) {
             $("#cartTable").append(rowToAppend)
             cartType[itemID] = new item(itemName, itemID, itemAmount)
         } else{
-            addToCartAmount(itemID, itemAmount)
+            addToCartAmount(itemID, itemAmount,false)
             cartType[itemID].addToAmount(itemAmount)
         }
     }
 }
 
-function addToCartAmount(itemID, amountToAddString) {
-    var cartTableRowId= "#cartRowItemId"+itemID
+function addToCartAmount(itemID, amountToAddString, isPartOfDiscount) {
+
+    var cartTableRowId
+    if(isPartOfDiscount){
+        cartTableRowId ="#cartRowItemIdDiscount"+itemID
+    }else{
+        cartTableRowId = "#cartRowItemId"+itemID
+    }
     var currAmountString =  $(cartTableRowId).find('td')[1].textContent
     var amountToAdd = parseFloat(amountToAddString)
     var currAmount = parseFloat(currAmountString)
@@ -236,9 +265,15 @@ function addToCartAmount(itemID, amountToAddString) {
     $(cartTableRowId).find('td')[1].innerHTML =amountToAdd;
 }
 
-function checkIfItemExistInCart(itemID) {
-
-    if($("#cartRowItemId"+itemID).length)
+function checkIfItemExistInCart(itemID, isPartOfDiscount) {
+    var rowIdToSearch
+    if(isPartOfDiscount){
+        rowIdToSearch = "#cartRowItemIdDiscount"
+    }
+    else {
+        rowIdToSearch = "#cartRowItemId"
+    }
+    if($(rowIdToSearch+itemID).length)
         return true
     else
         return false;
@@ -399,10 +434,12 @@ function addDiscountToTable(index, discount){
     var becauseYouBoughtItemName = discount.ifYouBuy.itemName
     var becauseYouBoughtItemAmount = discount.ifYouBuy.amount
     var thenYouGet
+    var forAdditional = ""
     var discountNameNoSpaces = name.replace(/\s+/g, '') //removes the spces from the zone name
     //TODO: check spelling
-    if(discount.thenYouGet.operator === 'allOrNothing' || discount.thenYouGet.operator === 'irrelevant'){
+    if(discount.thenYouGet.operator === "All or nothing" || discount.thenYouGet.operator === 'irrelevant'){
         thenYouGet = createThenYouGetLabels(discount.thenYouGet)
+        forAdditional = discount.thenYouGet
     }
     else {
         thenYouGet = createThenYouGetDropDown(discount.thenYouGet, name)
@@ -411,11 +448,12 @@ function addDiscountToTable(index, discount){
         "<td>" + name + "</td>" +
         "<td>" + becauseYouBoughtItemName + "</td>" +
         "<td>" + thenYouGet + "</td>" +
-        "<td>" + "</td>" +
+        "<td>" + +"</td>" +
         "<td><button class='btn btn-dark addDiscount' id='button" + discountNameNoSpaces + "'>add</button></td>")
 }
 
 function createThenYouGetDropDown(thenYouGet, discountName){
+    //discountsArray[0]
     var discountNameNoSpaces = discountName.replace(/\s+/g, '')
     var dropDown =  "<select class='btn btn-secondary discountDropDown' id='dropDown" + discountNameNoSpaces + "' name='storesDropDown'>" +
                     "<option id='pickItem' value='pickAnItem'>pick an item</option>" +
@@ -423,12 +461,13 @@ function createThenYouGetDropDown(thenYouGet, discountName){
     $.each(thenYouGet.allOffers || [], function (index, offer){
         var json = JSON.stringify({
             "forAdditional": offer.forAdditional,
-            "itemId": offer.id
+            "itemId": offer.id,
+            "itemName": offer.itemName,
+            "itemAmount":offer.amount
         })
-        discountNameNoSpaces += offer.id;
         dropDown += "<option id='" + discountNameNoSpaces + "-" + offer.id +"' value='" + json + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
-
+    //numberOfDiscounts++
     return dropDown += "</select>"
 }
 
@@ -436,14 +475,15 @@ function createThenYouGetDropDown(thenYouGet, discountName){
 
 function createThenYouGetLabels(thenYouGet) {
     var val = ""
-    $.each(thenYouGet.allOffers || [], function (offer){
+    $.each(thenYouGet.allOffers || [], function (index, offer){
         val += "<span id='" + offer.id + "'>" + offer.itemName + "</span>"
     })
-
+    var rowId = 'row' + $(this).attr('id').slice(8)
     return val
 }
 
 function ajaxCreatOrder() {
+    $('#submitOrder').val("Proceed to checkout")
     var date = $("#datepicker").val()
     var xcor = $("#x-cor").val()
     var ycor = $("#y-cor").val()
@@ -471,6 +511,10 @@ function ajaxCreatOrder() {
 function placeOrderPage(discounts){
     var json = JSON.stringify(discounts)
     var dataObjectBase64 = btoa(json);
-    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone;
+    var date = $("#datepicker").val()
+    var location = new Point(xcor,ycor)
+    type = isDynamicOrder === true ? "dynamic":"static"
+
+    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&location="+location;
 }
 
