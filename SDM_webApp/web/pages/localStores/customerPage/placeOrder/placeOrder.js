@@ -21,7 +21,7 @@ var StoresToPresentInDropDown
 const GET_ALL_STORES_DATA = buildUrlWithContextPath("getStoresData")
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
 const GET_STORE_ITEMS_DATA = buildUrlWithContextPath("getStoreItemsData")
-const CREAT_ORDER= buildUrlWithContextPath("creatOrder")
+const CREATE_ORDER= buildUrlWithContextPath("creatOrder")
 const GET_DISCOUNTS_URL = buildUrlWithContextPath("getDiscounts")
 class Point {
     constructor(x, y) {
@@ -493,12 +493,12 @@ function ajaxCreatOrder() {
     type = isDynamicOrder === true ? "dynamic":"static"
 
     $.ajax({
-        url: CREAT_ORDER,
+        url: CREATE_ORDER,
         dataType: 'json',
-        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
+        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store, 'approved': true },
         success: function (warper){
-            createDiscountSelectionWindow(warper.discount)
-/*            placeOrderPage(warper.discount.order)*/
+/*            createDiscountSelectionWindow(warper.discount)*/
+            placeOrderPage(warper.order)
             availableDiscounts = new EntitledDiscounts(currentOrder, warper.discount)
         },
         error : function (){

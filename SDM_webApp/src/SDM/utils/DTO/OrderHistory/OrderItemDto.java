@@ -13,6 +13,10 @@ public class OrderItemDto {
     private float totalCost;
     private boolean partOfDiscount;
 
+    /**
+     * contractor for the clinet order history
+     * @param item
+     */
     public OrderItemDto(ItemAmountAndStore item){
         this.itemId = item.getItemId();
         this.itemName = item.getItemName();

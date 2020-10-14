@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap.bundle.js"></script>
     <script src="../../../../common/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
-    <script src="userOrderHistoryPage.js"></script>
+    <script src="ownerStoresHistory.js"></script>
 
     <link rel="stylesheet" href="../../../../common/table.css">
     <link rel="stylesheet" href="../../../../common/navBar.css">
-    <link rel="stylesheet" href="userOrderHistoryPage.css">
 
 </head>
 <body>
@@ -26,25 +25,31 @@
     <div class="pb-5">
         <div class="container">
             <div class="row">
+                <select class='btn btn-secondary' id="storesDropDown" name="storesDropDown">
+                    <option id="pickAStore" value="pickAStore">Pick a store</option>
+                    <div class="dropdown-divider"></div>
+                </select>
+            </div>
+            <div class="row">
                 <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
 
                     <!-- stores table -->
                     <div class="table-responsive">
-                        <h3 class="font-italic mb-4 text-center" >Click on the order to see items</h3>
+                        <h3 class="font-italic mb-4 text-center" >Click on the store to see details</h3>
                         <table class="table " id ="storeTable">
                             <thead>
                             <tr>
                                 <th scope="col" class="border-0 bg-light">
-                                    <div class="p-2 px-3 text-uppercase">ID</div>
+                                    <div class="p-2 px-3 text-uppercase">Order number</div>
                                 </th>
                                 <th scope="col" class="border-0 bg-light">
                                     <div class="py-2 text-uppercase">Date</div>
                                 </th>
                                 <th scope="col" class="border-0 bg-light">
-                                    <div class="py-2 text-uppercase">Location</div>
+                                    <div class="py-2 text-uppercase">Customer name</div>
                                 </th>
                                 <th scope="col" class="border-0 bg-light">
-                                    <div class="py-2 text-uppercase">Number of stores</div>
+                                    <div class="py-2 text-uppercase">Customer location</div>
                                 </th>
                                 <th scope="col" class="border-0 bg-light">
                                     <div class="py-2 text-uppercase">Amount of items</div>
@@ -54,9 +59,6 @@
                                 </th>
                                 <th scope="col" class="border-0 bg-light">
                                     <div class="py-2 text-uppercase">Shipping cost</div>
-                                </th>
-                                <th scope="col" class="border-0 bg-light">
-                                    <div class="py-2 text-uppercase">Total cost</div>
                                 </th>
                             </tr>
                             </thead>
@@ -82,13 +84,7 @@
                             <div class="py-2 text-uppercase">Sell by</div>
                         </th>
                         <th scope="col" class="border-0 bg-light">
-                            <div class="py-2 text-uppercase">Store name</div>
-                        </th>
-                        <th scope="col" class="border-0 bg-light">
-                            <div class="py-2 text-uppercase">Store id</div>
-                        </th>
-                        <th scope="col" class="border-0 bg-light">
-                            <div class="py-2 text-uppercase">Amount</div>
+                            <div class="py-2 text-uppercase">Amount sold</div>
                         </th>
                         <th scope="col" class="border-0 bg-light">
                             <div class="py-2 text-uppercase">Price per unit</div>
@@ -106,7 +102,7 @@
                 </table>
 
             </div>
+        </div>
     </div>
-</div>
 </body>
 </html>

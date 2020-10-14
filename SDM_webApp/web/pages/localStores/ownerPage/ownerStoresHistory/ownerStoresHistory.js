@@ -1,14 +1,15 @@
-const GET_ORDER_HISTORY_URL = buildUrlWithContextPath("getOrderHistory")
+const GET_STORES_HISTORY_URL = buildUrlWithContextPath("getStoresHistory")
 var allOrders
 
 $(document).ready(function (){
     //http request for getting the order history
     $.ajax({
-        url: GET_ORDER_HISTORY_URL,
+        url: GET_STORES_HISTORY_URL,
         dataType: 'json',
-        success: function (orders){
-            allOrders = orders // this.orders is the global variable
-            $.each(orders || [], appendRowToOrdersTable)
+        success: function (data){
+            $.each(data)
+/*            allOrders = orders
+            $.each(orders || [], appendRowToOrdersTable)*/
         },
         error: function (){
             console.log('error in get order history servlet')
@@ -23,26 +24,29 @@ $(document).ready(function (){
 
 })
 
+function addStoresToDropDown(index, store){
+    $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
+}
+
+
 //creates the stores table on load
-function appendRowToOrdersTable(index, order) {
+function appendRowToOrdersTable(index, order){
     var orderId = order.orderId
     var orderDate = order.orderDate.toString().slice(0,-11)
     var orderDestination = order.orderDestination.x + ', ' + order.orderDestination.y
-    var numberOfStoresInOrder = order.numberOfStoresInOrder
     var amountOfItems = order.amountOfItems
     var itemsCost = order.itemsCost
     var shippingCost = order.shippingCost
-    var totalCost = order.totalCost
+    var clientName = order.clientName
     var rowToAppend =
         "<tr class='orderId' id='" + orderId + "'> "+
         " <td class='align-middle'>"+orderId+"</td>" +
         " <td class='align-middle'>"+orderDate+"</td>" +
+        " <td class='align-middle'>"+clientName+"</td>" +
         " <td class='align-middle'>"+orderDestination+"</td>" +
-        " <td class='align-middle'>"+numberOfStoresInOrder+"</td>" +
         " <td class='align-middle'>"+amountOfItems+"</td>" +
         " <td class='align-middle'>"+itemsCost+"</td>" +
         " <td class='align-middle'>"+shippingCost+"</td>" +
-        " <td class='align-middle'>"+totalCost+"</td>" +
         "</tr>"
     $("#storeTable").append(rowToAppend)
 }

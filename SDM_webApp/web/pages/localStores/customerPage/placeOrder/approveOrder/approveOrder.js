@@ -21,12 +21,14 @@ $(document).ready(function() {
     $(document).on('click', '#approvedBtn', function () {
         approveOrder()
     });
+
+
 })
 
 
 function approveOrder(){
     $.ajax({
-        url: CREAT_ORDER,
+        url: CREATE_ORDER,
         dataType: 'json',
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': typeOfOrder, 'store': store },
         type: 'POST',
