@@ -121,11 +121,12 @@ $(document).ready(function() {
     $(document).on('click', ".addDiscount", function (){
         var discountName = $(this).attr('id')
         var a = $(this).val()
-        if(availableDiscounts[discountName] > 0){
+        if(availableDiscounts.discountMap[discountName] > 0){
             $(this).prop('disabled', true)
         }
         availableDiscounts[discountName]--
-        var rowID = availableItems[itemJson.name]
+        var rowId = 'row' + $(this).attr('id').slice(6) //generate the row id
+        var itemInfo = $("#"+rowId).find('td').eq(3).val()
         updateCart(rowID, true)
 
     })
@@ -420,12 +421,12 @@ function createThenYouGetDropDown(thenYouGet, discountName){
                     "<option id='pickItem' value='pickAnItem'>pick an item</option>" +
                     "<div class='dropdown-divider'></div>"
     $.each(thenYouGet.allOffers || [], function (index, offer){
-        var json = {
-            'forAdditional': offer.forAdditional,
-            'itemId': offer.id
-        }
+        var json = JSON.stringify({
+            "forAdditional": offer.forAdditional,
+            "itemId": offer.id
+        })
         discountNameNoSpaces += offer.id;
-        dropDown += "<option id='" + discountNameNoSpaces + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
+        dropDown += "<option id='" + discountNameNoSpaces + "-" + offer.id +"' value='" + json + "'>" + offer.itemName + ", amount: " + offer.amount + "</option>"
     })
 
     return dropDown += "</select>"
