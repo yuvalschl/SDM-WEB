@@ -1,8 +1,11 @@
 var maxLength = 2;
 var btnsID =0;
 var store
+var xcor
+var ycor
 var zone = decodeURI(GetURLParameter("zonename"))
 var dropdownHappend = false;
+var discountDropHappened = false
 var xCoordinateValid = false
 var yCoordinateValid = false
 var pickedDate = false;
@@ -12,6 +15,7 @@ var currentOrder
 var availableDiscounts
 var availableItems
 var currDiscountItem
+var currOffers
 var dropdown = "   <select class='btn btn-secondary' id='storesDropDown' name='storesDropDown'>" +
     "         <option id='pickAStore' value='pickAStore'>Pick a store</option>" +
     "          <div class='dropdown-divider'></div>" +
@@ -30,7 +34,7 @@ class Point {
     }
 }
 var isDynamicOrder = true
-
+var showedDiscounts = false
 
 $(document).ready(function() {
     currentOrder = new order()
@@ -121,16 +125,24 @@ $(document).ready(function() {
         currDiscountItem.amount = json.itemAmount
         currDiscountItem.name = json.itemName
         currDiscountItem.id = json.itemId
+        discountDropHappened = true
     })
 
     $(document).on('click', ".addDiscount", function (){
         var discountName = $(this).attr('id').slice(6)
-        if(availableDiscounts.entitledDiscounts[discountName] === 0){
+        if(availableDiscounts.entitledDiscounts[discountName] <= 0){
             $(this).prop('disabled', true)
         }else {
             availableDiscounts.entitledDiscounts[discountName]--
-            var rowId = 'row' + $(this).attr('id').slice(6) //generate the row id
-            discountUpdateCart(currDiscountItem.amount, currDiscountItem.id, currDiscountItem.name)
+            if(!discountDropHappened){//if the then you get is all or nothing add all the items offered
+                for (var i=0;i<currOffers.length;i++){
+                    discountUpdateCart(currOffers[i].amount, currOffers[i].id, currOffers[i].itemName)
+                }
+            }else{
+                discountUpdateCart(currDiscountItem.amount, currDiscountItem.name, currDiscountItem.id)
+            }
+
+
         }
     })
 
@@ -144,19 +156,13 @@ $(document).ready(function() {
     });
 
     $(document).on('click', "#submitOrder", function(){
-        checkForDiscount()
-        goToOrderSummeryPg()
+       // checkForDiscount()
+       // goToOrderSummeryPg()
     });
 })
 //end of onload
 
-function goToOrderSummeryPg() {
-    console.log($("#myForm").serializeArray());
-    //window.location = "approveOrder/approveOrder.html";
-}
-function checkForDiscount() {
 
-}
 
 function addToAvailableItems(index, data) {
     availableItems[data.id] = {
@@ -411,6 +417,7 @@ function GetURLParameter(sParam) {
 }
 
 function createDiscountSelectionWindow(discounts){
+    showedDiscounts = true
     $("#itemTable").empty()
     $("#itemTable").append("<table class=\"table\" id=\"discountTable\">\n" +
         "    <thead>\n" +
@@ -439,7 +446,9 @@ function addDiscountToTable(index, discount){
     //TODO: check spelling
     if(discount.thenYouGet.operator === "All or nothing" || discount.thenYouGet.operator === 'irrelevant'){
         thenYouGet = createThenYouGetLabels(discount.thenYouGet)
-        forAdditional = discount.thenYouGet
+        forAdditional = discount.thenYouGet.allOffers[0].forAdditional
+        currOffers = discount.thenYouGet.allOffers;
+        discountDropHappened = false
     }
     else {
         thenYouGet = createThenYouGetDropDown(discount.thenYouGet, name)
@@ -448,7 +457,7 @@ function addDiscountToTable(index, discount){
         "<td>" + name + "</td>" +
         "<td>" + becauseYouBoughtItemName + "</td>" +
         "<td>" + thenYouGet + "</td>" +
-        "<td>" + +"</td>" +
+        "<td>" + forAdditional +"</td>" +
         "<td><button class='btn btn-dark addDiscount' id='button" + discountNameNoSpaces + "'>add</button></td>")
 }
 
@@ -478,15 +487,13 @@ function createThenYouGetLabels(thenYouGet) {
     $.each(thenYouGet.allOffers || [], function (index, offer){
         val += "<span id='" + offer.id + "'>" + offer.itemName + "</span>"
     })
-    var rowId = 'row' + $(this).attr('id').slice(8)
     return val
 }
 
 function ajaxCreatOrder() {
-    $('#submitOrder').val("Proceed to checkout")
     var date = $("#datepicker").val()
-    var xcor = $("#x-cor").val()
-    var ycor = $("#y-cor").val()
+    xcor = $("#x-cor").val()
+    ycor = $("#y-cor").val()
     var location = new Point(xcor,ycor)
     location = JSON.stringify(location)
     var items = JSON.stringify(currentOrder)
@@ -496,10 +503,22 @@ function ajaxCreatOrder() {
         url: CREAT_ORDER,
         dataType: 'json',
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
-        success: function (warper){
-            createDiscountSelectionWindow(warper.discount)
-/*            placeOrderPage(warper.discount.order)*/
-            availableDiscounts = new EntitledDiscounts(currentOrder, warper.discount)
+        success: function (wrapper){
+            if(!showedDiscounts){
+                availableDiscounts = new EntitledDiscounts(currentOrder, wrapper.discount)
+                if(wrapper.discount.length !==0){
+                    createDiscountSelectionWindow(wrapper.discount)
+                    $('#submitOrder').val("Proceed to checkout")
+                }
+            else{
+                showedDiscounts = true
+                goToOrderApprovePg(wrapper)
+
+                }
+
+            }else {
+                goToOrderApprovePg(wrapper)
+            }
         },
         error : function (){
             console.log("dani zion")
@@ -508,13 +527,14 @@ function ajaxCreatOrder() {
 
 }
 
-function placeOrderPage(discounts){
+function goToOrderApprovePg(discounts){
     var json = JSON.stringify(discounts)
     var dataObjectBase64 = btoa(json);
     var date = $("#datepicker").val()
     var location = new Point(xcor,ycor)
-    type = isDynamicOrder === true ? "dynamic":"static"
-
-    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&location="+location;
+    location = JSON.stringify(location)
+    var location = btoa(location);
+    var type = isDynamicOrder === true ? "dynamic":"static"
+    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor;
 }
 

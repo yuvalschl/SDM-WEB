@@ -353,7 +353,7 @@ public class StoreManager {
             HashMap<Integer, ItemAmountAndStore> itemAmountAndStores = order.getItemAmountAndStores();
             for (ItemAmountAndStore itemAndAmount : itemAmountAndStores.values()) {//loop through the items and check if the amount and id matches any of the stores discounts
                 for (Discount discount : store.getAllDiscounts()) {
-                    if ( itemAndAmount.getIsPartOfDiscount()==false &&  itemAndAmount.getItemId() == discount.getIfYouBuy().getItemId() && itemAndAmount.getDiscountItemAmount() >= discount.getIfYouBuy().getQuantity()) {
+                    if ( itemAndAmount.getIsPartOfDiscount()==false &&  itemAndAmount.getItemId() == discount.getIfYouBuy().getItemId()) {
                         discounts.add(discount);
                     }
                 }

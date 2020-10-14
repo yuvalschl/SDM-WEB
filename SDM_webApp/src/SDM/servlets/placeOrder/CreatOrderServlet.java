@@ -35,7 +35,6 @@ public class CreatOrderServlet extends HttpServlet {
         res.setContentType("application/json");
         try {
             PrintWriter out = res.getWriter();
-
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String isOrderApproved = req.getParameter("approved");
             boolean orderApproved = false;

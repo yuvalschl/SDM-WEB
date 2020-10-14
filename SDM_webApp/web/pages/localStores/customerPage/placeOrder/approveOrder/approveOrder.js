@@ -1,16 +1,12 @@
 var currOrder
+var currDiscounts
 var date
 var typeOfOrder
-var location
+var currlocation
 var zone
+
 $(document).ready(function() {
-    zone = decodeURI(GetURLParameter("zonename"))
-    date = decodeURI(GetURLParameter("date"))
-    date = decodeURI(GetURLParameter("typeOfOrder"))
-    date = decodeURI(GetURLParameter("location"))
-    var data = decodeURI(GetURLParameter("varid"))//gets the object passed from the last page
-    var jsonOrder = atob(data);//decodes it
-    creatOrderJsObject(jsonOrder)//creates a JS order object
+    initializeGlobalVariables()
     presentStores()
     createOrderSummery()
     $(document).on('click', '.storeName', function () {
@@ -23,7 +19,18 @@ $(document).ready(function() {
     });
 })
 
+function initializeGlobalVariables() {//initialize all the global vars used in this page for later use
+    zone = decodeURI(GetURLParameter("zonename"))
+    date = decodeURI(GetURLParameter("date"))
+    typeOfOrder = decodeURI(GetURLParameter("type"))
+    var xCor =  GetURLParameter("xCor")
+    var yCor = GetURLParameter("yCor")
+    currlocation = JSON.stringify({"x":xCor,"y":yCor})
+    var data = decodeURI(GetURLParameter("varid")) //gets the object passed from the last page
+    var jsonOrder = atob(data);//decodes it
+    creatOrderJsObject(jsonOrder)//creates a JS order object
 
+}
 function approveOrder(){
     $.ajax({
         url: CREAT_ORDER,
@@ -47,7 +54,9 @@ function getStoreByName(storeName) {//gets the store object by its name
     }
 }
 function creatOrderJsObject(JsonOrder) {
-   currOrder = JSON.parse(JsonOrder); //parse the json recieved to a JS object
+    var wrapper = JSON.parse(JsonOrder); //parse the json recieved to a JS object
+    currOrder = wrapper.order
+    currDiscounts = wrapper.discount
 }
 
 function createItemsTable(items) {
