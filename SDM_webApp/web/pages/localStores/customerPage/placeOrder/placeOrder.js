@@ -505,22 +505,6 @@ function ajaxCreatOrder() {
     $.ajax({
         url: CREATE_ORDER,
         dataType: 'json',
-        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
-        success: function (wrapper){
-            if(!showedDiscounts){
-                availableDiscounts = new EntitledDiscounts(currentOrder, wrapper.discount)
-                if(wrapper.discount.length !==0){
-                    createDiscountSelectionWindow(wrapper.discount)
-                    $('#submitOrder').val("Proceed to checkout")
-                }
-            else{
-                showedDiscounts = true
-                goToOrderApprovePg(wrapper)
-                }
-
-            }else {
-                goToOrderApprovePg(wrapper)
-            }
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store, 'approved': true },
         success: function (warper){
 /*            createDiscountSelectionWindow(warper.discount)*/

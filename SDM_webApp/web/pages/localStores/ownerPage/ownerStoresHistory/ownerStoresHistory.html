@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="../../../../common/table.css">
     <link rel="stylesheet" href="../../../../common/navBar.css">
+    <link rel="stylesheet" href="ownerStoresHistory.css">
 
 </head>
 <body>
@@ -24,7 +25,10 @@
 
     <div class="pb-5">
         <div class="container">
-            <div class="row">
+            <div class="row container align-items-center">
+                <h2>Available stores</h2>
+            </div>
+            <div class="row container align-items-center">
                 <select class='btn btn-secondary' id="storesDropDown" name="storesDropDown">
                     <option id="pickAStore" value="pickAStore">Pick a store</option>
                     <div class="dropdown-divider"></div>
@@ -62,7 +66,7 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="storeTableBody">
                             </tbody>
                         </table>
                     </div>

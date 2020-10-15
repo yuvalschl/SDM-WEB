@@ -250,7 +250,7 @@ public class StoreManager {
             }
             store.getValue().getStoreOwner().getBalance().receivePayment(order.getDateOfOrder(),ordersToAdd.getTotalCost());//update the store owner balance
             store.getValue().getAllOrders().put(ordersToAdd.getOrderId(), ordersToAdd);
-            store.getValue().getStoreOwner().getAllOrders().put(ordersToAdd.getOrderId(), ordersToAdd);
+            store.getValue().getStoreOwner().getAllOrders().add(ordersToAdd);
         }
 
     }

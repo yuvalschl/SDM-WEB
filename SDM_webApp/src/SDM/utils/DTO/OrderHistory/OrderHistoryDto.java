@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class OrderDto {
+public class OrderHistoryDto {
     private int orderId;
     private Date orderDate;
     private Point orderDestination;
@@ -20,14 +20,15 @@ public class OrderDto {
     private float shippingCost;
     private float totalCost;
     private String clientName;
-    private Map<Integer, OrderItemDto> orderItems = new HashMap<>();
+    private int storeId;
+    private Map<Integer, OrderHistoryItemDto> orderItems = new HashMap<>();
 
 
     /**
      * the constructor is for a client order history
      * @param order the order to convert to dto
      */
-    public OrderDto(Order order){
+    public OrderHistoryDto(Order order){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         this.orderId = order.getOrderId();
         this.orderDate = order.getDateOfOrder();
@@ -37,11 +38,14 @@ public class OrderDto {
         this.itemsCost = order.getTotalPriceOfItems();
         this.shippingCost = order.getShippingCost();
         this.totalCost = order.getTotalCost();
-        order.getItemAmountAndStores().forEach((itemId, item) -> orderItems.put(itemId, new OrderItemDto(item)));
+        order.getItemAmountAndStores().forEach((itemId, item) -> orderItems.put(itemId, new OrderHistoryItemDto(item)));
     }
 
-    public OrderDto(StoreOrder order){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    /**
+     * constractor for the owner history servlet
+     * @param order
+     */
+    public OrderHistoryDto(StoreOrder order){
         this.orderId = order.getOrderId();
         this.orderDate = order.getDateOfOrder();
         this.orderDestination = order.getLocation();
@@ -50,6 +54,7 @@ public class OrderDto {
         this.shippingCost = order.getShippingCost();
         this.totalCost = order.getTotalCost();
         this.clientName = order.getCustomerName();
-        order.getItems().forEach(item -> orderItems.put(item.getItemId(), new OrderItemDto(item)));
+        this.storeId = order.getStoreID();
+        order.getItems().forEach(item -> orderItems.put(item.getItemId(), new OrderHistoryItemDto(item)));
     }
 }

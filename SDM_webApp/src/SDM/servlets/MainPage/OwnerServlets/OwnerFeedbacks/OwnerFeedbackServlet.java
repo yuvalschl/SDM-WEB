@@ -1,10 +1,13 @@
-package SDM.servlets.MainPage.OwnerServlets.StoresHistoryServlet;
+package SDM.servlets.MainPage.OwnerServlets.OwnerFeedbacks;
 
+import SDM.servlets.MainPage.OwnerServlets.StoresHistoryServlet.StoresHistoryServlet;
 import SDM.utils.DTO.OrderHistory.OrderHistoryDto;
+import SDM.utils.DTO.OwnerFeedback.OwnerFeedbackDto;
 import SDM.utils.ServletUtils;
+import SDM.utils.SessionUtils;
 import com.google.gson.Gson;
 import users.Owner;
-import users.UserManager;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,30 +18,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static SDM.Constants.Constants.USERNAME;
+public class OwnerFeedbackServlet extends HttpServlet {
 
-/**
- * servlet for getting the order history of all the owner stores
- */
-public class StoresHistoryServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
         res.setContentType("application/json");
         try (PrintWriter out = res.getWriter()) {
-            String userName = req.getSession(false).getAttribute(USERNAME).toString();
-            UserManager userManager = ServletUtils.getUserManager(getServletContext());
-            Owner owner = (Owner) (userManager.getUsers().get(userName));
-            ArrayList<OrderHistoryDto> orderDtoMap = new ArrayList<>();
-            Map<Integer, String> allStores = new HashMap<>();
-            owner.getAllStores().forEach((id, store) -> allStores.put(id, store.getName()));
-            owner.getAllOrders().forEach(storeOrder -> orderDtoMap.add(new OrderHistoryDto(storeOrder)));
+            String userName = SessionUtils.getUsername(req);
+            Owner owner = (Owner) ServletUtils.getUserManager(getServletContext()).getUsers().get(userName);
+            //allFeedbacks is, key: store id, value: array of all the feedbacks from the store
+            Map<Integer, ArrayList<OwnerFeedbackDto>> allFeedbacks = new HashMap<>();
+            owner.getAllStores().forEach((id, store) -> store.getFeedbacks().forEach((feedback -> allFeedbacks.get(store.getSerialNumber()).add(new OwnerFeedbackDto(feedback)))));
             Gson gson = new Gson();
-            out.println(gson.toJson(new OrderAndStores(allStores, orderDtoMap)));
+            out.println(gson.toJson(allFeedbacks));
             out.flush();
         }
         catch (Exception e){
-            System.out.println("error in OrderHistoryServlet");
             e.printStackTrace();
+            System.out.println("error in OwnerFeedbackServlet");
         }
     }
 

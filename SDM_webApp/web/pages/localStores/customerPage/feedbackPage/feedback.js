@@ -5,9 +5,7 @@ const zone = 'Hasharon'
 
 $(document).ready(function () {
     getStoresById()
-
     $("#backToMainPage").on('click', goToMainPage)
-
     $(document).on('click', '.addFeedback', addFeedback)
 })
 
@@ -51,9 +49,10 @@ function addFeedback(){
     var feedback = $("#textArea" + storeId).val()
     var radioName = "rating" + storeId
     var rating = $("input[name=" + radioName +"]:checked").val();
+    var date = GetURLParameter("date")
     $.ajax({
         url: SEND_FEEDBACK_URL,
-        data: {'feedback' : feedback, 'rating' : rating, 'zoneName': zone, 'store': storeId},
+        data: {'feedback' : feedback, 'rating' : rating, 'zoneName': zone, 'store': storeId, 'date': date},
         type : 'POST',
         success:function (){
             buttonPressed.attr('disabled', true)
@@ -63,4 +62,15 @@ function addFeedback(){
 
 function goToMainPage(){
     window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zone
+}
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1];
+        }
+    }
 }
