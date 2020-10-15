@@ -38,6 +38,7 @@ var isDynamicOrder = true
 var showedDiscounts = false
 
 $(document).ready(function() {
+    $('#userNameText').text(decodeURI(GetURLParameter("username")))
     currentOrder = new order(0)
     currDiscountItem = new item()
     $('#x-cor').keyup(function() {//add event listener to the x coodrinate
