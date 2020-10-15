@@ -60,24 +60,27 @@
         <servlet-name>ItemNamePriceAndId</servlet-name>
         <servlet-class>SDM.servlets.placeOrder.getItemsInfoServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>OrderHistoryServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.OrderHistory.OrderHistoryServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>CreatOrderServlet</servlet-name>
         <servlet-class>SDM.servlets.placeOrder.CreatOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoresHistoryServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.OwnerServlets.StoresHistoryServlet.StoresHistoryServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>ItemNamePriceAndId</servlet-name>
         <url-pattern>/getItemNamePriceAndID</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>CreatOrderServlet</servlet-name>
         <url-pattern>/creatOrder</url-pattern>
     </servlet-mapping>
-
-
-
     <servlet-mapping>
         <servlet-name>UsersListServlet</servlet-name>
         <url-pattern>/userData</url-pattern>
@@ -129,6 +132,14 @@
     <servlet-mapping>
         <servlet-name>AddFeedback</servlet-name>
         <url-pattern>/sendFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryServlet</servlet-name>
+        <url-pattern>/getOrderHistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StoresHistoryServlet</servlet-name>
+        <url-pattern>/getStoresHistory</url-pattern>
     </servlet-mapping>
 
 </web-app>

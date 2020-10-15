@@ -12,6 +12,8 @@ import logicSDM.Exceptions.ItemNotSoldException;
 import logicSDM.Jaxb.JaxbClassToStoreManager;
 import logicSDM.Jaxb.XmlToObject;
 import logicSDM.StoreManager.StoreManager;
+import users.Owner;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +42,8 @@ public class UploadFileServlet extends HttpServlet{
         StoreManager storeManager = null;
         try {
             String userName = SessionUtils.getUsername(request);
-            storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file), userName);
+            Owner owner  = (Owner) ServletUtils.getUserManager(getServletContext()).getUsers().get(userName);
+            storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file), owner);
         } catch (DuplicateValueException | InvalidValueException | ItemNotSoldException | InterruptedException e) {
             e.printStackTrace();
         }

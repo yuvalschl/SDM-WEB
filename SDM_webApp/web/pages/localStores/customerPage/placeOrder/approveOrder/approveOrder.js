@@ -17,6 +17,8 @@ $(document).ready(function() {
     $(document).on('click', '#approvedBtn', function () {
         approveOrder()
     });
+
+
 })
 
 function initializeGlobalVariables() {//initialize all the global vars used in this page for later use
@@ -33,7 +35,7 @@ function initializeGlobalVariables() {//initialize all the global vars used in t
 }
 function approveOrder(){
     $.ajax({
-        url: CREAT_ORDER,
+        url: CREATE_ORDER,
         dataType: 'json',
         data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': typeOfOrder, 'store': store },
         type: 'POST',
@@ -112,7 +114,8 @@ function appendRowToStoresTable(store) {
     $("#storeTable").append(rowToAppend)
 }
 
-function createOrderSummery() {//TODO:enter the real number instead of 120 121 122
+//TODO:enter the real number instead of 120 121 122
+function createOrderSummery() {
     $("#Order-Subtotal").text(currOrder.totalItemCost)
     $("#Shipping-total").text(currOrder.shippingTotal)
     $("#total").text(currOrder.orderTotal)

@@ -5,7 +5,7 @@ var GET_CURRENT_USER = buildUrlWithContextPath("getCurrentUser")
 var refreshRate = 3000; //milli seconds
 var userName
 var isOwner
-var pickedUp
+var pickedUp //the zone selected
 
 $(document).ready(function (){
     ajaxGetAllUsers()
@@ -21,10 +21,7 @@ $(document).ready(function (){
         $("#fileChooserLabel").text($("#fileChooser").val())
     })
 
-    /**
-     * chenges the selected row color
-     * saves the selected row id in pickUp var
-     */
+
     $( "#zoneTable").on( "click", "tr", function( event ) {
 
 

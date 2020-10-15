@@ -4,28 +4,31 @@ import logicSDM.Item.sellBy;
 import logicSDM.ItemPair.ItemAmountAndStore;
 import logicSDM.Store.Store;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class StoreOrder {
     private Date dateOfOrder;
-    private float amountOfItems;
+    private int amountOfItems;
     private float totalPriceOfItems;
     private float shippingCost;
     private float totalCost;
     private float distance;
     private Store store;
     private int storeID;
-    private String name;
+    private String storeName;
     private int orderId;
     private ArrayList<ItemAmountAndStore> items;
     private float pkk;
+    private Point location;
+    private String customerName;
 
     public Date getDateOfOrder() {
         return dateOfOrder;
     }
 
-    public StoreOrder(Date dateOfOrder, float shippingCost, float distance, Store store, int orderId, float pkk) {
+    public StoreOrder(Date dateOfOrder, float shippingCost, float distance, Store store, int orderId, float pkk, Point location, String customerName) {
         this.dateOfOrder = dateOfOrder;
         this.shippingCost = shippingCost;
         this.distance = distance;
@@ -35,8 +38,10 @@ public class StoreOrder {
         this.totalCost = shippingCost;
         this.items = new ArrayList<>();
         this.pkk = pkk;
-        this.name = store.getName();
+        this.storeName = store.getName();
         this.storeID = store.getSerialNumber();
+        this.location = location;
+        this.customerName = customerName;
     }
 
     public void addItemToOrder(ItemAmountAndStore item){
@@ -78,21 +83,21 @@ public class StoreOrder {
         this.storeID = storeID;
     }
 
-    public String getName() {
-        return name;
+    public String getStoreName() {
+        return storeName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }    public void setDateOfOrder(Date dateOfOrder) {
         this.dateOfOrder = dateOfOrder;
     }
 
-    public float getAmountOfItems() {
+    public int getAmountOfItems() {
         return amountOfItems;
     }
 
-    public void setAmountOfItems(float amountOfItems) {
+    public void setAmountOfItems(int amountOfItems) {
         this.amountOfItems = amountOfItems;
     }
 
@@ -152,4 +157,19 @@ public class StoreOrder {
         this.items = items;
     }
 
+    public Point getLocation() {
+        return location;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }

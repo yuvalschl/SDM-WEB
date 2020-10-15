@@ -5,6 +5,7 @@ import logicSDM.Order.*;
 import logicSDM.Store.Discount.Discount;
 import logicSDM.Store.Feedback.Feedback;
 import users.Owner;
+import users.UserManager;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -47,7 +48,7 @@ public class Store {
     /**
      * constractor for a new store from xml file
      */
-    public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders, Point location, float PPK, Set<Discount> discounts, String ownerName) {
+    public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders, Point location, float PPK, Set<Discount> discounts, Owner owner) {
         this.name = name;
         this.serialNumber = serialNumber;
         this.inventory = inventory;
@@ -57,7 +58,7 @@ public class Store {
         this.PPK = PPK;
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = discounts;
-        this.storeOwner = new Owner(ownerName);
+        this.storeOwner = owner;
         this.feedbacks = new ArrayList<>();
         allDiscounts.stream().forEach(discount -> discount.setStoreId(serialNumber));
     }

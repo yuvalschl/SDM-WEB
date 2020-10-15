@@ -23,7 +23,6 @@ $(document).ready(function() {
     $(document).on('click', "#firstBtnText", function(){
         //if(checkIfCustomer())
             placeOrderPage()
-
     });
 });
 

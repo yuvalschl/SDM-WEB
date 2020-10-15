@@ -2,10 +2,10 @@ package logicSDM.Store.Discount;
 
 public class Offer {
     private int itemId;
-    private float quantity;
+    private int quantity;
     private float forAdditional;
 
-    public Offer(int itemId, float quantity, float forAdditional) {
+    public Offer(int itemId, int quantity, float forAdditional) {
         this.itemId = itemId;
         this.quantity = quantity;
         this.forAdditional = forAdditional;
@@ -19,11 +19,11 @@ public class Offer {
         this.itemId = itemId;
     }
 
-    public float getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(float quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

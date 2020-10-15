@@ -30,12 +30,12 @@ public class StoreManager {
 
     private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zoneName, String ownerName) {
+    public StoreManager(Map<Integer, Store> allStores, Map<Integer, Item> allItems, String zoneName, Owner owner) {
         this.allStores = allStores;
         this.allItems = allItems;
         this.zoneName = zoneName;
         this.currentFilePath = " ";
-        this.zoneOwner = new Owner(ownerName);
+        this.zoneOwner = owner;
     }
 
     public StoreManager(){
@@ -224,6 +224,7 @@ public class StoreManager {
 
         allOrders.add(order);
         order.getCustomer().getBalance().buy(order.getDateOfOrder(), order.getTotalCost());//update the customer's balance
+        order.getCustomer().getOrderHistory().put(order.getOrderId(), order); // add the order to the user history
 
         for (ItemAmountAndStore item : order.getItemAmountAndStores().values()) {
             int itemID = item.item().getId();
@@ -241,7 +242,7 @@ public class StoreManager {
         for(Map.Entry<Integer, Store> store : order.getStores().entrySet()){
             float shippingCost = order.getShippingCostByStore().get(store.getKey());
             float distance = distanceCalculator(order.getCustomerLocation(), store.getValue().getLocation()) ;
-            StoreOrder ordersToAdd = new StoreOrder(order.getDateOfOrder(), shippingCost, distance, store.getValue(), order.getOrderId(),store.getValue().getPPK());
+            StoreOrder ordersToAdd = new StoreOrder(order.getDateOfOrder(), shippingCost, distance, store.getValue(), order.getOrderId(),store.getValue().getPPK(), order.getCustomerLocation(), order.getCustomer().getName());
             for(ItemAmountAndStore item : order.getItemAmountAndStores().values()){
                 if(item.getStore().getSerialNumber() == store.getValue().getSerialNumber()){
                     ordersToAdd.addItemToOrder(item);
@@ -249,8 +250,9 @@ public class StoreManager {
             }
             store.getValue().getStoreOwner().getBalance().receivePayment(order.getDateOfOrder(),ordersToAdd.getTotalCost());//update the store owner balance
             store.getValue().getAllOrders().put(ordersToAdd.getOrderId(), ordersToAdd);
-
+            store.getValue().getStoreOwner().getAllOrders().put(ordersToAdd.getOrderId(), ordersToAdd);
         }
+
     }
 
 

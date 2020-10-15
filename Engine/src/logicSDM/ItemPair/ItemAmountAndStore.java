@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 public class ItemAmountAndStore {
-    private float amount;
+    private int amount;
     private Item item;
     private int itemId;
     private String itemName;
@@ -21,7 +21,7 @@ public class ItemAmountAndStore {
 
 
 
-    public ItemAmountAndStore(Item item, float amount, Store store) {
+    public ItemAmountAndStore(Item item, int amount, Store store) {
         this.item = item;
         this.amount = amount;
         this.store = store;
@@ -92,7 +92,7 @@ public class ItemAmountAndStore {
         this.itemStore = itemStore;
     }
 
-    public ItemAmountAndStore(float amount, Item item) {
+    public ItemAmountAndStore(int amount, Item item) {
         this.amount = amount;
         this.item = item;
     }
@@ -101,7 +101,7 @@ public class ItemAmountAndStore {
         this.store = store;
     }
 
-    public float getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -125,7 +125,7 @@ public class ItemAmountAndStore {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
     @XmlTransient

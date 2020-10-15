@@ -11,6 +11,7 @@ import logicSDM.Store.Discount.Offer;
 import logicSDM.StoreManager.StoreManager;
 import logicSDM.Jaxb.jaxbClasses.*;
 import javafx.beans.property.BooleanProperty;
+import users.Owner;
 
 import java.awt.*;
 import java.io.File;
@@ -30,17 +31,17 @@ public class JaxbClassToStoreManager {
     }*/
 
     //TODO: do all the new testing
-    public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore, String ownerName) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
+    public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore, Owner owner) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
         try{
 
             Map<Integer, Item> allItems = createAllItemsMap(xmlStore.getSDMItems().getSDMItem());
-            Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems, ownerName);
+            Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems, owner);
             HashSet<Integer> notSoldItems = checkIfAllTheItemsFromTheFileAreSold(allItems);
             String zoneName = xmlStore.getSDMZone().getName();
             if(!notSoldItems.isEmpty()){
                 throw new ItemNotSoldException("Items with id: " + notSoldItems.toString() + " are not sold by any store");
             }
-            return new StoreManager(allStores, allItems, zoneName, ownerName);
+            return new StoreManager(allStores, allItems, zoneName, owner);
         }
         catch (Exception e){
             return null;
@@ -62,7 +63,7 @@ public class JaxbClassToStoreManager {
         return allItems;
     }
 
-    private Map<Integer, Store> createAllStoresMap(List<SDMStore> sdmStores, Map<Integer, Item> allItems, String ownerName) throws DuplicateValueException, InvalidValueException {
+    private Map<Integer, Store> createAllStoresMap(List<SDMStore> sdmStores, Map<Integer, Item> allItems, Owner owner) throws DuplicateValueException, InvalidValueException {
         Map<Integer, Store> allStores = new HashMap<Integer, Store>();
         for(SDMStore store : sdmStores){
             if(allStores.containsKey(store.getId())){
@@ -77,8 +78,9 @@ public class JaxbClassToStoreManager {
             if(!isLocationValid(currentStoreLocation)){
                 throw new InvalidValueException(store.getId() + "has invalid location");
             }
-            Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount, ownerName);
+            Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount, owner);
             allStores.put(store.getId(), currentStore);
+            owner.getAllStores().put(store.getId(), currentStore);
         }
         return allStores;
     }
@@ -108,7 +110,7 @@ public class JaxbClassToStoreManager {
     private MyThenYouGet createThenYouGet(ThenYouGet thenYouGet) {
         Set<Offer> allOffers = new HashSet<Offer>();
         for(SDMOffer sdmOffer : thenYouGet.getSDMOffer()){
-            allOffers.add(new Offer(sdmOffer.getItemId(), (float) sdmOffer.getQuantity(), sdmOffer.getForAdditional()));
+            allOffers.add(new Offer(sdmOffer.getItemId(), (int) sdmOffer.getQuantity(), sdmOffer.getForAdditional()));
         }
         return new MyThenYouGet(MyThenYouGet.getOperatorFromSdmOffer(thenYouGet.getOperator()), allOffers);
 
