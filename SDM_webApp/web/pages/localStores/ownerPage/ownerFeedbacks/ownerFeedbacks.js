@@ -1,11 +1,10 @@
+const GET_FEEDBACKS_URL = buildUrlWithContextPath("getOwnerFeedbacks")
+const zone = 'Hasharon' //TODO: remove this
+
+
 $(document).ready(function (){
-    addCard()
-    addCard()
-    addCard()
+    addFeedbackCards()
 })
-
-
-
 
 function addCard(index, store){
     $("#commentsSection").append("" +
@@ -16,4 +15,12 @@ function addCard(index, store){
             "<div class=\"comment-footer\"> <span class=\"text-muted float-right\">Date</span></div>" +
         "</div>" +
     "</div>")
+}
+
+function addFeedbackCards() {
+    $.ajax({
+        url: GET_FEEDBACKS_URL,
+        data: {'zone': zone}
+    })
+
 }
