@@ -131,7 +131,8 @@ public class CreatOrderServlet extends HttpServlet {
                    if(item.getIsPartOfDiscount()){
                        isPartOfSale  = "YES";
                    }
-                    ItemDTO dtoItem = new ItemDTO(item.getItemName(), item.getItemId(),item.getAmount(),item.getItem().getSellBy().toString(),order.getTotalCost(),isPartOfSale);
+                   float price = store.getInventory().get(item.getItemId()).getPrice();
+                    ItemDTO dtoItem = new ItemDTO(item.getItemName(), item.getItemId(),item.getAmount(),item.getItem().getSellBy().toString(),isPartOfSale, price);
                     items.add(dtoItem);
                 }
             }

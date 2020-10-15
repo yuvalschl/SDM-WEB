@@ -6,9 +6,10 @@ import java.util.ArrayList;
 public class OrderDTO {
 
     private ArrayList<StoreDTO> allStores;
-    private float orderTotal;
-     private float shippingTotal;
+      private float orderTotal;
+      private float shippingTotal;
       private  float totalItemCost;
+
 
     public OrderDTO(ArrayList<StoreDTO> allStores, float orderTotal, float shippingTotal, float totalItemCost) {
         final DecimalFormat decimalFormat = new DecimalFormat("0.00");

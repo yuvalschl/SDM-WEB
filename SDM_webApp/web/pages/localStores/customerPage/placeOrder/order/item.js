@@ -1,9 +1,9 @@
 class item {
-    constructor(name, id, amount) {
+    constructor(name, id, amount, isPartOfSale) {
         this._name = name;
         this._id = id;
         this._amount = amount;
-
+        this._isPartOfSale = isPartOfSale;
     }
 
     addToAmount(amountToAdd){

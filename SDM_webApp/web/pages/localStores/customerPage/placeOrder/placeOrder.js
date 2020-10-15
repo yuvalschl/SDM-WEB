@@ -141,7 +141,7 @@ $(document).ready(function() {
                     discountUpdateCart(currOffers[i].amount, currOffers[i].id, currOffers[i].itemName)
                 }
             }else{
-                discountUpdateCart(currDiscountItem.amount, currDiscountItem.name, currDiscountItem.id)
+                discountUpdateCart(currDiscountItem.amount, currDiscountItem.id,currDiscountItem.name)
             }
 
 
@@ -215,6 +215,7 @@ function enableSubmitBtn() {
     $('#submitOrder').css("border-color","  #007bff");
     }
 }
+
 function discountUpdateCart(amount, id, name) {
     var itemAmount = amount
     var itemID = id
@@ -228,10 +229,12 @@ function discountUpdateCart(amount, id, name) {
             + "</tr>";
         $("#cartTable").append(rowToAppend)
         currentOrder.discountItems[itemID] = new item(itemName, itemID, itemAmount)
+        currentOrder.items[itemID] = new item(itemName, itemID, itemAmount, true)//check if this work*/
     }
     else{
         addToCartAmount(itemID, itemAmount, true)
         currentOrder.discountItems[itemID].addToAmount(itemAmount)
+        currentOrder.items[itemID].addToAmount(itemAmount)//check if this work*/
     }
 }
 
@@ -250,7 +253,7 @@ function updateCart(rowID, partOfDiscount) {
                 "<td>" + itemAmount + "</td>"
                 + "</tr>";
             $("#cartTable").append(rowToAppend)
-            cartType[itemID] = new item(itemName, itemID, itemAmount)
+            cartType[itemID] = new item(itemName, itemID, itemAmount, false)
         } else{
             addToCartAmount(itemID, itemAmount,false)
             cartType[itemID].addToAmount(itemAmount)
