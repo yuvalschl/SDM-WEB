@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 
 /**
- * sevlet for getting all the stores in the zone from the server
+ * servlet for getting all the stores in the zone from the server
  */
 public class ZoneStoresInfoServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {

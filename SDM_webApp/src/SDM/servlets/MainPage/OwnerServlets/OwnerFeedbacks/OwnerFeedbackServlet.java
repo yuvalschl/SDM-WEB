@@ -6,6 +6,7 @@ import SDM.utils.DTO.OwnerFeedback.OwnerFeedbackDto;
 import SDM.utils.ServletUtils;
 import SDM.utils.SessionUtils;
 import com.google.gson.Gson;
+import logicSDM.Store.Store;
 import users.Owner;
 
 import javax.servlet.ServletException;
@@ -24,11 +25,11 @@ public class OwnerFeedbackServlet extends HttpServlet {
 
         res.setContentType("application/json");
         try (PrintWriter out = res.getWriter()) {
-            String userName = SessionUtils.getUsername(req);
-            Owner owner = (Owner) ServletUtils.getUserManager(getServletContext()).getUsers().get(userName);
-            //allFeedbacks is, key: store id, value: array of all the feedbacks from the store
-            Map<Integer, ArrayList<OwnerFeedbackDto>> allFeedbacks = new HashMap<>();
-            owner.getAllStores().forEach((id, store) -> store.getFeedbacks().forEach((feedback -> allFeedbacks.get(store.getSerialNumber()).add(new OwnerFeedbackDto(feedback)))));
+            String storeId = req.getParameter("storeId");
+            String zoneName = req.getParameter("zone");
+            Store store = ServletUtils.getAllZoneManager(getServletContext()).getStoreMangerForZone(zoneName).getAllStores().get(Integer.parseInt(storeId));
+            ArrayList<OwnerFeedbackDto> allFeedbacks = new ArrayList<>();
+            store.getFeedbacks().forEach(feedback -> allFeedbacks.add(new OwnerFeedbackDto(feedback)));
             Gson gson = new Gson();
             out.println(gson.toJson(allFeedbacks));
             out.flush();
