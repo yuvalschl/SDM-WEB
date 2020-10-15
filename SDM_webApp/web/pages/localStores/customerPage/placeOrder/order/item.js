@@ -1,15 +1,25 @@
 class item {
-    constructor(name, id, amount, isPartOfSale) {
+
+    constructor(name, id, amount, isPartOfSale, storeId, forAdditional) {
         this._name = name;
         this._id = id;
         this._amount = amount;
         this._isPartOfSale = isPartOfSale;
+        this._storeId = storeId;
+        this._forAdditional = forAdditional;
     }
 
-    addToAmount(amountToAdd){
-        this._amount = parseInt(this._amount) + parseInt(amountToAdd)
+    addToAmount(amountToAdd, forAdditional){
+        this._amount = parseInt(this._amount) + parseInt(amountToAdd )
+        this._forAdditional += forAdditional
+    }
+    get storeId() {
+        return this._storeId;
     }
 
+    set storeId(value) {
+        this._storeId = value;
+    }
     get name() {
         return this._name;
     }

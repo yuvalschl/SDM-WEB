@@ -9,14 +9,16 @@ public class OrderDTO {
       private float orderTotal;
       private float shippingTotal;
       private  float totalItemCost;
+      private int maxID;
 
 
-    public OrderDTO(ArrayList<StoreDTO> allStores, float orderTotal, float shippingTotal, float totalItemCost) {
+    public OrderDTO(ArrayList<StoreDTO> allStores, float orderTotal, float shippingTotal, float totalItemCost, int maxID) {
         final DecimalFormat decimalFormat = new DecimalFormat("0.00");
         this.allStores = allStores;
         this.orderTotal = Float.parseFloat(decimalFormat.format(orderTotal)) ;
         this.shippingTotal = Float.parseFloat(decimalFormat.format(shippingTotal)) ;
         this.totalItemCost = Float.parseFloat(decimalFormat.format(totalItemCost)) ;
+        this.maxID = maxID;
     }
 
 }
