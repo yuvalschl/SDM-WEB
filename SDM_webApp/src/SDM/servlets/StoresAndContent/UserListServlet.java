@@ -1,5 +1,6 @@
 package SDM.servlets.StoresAndContent;
 
+import SDM.utils.DTO.UsersListDto;
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
 import users.SingelUserEntry;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,7 +27,9 @@ public class UserListServlet extends HttpServlet {
             Gson gson = new Gson();
             UserManager userManager = ServletUtils.getUserManager(getServletContext());
             Map<String,SingelUserEntry> usersList = userManager.getUsers();
-            String json = gson.toJson(usersList);
+            Map<String, UsersListDto> usersListDto = new HashMap<>();
+            usersList.forEach((name, user) -> usersListDto.put(name, new UsersListDto(user)));
+            String json = gson.toJson(usersListDto);
 
             out.println(json);
             out.flush();

@@ -1,13 +1,15 @@
 package users;
 
 import logicSDM.Order.StoreOrder;
+import logicSDM.Store.Feedback.Feedback;
 import logicSDM.Store.Store;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Owner extends SingelUserEntry {
-    private Map<Integer, StoreOrder> allOrders = new HashMap<>();
+    private ArrayList <StoreOrder> allOrders = new ArrayList<>();
     private Map <Integer, Store> allStores = new HashMap<>();
 
     public Owner(String name){
@@ -15,11 +17,11 @@ public class Owner extends SingelUserEntry {
         super.setOwner(true);
     }
 
-    public Map<Integer, StoreOrder> getAllOrders() {
+    public ArrayList <StoreOrder> getAllOrders() {
         return allOrders;
     }
 
-    public void setAllOrders(Map<Integer, StoreOrder> allOrders) {
+    public void setAllOrders(ArrayList <StoreOrder> allOrders) {
         this.allOrders = allOrders;
     }
 

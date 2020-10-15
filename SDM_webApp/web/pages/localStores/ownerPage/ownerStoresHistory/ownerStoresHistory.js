@@ -1,5 +1,6 @@
 const GET_STORES_HISTORY_URL = buildUrlWithContextPath("getStoresHistory")
 var allOrders
+var currentStoreId
 
 $(document).ready(function (){
     //http request for getting the order history
@@ -7,9 +8,8 @@ $(document).ready(function (){
         url: GET_STORES_HISTORY_URL,
         dataType: 'json',
         success: function (data){
-            $.each(data)
-/*            allOrders = orders
-            $.each(orders || [], appendRowToOrdersTable)*/
+            allOrders = data.allOrders
+            $.each(data.allStores, addStoresToDropDown)
         },
         error: function (){
             console.log('error in get order history servlet')
@@ -18,14 +18,42 @@ $(document).ready(function (){
 
     $(document).on('click', '.orderId', function () {
         var orderId = $(this).attr('id')
-        var order = allOrders[orderId]
-        createItemsTable(order.orderItems)
+        var items = getItemsByOrderAndId(orderId, currentStoreId)
+        createItemsTable(items)
     });
+
+
+    $(document).on('change', "#storesDropDown", function (){
+        currentStoreId = $(this).children(":selected").prop("value");
+        var orders = getOrdersByStoreId(currentStoreId)
+        $("#storeTableBody").empty()
+        $("#itemsTable").empty()
+        $.each(orders || [], appendRowToOrdersTable)
+    })
 
 })
 
-function addStoresToDropDown(index, store){
-    $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
+function getItemsByOrderAndId(orderId, storeId){
+    for(var i=0; i<allOrders.length; i++){
+        if(allOrders[i].storeId == storeId && allOrders[i].orderId == orderId){
+            return allOrders[i].orderItems
+        }
+    }
+}
+
+function getOrdersByStoreId(storeId) {
+    var ordersToReturn = []
+    $.each(allOrders || [], function (index, order){
+        if(order.storeId == storeId){ // == is on purpose
+            ordersToReturn.push(order)
+        }
+    })
+
+    return ordersToReturn
+}
+
+function addStoresToDropDown(id, name){
+    $("#storesDropDown").append("<option value=" + id + ">" + name + "</option")
 }
 
 
@@ -56,8 +84,6 @@ function appendRowToItemstable(index, item) {
         "                        <td class='align-middle'>"+item.itemId+"</td>" +
         "                        <td class='align-middle'>"+item.itemName+"</td>" +
         "                        <td class='align-middle'>"+item.sellBy+"</td>" +
-        "                        <td class='align-middle'>"+item.storeId+"</td>" +
-        "                        <td class='align-middle'>"+item.storeName+"</td>" +
         "                        <td class='align-middle'>"+item.amount+"</td>" +
         "                        <td class='align-middle'>"+item.pricePerUnit+"</td>" +
         "                        <td class='align-middle'>"+item.totalCost+"</td>" +

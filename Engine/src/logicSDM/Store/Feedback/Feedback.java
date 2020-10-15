@@ -1,12 +1,18 @@
 package logicSDM.Store.Feedback;
 
+import java.util.Date;
+
 public class Feedback {
     private int rating;
     private String feedback;
+    private String userName;
+    private Date date;
 
-    public Feedback(int rating, String feedback) {
+    public Feedback(int rating, String feedback, Date date, String userName) {
         this.rating = rating;
         this.feedback = feedback;
+        this.date = date;
+        this.userName = userName;
     }
 
     /**
@@ -35,6 +41,22 @@ public class Feedback {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
 

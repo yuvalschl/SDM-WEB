@@ -2,7 +2,7 @@ package SDM.utils.DTO.OrderHistory;
 
 import logicSDM.ItemPair.ItemAmountAndStore;
 
-public class OrderItemDto {
+public class OrderHistoryItemDto {
     private int itemId;
     private String itemName;
     private String sellBy;
@@ -17,7 +17,7 @@ public class OrderItemDto {
      * contractor for the clinet order history
      * @param item
      */
-    public OrderItemDto(ItemAmountAndStore item){
+    public OrderHistoryItemDto(ItemAmountAndStore item){
         this.itemId = item.getItemId();
         this.itemName = item.getItemName();
         this.sellBy = item.getItem().getSellBy().toString();

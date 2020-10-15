@@ -1,6 +1,6 @@
 package SDM.servlets.MainPage.OrderHistory;
 
-import SDM.utils.DTO.OrderHistory.OrderDto;
+import SDM.utils.DTO.OrderHistory.OrderHistoryDto;
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
 import logicSDM.Order.Order;
@@ -30,8 +30,8 @@ public class OrderHistoryServlet extends HttpServlet {
             UserManager userManager = ServletUtils.getUserManager(getServletContext());
             Clinet clinet = (Clinet) (userManager.getUsers().get(userName));
             Map<Integer, Order> orderHistory = clinet.getOrderHistory();
-            Map<Integer, OrderDto> orderDtoMap = new HashMap<>();
-            orderHistory.forEach((id, order) -> orderDtoMap.put(id, new OrderDto(order)));
+            Map<Integer, OrderHistoryDto> orderDtoMap = new HashMap<>();
+            orderHistory.forEach((id, order) -> orderDtoMap.put(id, new OrderHistoryDto(order)));
             Gson gson = new Gson();
             out.println(gson.toJson(orderDtoMap));
             out.flush();
