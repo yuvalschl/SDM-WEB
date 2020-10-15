@@ -1,4 +1,5 @@
 var maxLength = 2;
+//var maxItemID;
 var btnsID =0;
 var store
 var xcor
@@ -130,6 +131,8 @@ $(document).ready(function() {
 
     $(document).on('click', ".addDiscount", function (){
         var discountName = $(this).attr('id').slice(6)
+        discountName.replace(/[^a-zA-Z ]/g, "")
+        var storeId = $("#"+'row'+discountName).find('td').eq(0).attr('id')
         var forAdditional = parseInt($("#"+'row'+discountName).find('td').eq(3).text())
         currentOrder._amountAddedByDiscounts += forAdditional//add the for additional to the amount added to order by discounts
         if(availableDiscounts.entitledDiscounts[discountName] <= 0){
@@ -138,10 +141,10 @@ $(document).ready(function() {
             availableDiscounts.entitledDiscounts[discountName]--
             if(!discountDropHappened){//if the then you get is all or nothing add all the items offered
                 for (var i=0;i<currOffers.length;i++){
-                    discountUpdateCart(currOffers[i].amount, currOffers[i].id, currOffers[i].itemName)
+                    discountUpdateCart(currOffers[i].amount, currOffers[i].id, currOffers[i].itemName, storeId, forAdditional)
                 }
             }else{
-                discountUpdateCart(currDiscountItem.amount, currDiscountItem.id,currDiscountItem.name)
+                discountUpdateCart(currDiscountItem.amount, currDiscountItem.id,currDiscountItem.name, storeId, forAdditional)
             }
 
 
@@ -160,6 +163,13 @@ $(document).ready(function() {
     $(document).on('click', "#submitOrder", function(){
        // checkForDiscount()
        // goToOrderSummeryPg()
+    });
+
+    $(document).on('keypress', ".quantity", function(e) {
+        //if the letter is not digit then display error and don't type anything
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            return false;
+        }
     });
 })
 //end of onload
@@ -216,7 +226,13 @@ function enableSubmitBtn() {
     }
 }
 
-function discountUpdateCart(amount, id, name) {
+/*function findDiscountItemIDByName(name) {
+    for (var i=0; i<currentOrder.items.length; i++){
+        if(currentOrder.items[i].name === name)
+            return currentOrder.items[i].id
+    }
+}*/
+function discountUpdateCart(amount, id, name, storeId, forAdditional) {
     var itemAmount = amount
     var itemID = id
     var itemName = name
@@ -228,13 +244,12 @@ function discountUpdateCart(amount, id, name) {
             "<td>" + itemAmount + "</td>"
             + "</tr>";
         $("#cartTable").append(rowToAppend)
-        currentOrder.discountItems[itemID] = new item(itemName, itemID, itemAmount)
-        currentOrder.items[itemID] = new item(itemName, itemID, itemAmount, true)//check if this work*/
+        currentOrder.discountItems[itemID] = new item(itemName, itemID, itemAmount,true,storeId, forAdditional)
     }
     else{
         addToCartAmount(itemID, itemAmount, true)
-        currentOrder.discountItems[itemID].addToAmount(itemAmount)
-        currentOrder.items[itemID].addToAmount(itemAmount)//check if this work*/
+        currentOrder.discountItems[itemID].addToAmount(itemAmount, forAdditional)
+
     }
 }
 
@@ -362,6 +377,8 @@ function updateTableSingleEntryDynamicOrder(itemInfo) {
     var itemName = itemInfo.name
     var itemPrice = itemInfo.pricePerUnit
     var ID = itemInfo.id
+    var className
+    var sellByUnit = itemInfo.sellBy === "UNIT" ? className = "quantity" : className = ""
 
     var rowToAppend = "<tr" + " id =" + "\"" + stringRowID + "\"" + " >" +
         "<td>" + ID + "</td>" +
@@ -376,7 +393,7 @@ function updateTableSingleEntryDynamicOrder(itemInfo) {
     addToCartBtn ="<input class=\"btn btn-primary addBtn   float-right\"" +
         " id ="+ "\"" + StringbtnID+ "\""
         +" type=\"button\" value=\"Add\">\n" +
-        "<input"+ " id ="+ "\"" + stringAmountInput+ "\"" +"  type=\"number\" min=\"0\" maxlength=\"2\"  name=\"username\" class=\"form-control float-right amountText\">";
+        "<input"+ " id ="+ "\"" + stringAmountInput+ "\"" +"  type=\"number\" min=\"0\" maxlength=\"2\"  name=\"username\" class=\"form-control float-right "+className+"  amountText\">";
     rowToAppend += "<td>" + addToCartBtn + "</td>";
     setInputMinVal()
     rowToAppend+"</tr>";
@@ -442,6 +459,7 @@ function createDiscountSelectionWindow(discounts){
 
 function addDiscountToTable(index, discount){
     var name = discount.name
+    var storeId = discount.storeId
     //var becauseYouBoughtItemId = discount.ifYouBuy.itemId
     var becauseYouBoughtItemName = discount.ifYouBuy.itemName
     //var becauseYouBoughtItemAmount = discount.ifYouBuy.amount
@@ -459,7 +477,7 @@ function addDiscountToTable(index, discount){
         thenYouGet = createThenYouGetDropDown(discount.thenYouGet, name)
     }
     $("#discountTableBody").append("<tr id='row" + discountNameNoSpaces + "'>" +
-        "<td>" + name + "</td>" +
+        "<td id ="+storeId+">" + name + "</td>" +
         "<td>" + becauseYouBoughtItemName + "</td>" +
         "<td>" + thenYouGet + "</td>" +
         "<td>" + forAdditional +"</td>" +
@@ -500,16 +518,29 @@ function ajaxCreatOrder() {
     var location = new Point(xcor,ycor)
     location = JSON.stringify(location)
     var items = JSON.stringify(currentOrder)
+
     type = isDynamicOrder === true ? "dynamic":"static"
 
     $.ajax({
         url: CREATE_ORDER,
         dataType: 'json',
-        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store, 'approved': true },
-        success: function (warper){
-/*            createDiscountSelectionWindow(warper.discount)*/
-            placeOrderPage(warper.order)
-            availableDiscounts = new EntitledDiscounts(currentOrder, warper.discount)
+        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
+        success: function (wrapper){
+            if(!showedDiscounts){
+                availableDiscounts = new EntitledDiscounts(currentOrder, wrapper.discount)
+                if(wrapper.discount.length !==0){
+                    maxItemID = wrapper.order.maxID
+                    createDiscountSelectionWindow(wrapper.discount)
+                    $('#submitOrder').val("Proceed to checkout")
+                }
+                else{
+                    showedDiscounts = true
+                    goToOrderApprovePg(wrapper)
+                }
+
+            }else {
+                goToOrderApprovePg(wrapper)
+            }
         },
         error : function (){
             console.log("dani zion")

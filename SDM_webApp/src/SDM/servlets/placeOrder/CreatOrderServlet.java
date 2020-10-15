@@ -11,6 +11,7 @@ import SDM.utils.DTO.discountInfo.DiscountDto;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Item.Item;
+import logicSDM.Item.sellBy;
 import logicSDM.ItemPair.ItemAmountAndStore;
 import logicSDM.Order.Order;
 import logicSDM.Store.Discount.Discount;
@@ -56,6 +57,7 @@ public class CreatOrderServlet extends HttpServlet {
             LinkedHashMap itemsJSN = gson.fromJson(itemsString, LinkedHashMap.class);
             itemsJSN = (LinkedHashMap) itemsJSN.get("_items");
             HashMap<Integer, ItemAmountAndStore> items = new HashMap<Integer, ItemAmountAndStore>();
+            int key = 1;
             for (Object val: itemsJSN.values()){
                 String name = (String) ((LinkedHashMap) val).get("_name");
                 String idString = (String) ((LinkedHashMap) val).get("_id");
@@ -71,8 +73,11 @@ public class CreatOrderServlet extends HttpServlet {
                     Item item = currStore.getInventory().get(id);
                     currItemAmounAndStore = new ItemAmountAndStore(item,amount,currStore);
                 }
-                items.put(id, currItemAmounAndStore);
+                items.put(key, currItemAmounAndStore);
+                key++;
             }
+            LinkedHashMap discountItemsJSN = gson.fromJson(itemsString, LinkedHashMap.class);
+            addDiscountItemsToOrder(items, (LinkedHashMap) discountItemsJSN.get("_discountItems"), currZoneManager, key);
             Order order = currZoneManager.createOrder(location,date, items, user);
             if(orderApproved){
                currZoneManager.placeOrder(order);
@@ -101,13 +106,38 @@ public class CreatOrderServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
+
+    private void addDiscountItemsToOrder(HashMap<Integer, ItemAmountAndStore> itemsInOrder, LinkedHashMap itemsToAdd, StoreManager currZoneManager, int key) {
+        for (Object val: itemsToAdd.values()){
+            String name = (String) ((LinkedHashMap) val).get("_name");
+           //String idString = (int) ((LinkedHashMap) val).get("_id");
+            //String amountString = (String) ((LinkedHashMap) val).get("_amount");
+            String storeIdString = (String) ((LinkedHashMap) val).get("_storeId");
+            //String priceString = (String) ((LinkedHashMap) val).get("_forAdditional");
+            Double doubleId = (Double) ((LinkedHashMap) val).get("_id");
+            int id = doubleId.intValue();
+            Double amountDouble = (Double) ((LinkedHashMap) val).get("_amount");
+            int amount = amountDouble.intValue();
+            int storeID = Integer.parseInt(storeIdString);
+            Double priceDouble =  (Double) ((LinkedHashMap) val).get("_forAdditional");
+            float price =  priceDouble.floatValue();
+            Store currStore = currZoneManager.getAllStores().get(storeID);
+            sellBy sellBy = currStore.getInventory().get(id).getSellBy();
+            Item item = new Item(id,name, price,sellBy );
+            ItemAmountAndStore currItemAmounAndStore = new ItemAmountAndStore(item,amount,currStore);
+            currItemAmounAndStore.setPartOfDiscount(true);
+            itemsInOrder.put(key,currItemAmounAndStore);
+            item.setMaxID(++key);
+        }
+    }
+
     private OrderAndDiscountWrapperDTO wrapOrderAndDiscounts(OrderDTO orderDTO, ArrayList<DiscountDto> discountDto){
         OrderAndDiscountWrapperDTO orderAndDiscountDTO = new OrderAndDiscountWrapperDTO(discountDto, orderDTO);
         return  orderAndDiscountDTO;
     }
     private OrderDTO createOrderDTO(Order order, StoreManager storeManager){
         ArrayList<StoreDTO> stores = creatStoreDTOArray(order, storeManager);
-        OrderDTO orderDTO = new OrderDTO(stores, order.getTotalCost(),order.getShippingCost(), order.getTotalPriceOfItems());
+        OrderDTO orderDTO = new OrderDTO(stores, order.getTotalCost(),order.getShippingCost(), order.getTotalPriceOfItems(), storeManager.getAllItems().get(1).getMaxID());
        return orderDTO;
     }
 
@@ -126,16 +156,22 @@ public class CreatOrderServlet extends HttpServlet {
     private ArrayList<ItemDTO> creatItemDTOArray(Order order, Store store) {
         ArrayList<ItemDTO> items = new ArrayList<ItemDTO>();
         String isPartOfSale = "NO";
-            for(ItemAmountAndStore item : order.getItemAmountAndStores().values()){
-                if(item.getStore().getSerialNumber() == store.getSerialNumber()){
-                   if(item.getIsPartOfDiscount()){
-                       isPartOfSale  = "YES";
-                   }
-                   float price = store.getInventory().get(item.getItemId()).getPrice();
-                    ItemDTO dtoItem = new ItemDTO(item.getItemName(), item.getItemId(),item.getAmount(),item.getItem().getSellBy().toString(),isPartOfSale, price);
-                    items.add(dtoItem);
-                }
+        float pricePerUnit, totalItemCost;
+        for(ItemAmountAndStore item : order.getItemAmountAndStores().values()){
+            if(item.getStore().getSerialNumber() == store.getSerialNumber()){
+               if(item.getIsPartOfDiscount()){
+                   isPartOfSale  = "YES";
+                   pricePerUnit = item.getItem().getPrice();
+                   totalItemCost = pricePerUnit;
+               }
+               else {
+                   pricePerUnit = store.getInventory().get(item.getItemId()).getPrice();
+                   totalItemCost = pricePerUnit * item.getAmount();
+               }
+                ItemDTO dtoItem = new ItemDTO(item.getItemName(), item.getItemId(),item.getAmount(),item.getItem().getSellBy().toString(),isPartOfSale, pricePerUnit,totalItemCost );
+                items.add(dtoItem);
             }
+        }
 
         return items;
     }

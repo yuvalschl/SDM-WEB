@@ -12,7 +12,6 @@ class order {
         this._amountAddedByDiscounts = amountAddedByDiscounts;
     }
 
-
     get discountItems() {
         return this._discountItems;
     }
