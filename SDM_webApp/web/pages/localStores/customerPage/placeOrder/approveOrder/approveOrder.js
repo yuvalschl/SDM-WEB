@@ -1,9 +1,12 @@
 var currOrderPGapproveOrder
 var currDiscountsPGapproveOrder
-var date
+var datePGapproveOrder
 var typeOfOrder
 var currlocation
-var zone
+var zonePGapproveOrder
+var orderWrapper
+var items
+const CREATE_ORDER= buildUrlWithContextPath("creatOrder")
 
 $(document).ready(function() {
     initializeGlobalVariables()
@@ -25,22 +28,25 @@ $(document).ready(function() {
 })
 function initializeGlobalVariables() {//initialize all the global vars used in this page for later use
     zone = decodeURI(GetURLParameter("zonename"))
-    date = decodeURI(GetURLParameter("date"))
+    datePGapproveOrder = decodeURI(GetURLParameter("date"))
     typeOfOrder = decodeURI(GetURLParameter("type"))
     var xCor =  GetURLParameter("xCor")
     var yCor = GetURLParameter("yCor")
     currlocation = JSON.stringify({"x":xCor,"y":yCor})
-    var data = decodeURI(GetURLParameter("varid")) //gets the object passed from the last page
-    var jsonOrder = atob(data);//decodes it
-    creatOrderJsObject(jsonOrder)//creates a JS order object
-
+    var data = decodeURI(GetURLParameter("varid")) //gets the coded object passed from the last page
+    orderWrapper = atob(data);//decodes it to a string
+    creatOrderJsObject(orderWrapper)//creates a JS order object
+    items = atob(GetURLParameter("orderAfterDiscount"))
+    items = JSON.parse(items)
 }
 function approveOrder(){
+    var store = currOrderPGapproveOrder.allStores[0].id
+    store = JSON.stringify(store)
+    items = items.replace(/\\\//g, "");
     $.ajax({
         url: CREATE_ORDER,
         dataType: 'json',
-        data: {'zonename': zone, 'location': location, 'items': currOrderPGapproveOrder, 'date': date, 'type': typeOfOrder, 'store': store, 'approved': true },
-        type: 'POST',
+        data: {'zonename': zone, 'location': currlocation, 'items': items, 'date': datePGapproveOrder, 'type': typeOfOrder, 'approved': true , 'store': store},
         success: function (){
             console.log("order was good assss bro")
             goToFeedbackPg()
@@ -49,6 +55,7 @@ function approveOrder(){
             console.log("dani zion")
         }
     })
+
 }
 
 function cancelOrder() {
@@ -66,6 +73,8 @@ function creatOrderJsObject(JsonOrder) {
     var wrapper = JSON.parse(JsonOrder); //parse the json recieved to a JS object
     currOrderPGapproveOrder = wrapper.order
     currDiscountsPGapproveOrder = wrapper.discount
+    orderWrapper = wrapper
+
 }
 
 function createItemsTable(items) {
@@ -140,8 +149,7 @@ function GetURLParameter(sParam) {
 }
 
 function goToFeedbackPg(){
-
-    window.location = "/feedback.html.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type;
-
+    var stores = currOrderPGapproveOrder.allStores
+    window.location = "/feedback.html.html?&zonename="+zonePGapproveOrder+"&date="+datePGapproveOrder+"&type="+type+"&stores="+stores;
 }
 

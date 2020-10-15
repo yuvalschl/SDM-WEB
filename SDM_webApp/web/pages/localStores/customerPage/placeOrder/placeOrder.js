@@ -536,11 +536,11 @@ function ajaxCreatOrder() {
                 }
                 else{
                     showedDiscounts = true
-                    goToOrderApprovePg(wrapper)
+                    goToOrderApprovePg(wrapper,items)
                 }
 
             }else {
-                goToOrderApprovePg(wrapper)
+                goToOrderApprovePg(wrapper,items)
             }
         },
         error : function (){
@@ -550,13 +550,15 @@ function ajaxCreatOrder() {
 
 }
 
-function goToOrderApprovePg(order){
+function goToOrderApprovePg(order, itemsToSend){
     var json = JSON.stringify(order)
     var dataObjectBase64 = btoa(json);
     var date = $("#datepicker").val()
     var stringOrderAfterDiscount = JSON.stringify(currentOrder);
     var orderAfterDiscount = btoa(stringOrderAfterDiscount);
+    var StringItemToSend = JSON.stringify(itemsToSend)
+    var itemsEncoded = btoa(StringItemToSend);
     var type = isDynamicOrder === true ? "dynamic":"static"
-    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor+"&orderAfterDiscount="+orderAfterDiscount;
+    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor+"&orderAfterDiscount="+itemsEncoded;
 }
 

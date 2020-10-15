@@ -54,6 +54,7 @@ public class CreatOrderServlet extends HttpServlet {
             String locationString = req.getParameter("location");
             Point location = gson.fromJson(locationString, Point.class);
             String itemsString = req.getParameter("items");
+            System.out.println(itemsString);
             LinkedHashMap itemsJSN = gson.fromJson(itemsString, LinkedHashMap.class);
             itemsJSN = (LinkedHashMap) itemsJSN.get("_items");
             HashMap<Integer, ItemAmountAndStore> items = new HashMap<Integer, ItemAmountAndStore>();
@@ -82,24 +83,23 @@ public class CreatOrderServlet extends HttpServlet {
             if(orderApproved){
                currZoneManager.placeOrder(order);
             }
-            else{
-                ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
-                ArrayList<DiscountDto> discountDtos = new ArrayList<>();
-                ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
-                for (Discount discount: discounts){
-                    Map<Integer, Item> currentStoreInventory = currZoneManager.getAllStores().get(discount.getStoreId()).getInventory();
-                    for(Offer offer : discount.getThenYouGet().getAllOffers()){
-                        // getting the item name in the offer
-                        offerDto.add(new OfferDto(offer, currentStoreInventory.get(offer.getItemId()).getName()));
-                    }
-                    discountDtos.add(new DiscountDto(discount, offerDto, currentStoreInventory.get(discount.getIfYouBuy().getItemId()).getName()));
+            ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
+            ArrayList<DiscountDto> discountDtos = new ArrayList<>();
+            ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
+            for (Discount discount: discounts){
+                Map<Integer, Item> currentStoreInventory = currZoneManager.getAllStores().get(discount.getStoreId()).getInventory();
+                for(Offer offer : discount.getThenYouGet().getAllOffers()){
+                    // getting the item name in the offer
+                    offerDto.add(new OfferDto(offer, currentStoreInventory.get(offer.getItemId()).getName()));
                 }
-                OrderDTO orderDTO = createOrderDTO(order,currZoneManager);
-                OrderAndDiscountWrapperDTO orderAndDiscountDTO = wrapOrderAndDiscounts(orderDTO, discountDtos);
-                String json = gson.toJson(orderAndDiscountDTO);
-                out.println(json);
-                out.flush();
+                discountDtos.add(new DiscountDto(discount, offerDto, currentStoreInventory.get(discount.getIfYouBuy().getItemId()).getName()));
             }
+            OrderDTO orderDTO = createOrderDTO(order,currZoneManager);
+            OrderAndDiscountWrapperDTO orderAndDiscountDTO = wrapOrderAndDiscounts(orderDTO, discountDtos);
+            String json = gson.toJson(orderAndDiscountDTO);
+            out.println(json);
+            out.flush();
+
 
         }
         catch (Exception e){
