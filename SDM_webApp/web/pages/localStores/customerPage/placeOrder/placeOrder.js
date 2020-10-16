@@ -551,6 +551,7 @@ function ajaxCreatOrder() {
 }
 
 function goToOrderApprovePg(order, itemsToSend){
+    var userName = $('#userNameText').text()
     var json = JSON.stringify(order)
     var dataObjectBase64 = btoa(json);
     var date = $("#datepicker").val()
@@ -559,6 +560,6 @@ function goToOrderApprovePg(order, itemsToSend){
     var StringItemToSend = JSON.stringify(itemsToSend)
     var itemsEncoded = btoa(StringItemToSend);
     var type = isDynamicOrder === true ? "dynamic":"static"
-    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor+"&orderAfterDiscount="+itemsEncoded;
+    window.location = "approveOrder/approveOrder.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type+"&xCor="+xcor+"&yCor="+ycor+"&orderAfterDiscount="+itemsEncoded+"&username="+userName;
 }
 

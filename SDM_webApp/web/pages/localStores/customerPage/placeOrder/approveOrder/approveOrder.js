@@ -148,8 +148,17 @@ function GetURLParameter(sParam) {
     }
 }
 
+function createStoresIdString() {
+    var storesID = ""
+    for(var i=0; i < currOrderPGapproveOrder.allStores.length ; i++){
+        storesID += currOrderPGapproveOrder.allStores[i].id+" "
+    }
+    return btoa(storesID)
+}
+
 function goToFeedbackPg(){
-    var stores = currOrderPGapproveOrder.allStores
-    window.location = "/feedback.html.html?&zonename="+zonePGapproveOrder+"&date="+datePGapproveOrder+"&type="+type+"&stores="+stores;
+    var stores = createStoresIdString()
+    var userName = decodeURI(GetURLParameter("username"))
+    window.location = "../../feedbackPage/feedback.html?&zonename="+zonePGapproveOrder+"&date="+datePGapproveOrder+"&stores="+stores+"&username="+userName;
 }
 

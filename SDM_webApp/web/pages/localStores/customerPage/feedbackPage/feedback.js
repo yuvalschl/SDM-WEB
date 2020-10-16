@@ -1,12 +1,14 @@
 const GET_STORES_BY_ID = buildUrlWithContextPath("getStoresById")
 const SEND_FEEDBACK_URL = buildUrlWithContextPath("sendFeedback")
-const stores = '1 2 3'
-const zone = 'Hasharon'
+var stores = atob(GetURLParameter("stores"))
+const zone = decodeURI(GetURLParameter("zonename"))
+const userName = decodeURI(GetURLParameter("username"))
 
 $(document).ready(function () {
     getStoresById()
     $("#backToMainPage").on('click', goToMainPage)
     $(document).on('click', '.addFeedback', addFeedback)
+    $('#userNameText').text(userName)
 })
 
 function buildStoreCards(orderStores){

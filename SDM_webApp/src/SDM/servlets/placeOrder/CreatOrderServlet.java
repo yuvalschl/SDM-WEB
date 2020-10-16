@@ -110,10 +110,7 @@ public class CreatOrderServlet extends HttpServlet {
     private void addDiscountItemsToOrder(HashMap<Integer, ItemAmountAndStore> itemsInOrder, LinkedHashMap itemsToAdd, StoreManager currZoneManager, int key) {
         for (Object val: itemsToAdd.values()){
             String name = (String) ((LinkedHashMap) val).get("_name");
-           //String idString = (int) ((LinkedHashMap) val).get("_id");
-            //String amountString = (String) ((LinkedHashMap) val).get("_amount");
             String storeIdString = (String) ((LinkedHashMap) val).get("_storeId");
-            //String priceString = (String) ((LinkedHashMap) val).get("_forAdditional");
             Double doubleId = (Double) ((LinkedHashMap) val).get("_id");
             int id = doubleId.intValue();
             Double amountDouble = (Double) ((LinkedHashMap) val).get("_amount");
