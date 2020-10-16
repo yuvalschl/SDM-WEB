@@ -3,6 +3,7 @@ var allOrders
 var currentStoreId
 
 $(document).ready(function (){
+
     //http request for getting the order history
     $.ajax({
         url: GET_STORES_HISTORY_URL,

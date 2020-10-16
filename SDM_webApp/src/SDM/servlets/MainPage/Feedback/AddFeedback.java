@@ -21,8 +21,10 @@ public class AddFeedback extends HttpServlet {
             String userName = SessionUtils.getUsername(req);
             String feedback = req.getParameter("feedback");
             int rating = Integer.parseInt(req.getParameter("rating"));
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(req.getParameter("date"));
-            Feedback feedbackToAdd = new Feedback(rating, feedback, date, userName);
+            //TODO: fix the date
+            String date = req.getParameter("date");
+            Date date1 = new Date();
+            Feedback feedbackToAdd = new Feedback(rating, feedback, date1, userName);
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String zoneName = req.getParameter("zoneName");
             StoreManager currentZone = allZonesManager.getStoreMangerForZone(zoneName);

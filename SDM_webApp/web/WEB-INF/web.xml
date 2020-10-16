@@ -72,6 +72,14 @@
         <servlet-name>StoresHistoryServlet</servlet-name>
         <servlet-class>SDM.servlets.MainPage.OwnerServlets.StoresHistoryServlet.StoresHistoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OwnerFeedbackServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.OwnerServlets.OwnerFeedbacks.OwnerFeedbackServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetOwnerStoresInZone</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.OwnerServlets.OwnerFeedbacks.GetOwnerStoresInZone</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>ItemNamePriceAndId</servlet-name>
@@ -140,6 +148,14 @@
     <servlet-mapping>
         <servlet-name>StoresHistoryServlet</servlet-name>
         <url-pattern>/getStoresHistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OwnerFeedbackServlet</servlet-name>
+        <url-pattern>/getOwnerFeedbacks</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetOwnerStoresInZone</servlet-name>
+        <url-pattern>/getStoresFromZone</url-pattern>
     </servlet-mapping>
 
 </web-app>
