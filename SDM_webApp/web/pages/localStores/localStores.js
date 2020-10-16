@@ -46,7 +46,6 @@ function updateTableSingleEntry(index, itemInfo){
         "</tr>");
 }
 
-
 function ajaxItemTableData(){
     var zone = GetURLParameter("zonename");
     $.ajax({
@@ -94,6 +93,7 @@ function updateTable(table){
     $("#tableBody").empty()
     $.each(table || [], updateTableSingleEntry)
 }
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');

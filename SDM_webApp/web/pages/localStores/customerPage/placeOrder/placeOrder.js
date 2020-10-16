@@ -355,6 +355,7 @@ function ajaxItemTableData(){
         }
     })
 }
+
 function updateTable(index, table){
     if(itemHeaderForStaticOrderAdded && isDynamicOrder){
     $("tr").each(function() {
