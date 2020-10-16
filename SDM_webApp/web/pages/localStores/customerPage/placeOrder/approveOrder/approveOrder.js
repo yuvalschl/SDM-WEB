@@ -3,7 +3,7 @@ var currDiscountsPGapproveOrder
 var datePGapproveOrder
 var typeOfOrder
 var currlocation
-var zonePGapproveOrder
+var zone
 var orderWrapper
 var items
 const CREATE_ORDER= buildUrlWithContextPath("creatOrder")
@@ -59,7 +59,9 @@ function approveOrder(){
 }
 
 function cancelOrder() {
+    var userName = decodeURI(GetURLParameter("username"))
 
+    window.location = "../../../localStores.html?&zonename="+zone+"&username="+userName;
 }
 function getStoreByName(storeName) {//gets the store object by its name
     for(var i=0; i< currOrderPGapproveOrder.allStores.length;i++){
@@ -69,6 +71,7 @@ function getStoreByName(storeName) {//gets the store object by its name
 
     }
 }
+
 function creatOrderJsObject(JsonOrder) {
     var wrapper = JSON.parse(JsonOrder); //parse the json recieved to a JS object
     currOrderPGapproveOrder = wrapper.order
@@ -159,6 +162,6 @@ function createStoresIdString() {
 function goToFeedbackPg(){
     var stores = createStoresIdString()
     var userName = decodeURI(GetURLParameter("username"))
-    window.location = "../../feedbackPage/feedback.html?&zonename="+zonePGapproveOrder+"&date="+datePGapproveOrder+"&stores="+stores+"&username="+userName;
+    window.location = "../../feedbackPage/feedback.html?&zonename="+zone+"&date="+datePGapproveOrder+"&stores="+stores+"&username="+userName;
 }
 

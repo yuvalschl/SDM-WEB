@@ -81,6 +81,16 @@
         <servlet-class>SDM.servlets.MainPage.OwnerServlets.OwnerFeedbacks.GetOwnerStoresInZone</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>getAccountServlet</servlet-name>
+        <servlet-class>SDM.servlets.Account.getAccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getAccountServlet</servlet-name>
+        <url-pattern>/getAccount</url-pattern>
+    </servlet-mapping>
+
+
     <servlet-mapping>
         <servlet-name>ItemNamePriceAndId</servlet-name>
         <url-pattern>/getItemNamePriceAndID</url-pattern>

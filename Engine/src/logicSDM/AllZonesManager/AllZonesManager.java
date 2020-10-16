@@ -1,7 +1,7 @@
 package logicSDM.AllZonesManager;
 
 import logicSDM.StoreManager.StoreManager;
-import users.SingelUserEntry;
+//import users.SingelUserEntry;
 
 import java.util.Collections;
 import java.util.HashMap;

@@ -24,8 +24,16 @@ $(document).ready(function() {
         //if(checkIfCustomer())
             placeOrderPage()
     });
+
+    $(document).on('click', "#account", function(){
+        //if(checkIfCustomer())
+        goToAccountPg()
+    });
 });
 
+function goToAccountPg() {
+    window.location = "../localStores/Account/account.html?userType=" +userType;
+}
 
 function updateTableSingleEntry(index, itemInfo){
     userName = itemInfo.userName

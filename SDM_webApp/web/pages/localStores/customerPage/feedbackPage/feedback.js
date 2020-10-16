@@ -37,7 +37,7 @@ function getStoresById(){
     $.ajax({
         url: GET_STORES_BY_ID,
         dataType: 'json',
-        data:{'orderStores': stores, "zoneName": "Hasharon"},
+        data:{'orderStores': stores, "zoneName": zone},
         success: function (stores){
             buildStoreCards(stores)
         }

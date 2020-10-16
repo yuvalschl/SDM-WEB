@@ -62,9 +62,9 @@ public class CreatOrderServlet extends HttpServlet {
             for (Object val: itemsJSN.values()){
                 String name = (String) ((LinkedHashMap) val).get("_name");
                 String idString = (String) ((LinkedHashMap) val).get("_id");
-                String amountString = (String) ((LinkedHashMap) val).get("_amount");
+                Double amountString = (Double) ((LinkedHashMap) val).get("_amount");
                 int id = Integer.parseInt(idString);
-                int amount = Integer.parseInt(amountString);
+                float amount = amountString.floatValue();
                 ItemAmountAndStore currItemAmounAndStore;
                 if(typeOfOrder.equals("dynamic") ){
                     currItemAmounAndStore = currZoneManager.getCheapestItem(id);

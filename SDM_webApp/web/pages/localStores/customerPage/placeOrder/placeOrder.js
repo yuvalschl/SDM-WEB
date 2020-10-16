@@ -150,6 +150,7 @@ $(document).ready(function() {
 
 
         }
+
     })
 
     $(document).on('change', "#storesDropDown", function(){
@@ -176,7 +177,11 @@ $(document).ready(function() {
 //end of onload
 
 
-
+function disableInfo() {
+    $('#dynamicRadioButton').attr("disabled", true);
+    $('#staticRadioButton').attr("disabled", true);
+    $(' #storesDropDown').attr("disabled", true);
+}
 function addToAvailableItems(index, data) {
     availableItems[data.id] = {
         'id': data.id,
@@ -259,20 +264,23 @@ function updateCart(rowID, partOfDiscount) {
     var itemName =  $("#tableRow" + rowID ).find('td')[1].textContent
     var itemID = $("#tableRow" + rowID ).find('td')[0].textContent
     var inputID = "#amountInput"+rowID
-    var itemAmount = $(inputID).val()
-    var cartType = partOfDiscount === true ? currentOrder.discountItems : currentOrder.items
-    if(itemAmount !== "0") {
-        if (!checkIfItemExistInCart(itemID, false)) {
-            var cartTableRowId = "id = cartRowItemId" + itemID
-            var rowToAppend = "<tr " + cartTableRowId + ">" +
-                "<td >" + itemName + "</td>" +
-                "<td>" + itemAmount + "</td>"
-                + "</tr>";
-            $("#cartTable").append(rowToAppend)
-            cartType[itemID] = new item(itemName, itemID, itemAmount, false)
-        } else{
-            addToCartAmount(itemID, itemAmount,false)
-            cartType[itemID].addToAmount(itemAmount)
+    var itemAmount = parseFloat($(inputID).val())
+    if(!isNaN(itemAmount)){//if the amount to be added to cart is not nan
+        var cartType = partOfDiscount === true ? currentOrder.discountItems : currentOrder.items
+        if(itemAmount !== 0) {
+            disableInfo()//once the user has added an item all the information (date coordinate etc...) will be disabled
+            if (!checkIfItemExistInCart(itemID, false)) {
+                var cartTableRowId = "id = cartRowItemId" + itemID
+                var rowToAppend = "<tr " + cartTableRowId + ">" +
+                    "<td >" + itemName + "</td>" +
+                    "<td>" + itemAmount + "</td>"
+                    + "</tr>";
+                $("#cartTable").append(rowToAppend)
+                cartType[itemID] = new item(itemName, itemID, itemAmount, false)
+            } else{
+                addToCartAmount(itemID, itemAmount,false)
+                cartType[itemID].addToAmount(itemAmount)
+            }
         }
     }
 }
@@ -309,14 +317,14 @@ function checkIfItemExistInCart(itemID, isPartOfDiscount) {
 }
 
 function showDropDown() {
-
-       var isRadioBtnOn =$("input[name='orderType']:checked").val();
-        if(isRadioBtnOn === "on" && !dropdownHappend){
-            dropdownHappend = true;
-            $("#dropDownRow").append(dropdown);
-            ajaxGetStores()
-            isDynamicOrder = false
-        }
+   $('#itemTableBody').empty()
+   var isRadioBtnOn =$("input[name='orderType']:checked").val();
+    if(isRadioBtnOn === "on" && !dropdownHappend){
+        dropdownHappend = true;
+        $("#dropDownRow").append(dropdown);
+        ajaxGetStores()
+        isDynamicOrder = false
+    }
 }
 function hideDropDown() {
     $("#dropDownRow").empty();
@@ -380,7 +388,6 @@ function updateTableSingleEntryDynamicOrder(itemInfo) {
     var ID = itemInfo.id
     var className
     var sellByUnit = itemInfo.sellBy === "UNIT" ? className = "quantity" : className = ""
-
     var rowToAppend = "<tr" + " id =" + "\"" + stringRowID + "\"" + " >" +
         "<td>" + ID + "</td>" +
         "<td" + " id =" + "\"" + nameColID + "\"" + ">" + itemName + "</td>";
@@ -400,6 +407,7 @@ function updateTableSingleEntryDynamicOrder(itemInfo) {
     rowToAppend+"</tr>";
     $("#itemTableBody").append("");
     $("#itemTableBody").append(rowToAppend);
+
 }
 
 function setInputMinVal(){
@@ -507,7 +515,7 @@ function createThenYouGetDropDown(thenYouGet, discountName){
 function createThenYouGetLabels(thenYouGet) {
     var val = ""
     $.each(thenYouGet.allOffers || [], function (index, offer){
-        val += "<span id='" + offer.id + "'>" + offer.itemName + "</span>"
+        val += "<span id='" + offer.id + "'> " +offer.amount+" "+ offer.itemName + "</span>"
     })
     return val
 }

@@ -1,6 +1,8 @@
 package users;
 
 import logicSDM.Order.Order;
+import logicSDM.balance.Balance;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,5 +23,22 @@ public class Clinet extends  SingelUserEntry {
         this.orderHistory = orderHistory;
     }
 
-    public boolean isOwner(){return false;};
+
+    public String getName() {
+      return   super.getName();
+    }
+
+    public void setName(String name) {
+       super.setName(name);
+    }
+
+    public Balance getBalance() {
+
+        return super.getBalance();
+    }
+
+    public void setBalance(Balance balance) {
+       super.setBalance(balance);
+    }
+
 }

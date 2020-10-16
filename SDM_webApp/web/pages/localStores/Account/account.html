@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>approve order</title>
+
+    <script src="../../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../../common/context-path-helper.js"></script>
+    <script src="../../../common/jquery-ui.js"></script>
+    <script src="account.js"></script>
+    <link rel="stylesheet" href="../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../common/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" href="account.css">
+</head>
+<body>
+<div class="px-4 px-lg-0">
+    <!-- For demo purpose -->
+    <div class="container text-white py-5 text-center">
+        <h1 class="display-4">ACCOUNT</h1>
+    </div>
+    <!-- End -->
+
+    <div class="pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+                    <!-- stores table -->
+                    <div class="table-responsive">
+                        <h3 class="font-italic mb-4 text-center" >Your account activity</h3>
+                        <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold row balance" style="width: 448px;margin-left: 290px;">
+                            <div class="col2">
+                                <ul>Current balance:</ul>
+                            </div>
+                            <div class="col2">
+                                 <ul id="balance" style="padding-left: 120px;"></ul>
+                            </div>
+                        </div>
+
+                        <table class="table " id ="actionTable">
+                            <thead>
+                            <tr>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="p-2 px-3 text-uppercase">Type of action</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Date of action</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Amount</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Balance before action</div>
+                                </th>
+                                <th scope="col" class="border-0 bg-light">
+                                    <div class="py-2 text-uppercase">Balance after action</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End -->
+                </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
