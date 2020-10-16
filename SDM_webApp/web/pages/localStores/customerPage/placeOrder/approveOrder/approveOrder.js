@@ -1,5 +1,5 @@
-var currOrder
-var currDiscounts
+var currOrderPGapproveOrder
+var currDiscountsPGapproveOrder
 var date
 var typeOfOrder
 var currlocation
@@ -17,10 +17,12 @@ $(document).ready(function() {
     $(document).on('click', '#approvedBtn', function () {
         approveOrder()
     });
+    $(document).on('click', '#CancelBtn', function () {
+        cancelOrder()
+    });
 
 
 })
-
 function initializeGlobalVariables() {//initialize all the global vars used in this page for later use
     zone = decodeURI(GetURLParameter("zonename"))
     date = decodeURI(GetURLParameter("date"))
@@ -37,28 +39,33 @@ function approveOrder(){
     $.ajax({
         url: CREATE_ORDER,
         dataType: 'json',
-        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': typeOfOrder, 'store': store },
+        data: {'zonename': zone, 'location': location, 'items': currOrderPGapproveOrder, 'date': date, 'type': typeOfOrder, 'store': store, 'approved': true },
         type: 'POST',
-        success: function (discounts){
-            console.log("order was good as bro")
+        success: function (){
+            console.log("order was good assss bro")
+            goToFeedbackPg()
         },
         error : function (){
             console.log("dani zion")
         }
     })
 }
+
+function cancelOrder() {
+
+}
 function getStoreByName(storeName) {//gets the store object by its name
-    for(var i=0; i< currOrder.allStores.length;i++){
-        if(currOrder.allStores[i].name === storeName){
-            return currOrder.allStores[i]
+    for(var i=0; i< currOrderPGapproveOrder.allStores.length;i++){
+        if(currOrderPGapproveOrder.allStores[i].name === storeName){
+            return currOrderPGapproveOrder.allStores[i]
         }
 
     }
 }
 function creatOrderJsObject(JsonOrder) {
     var wrapper = JSON.parse(JsonOrder); //parse the json recieved to a JS object
-    currOrder = wrapper.order
-    currDiscounts = wrapper.discount
+    currOrderPGapproveOrder = wrapper.order
+    currDiscountsPGapproveOrder = wrapper.discount
 }
 
 function createItemsTable(items) {
@@ -85,8 +92,8 @@ function appendRowToItemstable(index, item) {
 }
 
 function presentStores(){
-    for(var i=0; i< currOrder.allStores.length;i++){
-        var currStore = currOrder.allStores[i];
+    for(var i=0; i< currOrderPGapproveOrder.allStores.length;i++){
+        var currStore = currOrderPGapproveOrder.allStores[i];
         appendRowToStoresTable(currStore);
     }
 }
@@ -114,11 +121,11 @@ function appendRowToStoresTable(store) {
     $("#storeTable").append(rowToAppend)
 }
 
-//TODO:enter the real number instead of 120 121 122
+
 function createOrderSummery() {
-    $("#Order-Subtotal").text(currOrder.totalItemCost)
-    $("#Shipping-total").text(currOrder.shippingTotal)
-    $("#total").text(currOrder.orderTotal)
+    $("#Order-Subtotal").text(currOrderPGapproveOrder.totalItemCost)
+    $("#Shipping-total").text(currOrderPGapproveOrder.shippingTotal)
+    $("#total").text(currOrderPGapproveOrder.orderTotal)
 }
 
 function GetURLParameter(sParam) {
@@ -130,5 +137,11 @@ function GetURLParameter(sParam) {
             return sParameterName[1];
         }
     }
+}
+
+function goToFeedbackPg(){
+
+    window.location = "/feedback.html.html?&varid=" + dataObjectBase64 +"&zonename="+zone+"&date="+date+"&type="+type;
+
 }
 
