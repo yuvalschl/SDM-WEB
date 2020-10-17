@@ -10,3 +10,7 @@ td{
 .balance{
     margin-bottom: 20px;
 }
+:focus {
+    outline:none;
+    border: 0;
+}

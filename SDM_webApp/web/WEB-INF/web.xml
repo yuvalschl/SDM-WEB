@@ -89,6 +89,14 @@
         <servlet-name>getAccountServlet</servlet-name>
         <url-pattern>/getAccount</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DepositServlet</servlet-name>
+        <servlet-class>SDM.servlets.Account.DepositServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DepositServlet</servlet-name>
+        <url-pattern>/deposit</url-pattern>
+    </servlet-mapping>
 
 
     <servlet-mapping>

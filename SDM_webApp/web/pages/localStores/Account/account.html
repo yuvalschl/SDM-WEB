@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>approve order</title>
+    <title>ACCOUNT</title>
 
     <script src="../../../common/jquery-2.0.3.min.js"></script>
     <script src="../../../common/context-path-helper.js"></script>
@@ -33,11 +33,13 @@
                                 <ul>Current balance:</ul>
                             </div>
                             <div class="col2">
-                                 <ul id="balance" style="padding-left: 120px;"></ul>
+                                 <ul style="padding-left: 120px;" id="balance"></ul>
                             </div>
                         </div>
+                        <div id="deposit">
+                        </div>
 
-                        <table class="table " id ="actionTable">
+                        <table class="table " >
                             <thead>
                             <tr>
                                 <th scope="col" class="border-0 bg-light">
@@ -57,7 +59,7 @@
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id ="actionTable">
                             </tbody>
                         </table>
                     </div>

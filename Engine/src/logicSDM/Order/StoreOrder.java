@@ -49,8 +49,8 @@ public class StoreOrder {
         float priceToAddToTotalCost;
         float priceToAddToTotalItemCost;
         if (item.getIsPartOfDiscount()){
-            priceToAddToTotalCost = item.getOfferPrice();
-            priceToAddToTotalItemCost = item.getOfferPrice();
+            priceToAddToTotalCost = item.getItem().getPrice();
+            priceToAddToTotalItemCost = item.getItem().getPrice();
         }
         else{
             priceToAddToTotalCost = item.getStore().getInventory().get(item.getItemId()).getPrice() * item.getAmount();

@@ -1,10 +1,38 @@
+const DEPOSIT= buildUrlWithContextPath("deposit")
 const GET_ACCOUNT= buildUrlWithContextPath("getAccount")
+
 var isOwner = decodeURI(GetURLParameter("userType"))
 
 $(document).ready(function() {
     ajaxGetAccount()
+    presentDeposit()
+    setInterval(ajaxGetAccount, 2000)
+    $('#datepicker').datepicker({
+        uiLibrary: 'bootstrap4'
+    });
+    $('#depositBtn').on("click", deposit)
 })
 
+function deposit() {
+   var date = $('#datepicker').val();
+   var amountToDeposit = $('#depositText').val();
+    amountToDeposit = parseFloat(amountToDeposit)
+   if(!isNaN(amountToDeposit) && date !==""){
+       $.ajax({
+           url: DEPOSIT,
+           dataType: 'json',
+           data: {'date': date, 'amount':amountToDeposit},
+           success: function (balance){
+               console.log("request was good assss bro")
+               presentDeposit(isOwner)
+               showBalance(balance)
+           },
+           error : function (){
+               console.log("dani zion")
+           }
+       })
+   }
+}
 function ajaxGetAccount() {
    if(isOwner !== "true"){
        isOwner = null
@@ -16,6 +44,7 @@ function ajaxGetAccount() {
         success: function (balance){
             console.log("request was good assss bro")
             CreateTable(balance);
+            //presentDeposit(isOwner)
         },
         error : function (){
             console.log("dani zion")
@@ -23,13 +52,36 @@ function ajaxGetAccount() {
     })
 }
 
-function CreateTable(balance) {
-    var currBalance = balance.balance
-    $('#balance').text(currBalance)
-    $.each(balance.balanceActions || [], appendRowToActionTable)
+function presentDeposit() {
+    if(isOwner !== "true"){
+        var rowToAppend = " <div class=\"bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold row\" style=\"width: 700px;margin-left: 290px;margin-bottom: 20px;\">\n" +
+            "                                <div class=\"col2\">\n" +
+            "                                    <ul style=\"margin-bottom: 0px;padding-left: 0px;\">Deposit money to account:</ul>\n" +
+            "                                </div>\n" +
+            "                                <div class=\"col2\">\n" +
+            "                                    <input  id=\"depositText\" style=\"border-radius: 1rem;padding-left: 10px; ;margin-left: 1px;width: 96px; border: none;\">\n" +
+            "                                    <button type=\"button\" id=\"depositBtn\" class=\"btn btn-primary btn-sm\" style=\"width: 53px; padding-left: 1px;padding-right: 1px;padding-top: 0px; padding-bottom: 0px;border-bottom-width: 0px;border-top-width: 0px;border-left-width: 0px;border-right-width: 0px;\">deposit</button>\n" +
+            "                                </div>\n" +
+            "                                <div class=\"col2\">\n" +
+            "                                    <span style=\"margin-left: 5px\">Date: </span>\n" +
+            "                                    <input id=\"datepicker\" width=\"276\" readonly=\"true\" style=\"border: none\"/>\n" +
+            "                                </div>\n" +
+            "                            </div>"
+        $("#deposit").append(rowToAppend)
+    }
 }
 
+function CreateTable(balance) {
+    showBalance(balance)
+    $("#actionTable").empty()
+    $.each(balance.balanceActions || [], appendRowToActionTable)
+}
+function showBalance(balance) {
+    var currBalance = balance.balance
+    $('#balance').text(currBalance)
+}
 function appendRowToActionTable(index, action) {
+
     var beforeAction = action.balanceBeforeAction
     var afterAction = action.balanceAfterAction
     var amount = Math.abs(beforeAction - afterAction)
