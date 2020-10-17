@@ -122,6 +122,7 @@ $(document).ready(function() {
     $(document).on('change', ".discountDropDown", function (){
         $(this).find('option[value=pickAnItem]').remove();
         var rowId = 'row' + $(this).attr('id').slice(8) //generate the row id
+        rowId = rowId.replace(/[^a-zA-Z ]/g, "")
         var json = JSON.parse($(this).val()) // $(this) refers to button that was clicked //value is the forAdditional of the discount
         $("#"+rowId).find('td').eq(3).text(json.forAdditional)
         currDiscountItem.amount = json.itemAmount
@@ -132,7 +133,7 @@ $(document).ready(function() {
 
     $(document).on('click', ".addDiscount", function (){
         var discountName = $(this).attr('id').slice(6)
-        discountName.replace(/[^a-zA-Z ]/g, "")
+         discountName.replace(/[^a-zA-Z ]/g, "")
         var storeId = $("#"+'row'+discountName).find('td').eq(0).attr('id')
         var forAdditional = parseInt($("#"+'row'+discountName).find('td').eq(3).text())
         currentOrder._amountAddedByDiscounts += forAdditional//add the for additional to the amount added to order by discounts
@@ -476,6 +477,7 @@ function addDiscountToTable(index, discount){
     var thenYouGet
     var forAdditional = ""
     var discountNameNoSpaces = name.replace(/\s+/g, '') //removes the spces from the zone name
+    discountNameNoSpaces = discountNameNoSpaces.replace(/[^a-zA-Z ]/g, "")
     //TODO: check spelling
     if(discount.thenYouGet.operator === "All or nothing" || discount.thenYouGet.operator === 'irrelevant'){
         thenYouGet = createThenYouGetLabels(discount.thenYouGet)

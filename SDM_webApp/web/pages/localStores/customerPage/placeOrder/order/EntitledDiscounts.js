@@ -7,6 +7,8 @@ class EntitledDiscounts {
             var discountMap = new Map
             for(var i=0;i<discounts.length;i++){
                 var discountNameNoSpaces = discounts[i].name.replace(/\s+/g, '')
+                discountNameNoSpaces =discountNameNoSpaces.replace(/[^a-zA-Z ]/g, "")
+
                 discountMap[discountNameNoSpaces] = calcSingleDiscount(currentOrder, discounts[i])
             }
 

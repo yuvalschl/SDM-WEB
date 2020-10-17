@@ -23,3 +23,9 @@ table#sourcetable tbody  tr {
 #nextButton{
     float: right;
 }
+#WatchNews{
+    margin-top: 50px;
+}
+.ListForWatchFeedbackOfRide{
+    padding-left: 0;
+}
