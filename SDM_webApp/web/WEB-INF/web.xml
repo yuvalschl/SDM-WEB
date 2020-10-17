@@ -84,11 +84,16 @@
         <servlet-name>AddStoreServlet</servlet-name>
         <servlet-class>SDM.servlets.MainPage.OwnerServlets.AddStore.AddStoreServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>getAccountServlet</servlet-name>
         <servlet-class>SDM.servlets.Account.getAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationsServlet</servlet-name>
+        <servlet-class>SDM.servlets.NotificationsServlet</servlet-class>
+    </servlet>
+
+
     <servlet-mapping>
         <servlet-name>getAccountServlet</servlet-name>
         <url-pattern>/getAccount</url-pattern>
@@ -101,8 +106,6 @@
         <servlet-name>DepositServlet</servlet-name>
         <url-pattern>/deposit</url-pattern>
     </servlet-mapping>
-
-
     <servlet-mapping>
         <servlet-name>ItemNamePriceAndId</servlet-name>
         <url-pattern>/getItemNamePriceAndID</url-pattern>
@@ -182,6 +185,10 @@
     <servlet-mapping>
         <servlet-name>AddStoreServlet</servlet-name>
         <url-pattern>/addStore</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationsServlet</servlet-name>
+        <url-pattern>/getNotification</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -15,7 +15,7 @@ function showNotifications() {
         $('#WatchNews').empty()
         isNotificationsShown = false
     });
-    setInterval(ajaxGetNotifactions, 2000)
+
 }
 
 function ajaxGetNotifactions() {
@@ -24,7 +24,7 @@ function ajaxGetNotifactions() {
         url: GET_NOTIFICATION,
         dataType: 'json',
         success : function (notification){
-            if(!isNotificationsShown && notification.msg.length !==0){
+            if(!isNotificationsShown && notification.length !==0){
                 showNotifications()
                 isNotificationsShown = true
             }

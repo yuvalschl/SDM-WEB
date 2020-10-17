@@ -8,7 +8,8 @@ var isOwner
 var pickedUp //the zone selected
 
 $(document).ready(function (){
-    ajaxGetNotifactions()//taken from the notification script
+    setInterval(ajaxGetNotifactions, 2000)
+/*    ajaxGetNotifactions()//taken from the notification script*/
     ajaxGetAllUsers()
     ajaxZoneTableData()
     setInterval(ajaxGetAllUsers, refreshRate);

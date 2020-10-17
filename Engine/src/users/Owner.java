@@ -38,7 +38,7 @@ public class Owner extends SingelUserEntry {
         for(int i = lastNotificationSent ; i < notifications.size() ; i++){
             notificationsToReturn.add(notifications.get(i));
         }
-
+        lastNotificationSent = notifications.size();
         return notificationsToReturn;
     }
 
