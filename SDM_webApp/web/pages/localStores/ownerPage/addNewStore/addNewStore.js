@@ -5,7 +5,7 @@ var xCoordinateValid = false
 var yCoordinateValid = false
 var PPK
 var storeName
-var zone = 'Hasharon' //TODO: remove this
+var zone = decodeURI(GetURLParameter("zonename"))
 
 
 $(document).ready(function (){

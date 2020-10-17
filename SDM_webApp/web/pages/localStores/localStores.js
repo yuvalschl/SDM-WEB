@@ -11,7 +11,7 @@ $(document).ready(function() {
     ajaxItemTableData();
     ajaxGetStores();
 
-    $(document).on('click', "#storesDropDown", function(){
+    $(document).on('change', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
@@ -44,7 +44,8 @@ $(document).ready(function() {
             //TODO:add this
         }
         else {
-            //TODO:add this
+            //add store page
+            window.location = "ownerPage/addNewStore/addNewStore.html?username=" + userName+"&zonename="+zoneName
         }
     });
 });

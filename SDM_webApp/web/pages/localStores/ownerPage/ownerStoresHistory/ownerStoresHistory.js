@@ -53,8 +53,8 @@ function getOrdersByStoreId(storeId) {
     return ordersToReturn
 }
 
-function addStoresToDropDown(id, name){
-    $("#storesDropDown").append("<option value=" + id + ">" + name + "</option")
+function addStoresToDropDown(index, store){
+    $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
 }
 
 

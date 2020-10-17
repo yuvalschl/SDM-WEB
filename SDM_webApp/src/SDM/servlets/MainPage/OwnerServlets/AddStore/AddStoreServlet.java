@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import logicSDM.Item.Item;
 import logicSDM.Store.Store;
 import logicSDM.StoreManager.StoreManager;
+import users.Owner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +28,7 @@ public class AddStoreServlet extends HttpServlet {
             Point storeLocation = new Point(Integer.parseInt(xFromParameter), Integer.parseInt(yFromParameter));
             String itemsFromParameter = req.getParameter("items");
             String zoneName = req.getParameter("zone");
+            Owner owner =  (Owner) ServletUtils.getUserManager(getServletContext()).getUsers().get(SessionUtils.getUsername(req));
             Gson gson = new Gson();
             ArrayList stringItems = gson.fromJson(itemsFromParameter, ArrayList.class);
             HashMap<Integer, Item> items = new HashMap<Integer, Item>();
@@ -40,7 +42,7 @@ public class AddStoreServlet extends HttpServlet {
                 items.put(id ,new Item(id, name, price, itemFromSystem.getSellBy()));
             }
             int maxId = storeManager.getAllStores().keySet().stream().max(Integer::compareTo).get();
-            storeManager.addNewStore(new Store(storeNameFromParameter, storeLocation, items, ppkFromParameter, maxId + 1));
+            storeManager.addNewStore(new Store(storeNameFromParameter, storeLocation, items, ppkFromParameter, maxId + 1, owner));
         }
         catch (Exception e){
             e.printStackTrace();
