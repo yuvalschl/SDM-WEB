@@ -5,6 +5,7 @@ import java.util.Date;
 public class BalanceAction {
 
 
+    private int orderID;
     private float balanceBeforeAction;
     private float balanceAfterAction;
     private String typeOfAction;
@@ -15,6 +16,14 @@ public class BalanceAction {
         this.balanceBeforeAction = balanceBeforeAction;
         this.typeOfAction = typeOfAction;
         this.dateOfAction = date;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
     public float getBalanceBeforeAction() {

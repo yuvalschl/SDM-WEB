@@ -50,7 +50,6 @@ $(document).ready(function() {
     });
 
     $(document).on('click', "#account", function(){
-        //if(checkIfCustomer())
         goToAccountPg()
     });
 });

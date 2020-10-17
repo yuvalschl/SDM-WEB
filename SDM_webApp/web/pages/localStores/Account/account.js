@@ -24,7 +24,6 @@ function deposit() {
            data: {'date': date, 'amount':amountToDeposit},
            success: function (balance){
                console.log("request was good assss bro")
-               presentDeposit(isOwner)
                showBalance(balance)
            },
            error : function (){
@@ -78,12 +77,12 @@ function CreateTable(balance) {
 }
 function showBalance(balance) {
     var currBalance = balance.balance
-    $('#balance').text(currBalance)
+    $('#balance').text(currBalance.toFixed(2))
 }
 function appendRowToActionTable(index, action) {
 
-    var beforeAction = action.balanceBeforeAction
-    var afterAction = action.balanceAfterAction
+    var beforeAction = action.balanceBeforeAction.toFixed(2)
+    var afterAction = action.balanceAfterAction.toFixed(2)
     var amount = Math.abs(beforeAction - afterAction)
     var rowToAppend ="      <tr>" +
         "                        <th scope='row'>" +
@@ -94,7 +93,7 @@ function appendRowToActionTable(index, action) {
         "                            </div>" +
         "                        </th>" +
         "                        <td class='align-middle'>"+action.dateOfAction+"</td>" +
-        "                        <td class='align-middle'>"+amount+"</td>" +
+        "                        <td class='align-middle'>"+amount.toFixed(2)+"</td>" +
         "                        <td class='align-middle'>"+beforeAction+"</td>" +
         "                        <td class='align-middle'>"+afterAction+"</td>" +
         "                    </tr>"

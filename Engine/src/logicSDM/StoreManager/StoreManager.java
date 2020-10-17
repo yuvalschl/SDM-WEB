@@ -7,6 +7,7 @@ import logicSDM.Order.*;
 import logicSDM.Store.Store;
 import logicSDM.Jaxb.XmlToObject;
 import logicSDM.Store.Discount.Discount;
+import logicSDM.balance.BalanceAction;
 import users.Clinet;
 import users.Owner;
 
@@ -228,6 +229,7 @@ public class StoreManager {
     public void placeOrder(Order order) {//finilaize the order after final approval, in this method we add the order to the order set and update the amount sold in allitems
 
         allOrders.add(order);
+        HashMap<String, Owner> storeOwners = new HashMap<>();//create a map of all the storeOwners
         order.getCustomer().getBalance().buy(order.getDateOfOrder(), order.getTotalCost());//update the customer's balance
         order.getCustomer().getOrderHistory().put(order.getOrderId(), order); // add the order to the user history
 
@@ -253,7 +255,19 @@ public class StoreManager {
                     ordersToAdd.addItemToOrder(item);
                 }
             }
-            store.getValue().getStoreOwner().getBalance().receivePayment(order.getDateOfOrder(),ordersToAdd.getTotalCost());//update the store owner balance
+            Owner currStoreOwner = store.getValue().getStoreOwner();
+            if (storeOwners.containsKey(currStoreOwner.getName())){//if the store owner already appears in the owners map update his balance and the action
+                for (BalanceAction action:  currStoreOwner.getBalance().getBalanceActions().values()){
+                    if(action.getOrderID() == order.getOrderId()){
+                       action.setBalanceAfterAction(action.getBalanceAfterAction() + ordersToAdd.getTotalCost());
+                       currStoreOwner.getBalance().setBalance(currStoreOwner.getBalance().getBalance()+ ordersToAdd.getTotalCost());
+                    }
+                }
+            }
+            else{
+                storeOwners.put(currStoreOwner.getName(),currStoreOwner);
+                currStoreOwner.getBalance().receivePayment(order.getDateOfOrder(),ordersToAdd.getTotalCost(), order.getOrderId());//update the store owner balance
+            }
             store.getValue().getAllOrders().put(ordersToAdd.getOrderId(), ordersToAdd);
             store.getValue().getStoreOwner().getAllOrders().add(ordersToAdd);
         }

@@ -38,8 +38,9 @@ public class Balance {
         balanceActions.put(++numberOfActions,balanceAction);
     }
 
-    public void receivePayment(Date dateOfAction, float amountSold){
+    public void receivePayment(Date dateOfAction, float amountSold, int orderID){
         BalanceAction balanceAction = new BalanceAction(balance, balance + amountSold, "receive payment", dateOfAction);
+        balanceAction.setOrderID(orderID);
         balance += amountSold;
         balanceActions.put(++numberOfActions,balanceAction);
     }
@@ -50,15 +51,5 @@ public class Balance {
         balanceActions.put(++numberOfActions,balanceAction);
     }
 
-    public static void main(String[] args) {
-        Date date = new Date();
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
-        String stringDate= DateFor.format(date);
 
-        Balance balance = new Balance();
-        balance.deposit(date,20);
-        balance.buy(date, 10);
-        balance.receivePayment(date, 10);
-
-    }
 }
