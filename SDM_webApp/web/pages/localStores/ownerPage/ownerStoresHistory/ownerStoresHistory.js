@@ -1,13 +1,15 @@
 const GET_STORES_HISTORY_URL = buildUrlWithContextPath("getStoresHistory")
 var allOrders
 var currentStoreId
+var zone = decodeURI(GetURLParameter("zonename"))
 
 $(document).ready(function (){
-
+    allOrders = []
     //http request for getting the order history
     $.ajax({
         url: GET_STORES_HISTORY_URL,
         dataType: 'json',
+        data: {'zone': zone},
         success: function (data){
             allOrders = data.allOrders
             $.each(data.allStores, addStoresToDropDown)
@@ -96,4 +98,15 @@ function appendRowToItemstable(index, item) {
 function createItemsTable(items) {
     $("#itemsTable").empty()
     $.each(items || [], appendRowToItemstable)
+}
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1];
+        }
+    }
 }

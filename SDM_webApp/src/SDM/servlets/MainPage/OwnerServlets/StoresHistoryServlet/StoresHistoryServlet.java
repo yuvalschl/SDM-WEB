@@ -30,8 +30,9 @@ public class StoresHistoryServlet extends HttpServlet {
             Owner owner = (Owner) (userManager.getUsers().get(userName));
             ArrayList<OrderHistoryDto> orderDtoMap = new ArrayList<>();
             ArrayList<StoreNameAndId> allStores = new ArrayList<>();
-            owner.getAllZones().forEach((zoneName, zone) -> zone.forEach((id, store) -> allStores.add(new StoreNameAndId(store.getName(), id))));
-            owner.getAllOrders().forEach(storeOrder -> orderDtoMap.add(new OrderHistoryDto(storeOrder)));
+            String zoneName = req.getParameter("zone");
+            owner.getAllZones().get(zoneName).forEach((id, store) -> allStores.add(new StoreNameAndId(store.getName(), id)));
+            owner.getAllZones().get(zoneName).forEach((id, store) -> store.getAllOrders().forEach((integer, storeOrder) -> orderDtoMap.add(new OrderHistoryDto(storeOrder))));
             Gson gson = new Gson();
             out.println(gson.toJson(new OrderAndStores(allStores, orderDtoMap)));
             out.flush();

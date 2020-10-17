@@ -26,7 +26,7 @@ $(document).ready(function() {
         }
         else {
             //store history page
-            window.location = "ownerPage/ownerStoresHistory/ownerStoresHistory.html"
+            window.location = "ownerPage/ownerStoresHistory/ownerStoresHistory.html?username=" + userName+"&zonename="+zoneName
         }
     });
 

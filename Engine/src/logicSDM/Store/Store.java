@@ -27,11 +27,12 @@ public class Store {
     private float totalPayment;
     private int numberOfItemsSold;
     private ArrayList<Feedback> feedbacks;
+    private String zoneName;
 
     /**
      * constructor used in the addNewStore method
      */
-    public Store(String storeName, Point storeLocation, Map<Integer, Item> storeInventory, float storePPK, int storeId, Owner owner) {
+    public Store(String storeName, Point storeLocation, Map<Integer, Item> storeInventory, float storePPK, int storeId, Owner owner, String zoneName) {
         this.name = storeName;
         this.serialNumber = storeId;
         this.location = storeLocation;
@@ -44,12 +45,14 @@ public class Store {
         this.allDiscounts = new HashSet<Discount>();
         this.feedbacks = new ArrayList<>();
         this.storeOwner = owner;
+        this.zoneName = zoneName;
     }
 
     /**
      * constractor for a new store from xml file
      */
-    public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders, Point location, float PPK, Set<Discount> discounts, Owner owner) {
+    public Store(String name, int serialNumber, Map<Integer, Item> inventory, Map<Integer, StoreOrder> allOrders,
+                 Point location, float PPK, Set<Discount> discounts, Owner owner, String zoneName) {
         this.name = name;
         this.serialNumber = serialNumber;
         this.inventory = inventory;
@@ -62,6 +65,7 @@ public class Store {
         this.storeOwner = owner;
         this.feedbacks = new ArrayList<>();
         allDiscounts.stream().forEach(discount -> discount.setStoreId(serialNumber));
+        this.zoneName = zoneName;
     }
 
     public int getNumberOfItemsSold() {

@@ -77,7 +77,7 @@ public class JaxbClassToStoreManager {
             if(!isLocationValid(currentStoreLocation)){
                 throw new InvalidValueException(store.getId() + "has invalid location");
             }
-            Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount, owner);
+            Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount, owner, zoneName);
             allStores.put(store.getId(), currentStore);
         }
         owner.getAllZones().put(zoneName, allStores);
