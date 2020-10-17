@@ -1,15 +1,18 @@
 const GET_ITEM_DATA = buildUrlWithContextPath("getItemNamePriceAndID")
+const ADD_STORE_URL = buildUrlWithContextPath('addStore')
 var store
 var xCoordinateValid = false
 var yCoordinateValid = false
 var PPK
 var storeName
+var zone = 'Hasharon' //TODO: remove this
 
 
 $(document).ready(function (){
     ajaxItemTableData()
     store = new addStore_store()
-    $("#addStore").prop("disabled", true);
+    var addStoreButton = $("#addStore")
+    addStoreButton.prop("disabled", true);
 
     $("#PPK").keyup(function () {
         PPK = $("#PPK").val()
@@ -65,8 +68,7 @@ $(document).ready(function (){
             }
         }
     );
-
-    $("#addStore").on('click', getValuesFromTable)
+    addStoreButton.on('click', addStore)
 })
 
 
@@ -105,13 +107,13 @@ function GetURLParameter(sParam) {
     }
 }
 
-function getValuesFromTable(){
-    store.PPK = $("#PPK").val()
+function addStore(){
+    store.ppk = $("#PPK").val()
     store.name = $("#storeName").val()
-    store.x = $("x-cor").val()
-    store.y = $("y-cor").val()
+    store.x = $("#x-cor").val()
+    store.y = $("#y-cor").val()
 
-    if(store.items.size === 0){
+    if(store.inventory.length === 0){
         $("#errorLabel").text('No items in store')
     }
 
@@ -122,11 +124,24 @@ function getValuesFromTable(){
             var name = $(this).children('td').eq(2).text()
             var price = $(this).children('td').eq(3).find(":input").val()
             if(price > 0){
-                store.items.set(id, new addStoreItem(id, name, price))
+                store.inventory.push(new addStoreItem(id, name, price))
             }
             else {
                 $("#errorLabel").text("Add a positive price for all the products")
             }
+        }
+    })
+    var dani = JSON.stringify(store.inventory)
+    $.ajax({
+        url: ADD_STORE_URL,
+        type: 'POST',
+        data: {'name': store.name, 'ppk': store.ppk, 'x': store.x, 'y': store.y, 'items': dani, 'zone': zone},
+        success: function () {
+            console.log('store Added')
+            window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zone
+        },
+        error: function () {
+            console.log('error in add store servlet')
         }
     })
 }

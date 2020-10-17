@@ -2,7 +2,7 @@ class addStore_store {
     constructor() {
         this._name = 0
         this._ppk = 0;
-        this._items = new Map()
+        this._inventory = []
         this._x = 0;
         this._y = 0;
     }
@@ -40,11 +40,11 @@ class addStore_store {
         this._ppk = value;
     }
 
-    get items() {
-        return this._items;
+    get inventory() {
+        return this._inventory;
     }
 
-    set items(value) {
-        this._items = value;
+    set inventory(value) {
+        this._inventory = value;
     }
 }

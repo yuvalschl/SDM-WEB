@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Owner extends SingelUserEntry {
     private ArrayList <StoreOrder> allOrders = new ArrayList<>();
-    private Map <Integer, Store> allStores = new HashMap<>();
+    private Map <String, Map<Integer, Store>> allZones = new HashMap<>();
 
     public Owner(String name){
         super(name);
@@ -27,11 +27,11 @@ public class Owner extends SingelUserEntry {
 
     public boolean isOwner(){return true;};
 
-    public Map<Integer, Store> getAllStores() {
-        return allStores;
+    public Map<String, Map<Integer, Store>> getAllZones() {
+        return allZones;
     }
 
-    public void setAllStores(Map<Integer, Store> allStores) {
-        this.allStores = allStores;
+    public void setAllZones(Map<String, Map<Integer, Store>> allZones) {
+        this.allZones = allZones;
     }
 }

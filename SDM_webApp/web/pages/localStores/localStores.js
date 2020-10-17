@@ -21,8 +21,31 @@ $(document).ready(function() {
     });
 
     $(document).on('click', "#firstBtnText", function(){
-        //if(checkIfCustomer())
+        if(checkIfCustomer()){
             placeOrderPage()
+        }
+        else {
+            //store history page
+            window.location = "ownerPage/ownerStoresHistory/ownerStoresHistory.html"
+        }
+    });
+
+    $(document).on('click', "#secondBtnText", function(){
+        if(checkIfCustomer()){
+            //TODO: add this
+        }
+        else {
+            showFeedbacks()
+        }
+    });
+
+    $(document).on('click', "#thirdBtnText", function(){
+        if(checkIfCustomer()){
+            //TODO:add this
+        }
+        else {
+            //TODO:add this
+        }
     });
 });
 
@@ -84,7 +107,7 @@ function loadCustomerUi(){
     $("#thirdBtnText").text("Your orders");
 }
 function loadOwnerUi(){
-    $("#firstBtnText").text("You store orders");
+    $("#firstBtnText").text("Your stores orders");
     $("#secondBtnText").text("Show feedbacks");
     $("#thirdBtnText").text("Open a new store");
 }
@@ -138,6 +161,11 @@ function ajaxGetStoreItems(storeId){
 function placeOrderPage(){
     window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName+"&zonename="+zoneName;
 }
+
+function showFeedbacks(){
+    window.location = "ownerPage/ownerFeedbacks/ownerFeedbacks.html?username=" + userName+"&zonename="+zoneName
+}
+
 
 /**
  * function to update the items table of a specific store
