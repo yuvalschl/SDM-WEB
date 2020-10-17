@@ -24,7 +24,7 @@ function ajaxGetNotifactions() {
         url: GET_NOTIFICATION,
         dataType: 'json',
         success : function (notification){
-            if(!isNotificationsShown && notification.msg.length !=0){
+            if(!isNotificationsShown && notification.msg.length !==0){
                 showNotifications()
                 isNotificationsShown = true
             }
