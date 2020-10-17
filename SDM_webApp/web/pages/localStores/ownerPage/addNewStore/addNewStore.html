@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../../../common/jquery-2.0.3.min.js"></script>
+    <script src="../../../../common/context-path-helper.js"></script>
+    <script src="../../../../common/jquery-ui.js"></script>
+    <script src="addStoreObjects/addStoreItem.js"></script>
+    <script src="addStoreObjects/addStore_store.js"></script>
+    <script src="addNewStore.js"></script>
+    <link rel="stylesheet" href="../../../../common/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../common/jquery-ui-1.12.1.custom/jquery-ui.css">
+    <link rel="stylesheet" href="addNewStore.css">
+    <link rel="stylesheet" href="../../../../common/table.css">
+
+</head>
+<body>
+    <div class="px-4 px-lg-0">
+        <!-- For demo purpose -->
+        <div class="container text-white py-5 text-center">
+            <h1 class="display-4">Add store</h1>
+        </div>
+        <!-- End -->
+
+        <div class="pb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+
+                        <div class="order-info">
+                            <div class="row">
+                                <!-- Date col -->
+                                <div class="col-4">
+                                    <span><b>Store name</b></span>
+                                    <div class="row">
+                                        <input type="text" id="storeName" width="276"/>
+                                    </div>
+                                </div>
+                                <!--type of order col-->
+                                <div class="col-4">
+                                    <span><b>PPK </b></span>
+                                    <div class="row">
+                                        <input  type="number" id="PPK">
+                                    </div>
+                                </div>
+                                <!--location col-->
+                                <div class="col-4">
+                                    <span><b>Location: </b><span id="storeLocationInfoLabel"></span></span>
+                                    <div class="row ">
+                                        <div class="col-1">
+                                            <span type="text">X:</span>
+                                        </div>
+                                        <div class="col-1 location-input">
+                                            <input  type="number" maxlength="2"  id="x-cor" name="username" class="form-control location-input">
+                                        </div>
+                                        <div class="col-1">
+                                            <span type="text">Y:</span>
+                                        </div>
+                                        <div class="col-1 location-input">
+                                            <input  type="number" maxlength="2" id="y-cor" name="username" class="form-control location-input">
+                                        </div>
+                                        <div class="col-8 location-input">
+                                            <span id="warning-label" style="color: red; padding-left: 4px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end of header-->
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <table class="table" id="itemTable">
+                                    <thead>
+                                    <tr id ="itemTableRowHeader">
+                                        <th id="checkedCol">Selected</th>
+                                        <th id="idCol">Item ID</th>
+                                        <th id="itemNameCol" scope="col">Item name</th>
+                                        <th id="priceCol"  scope="col">Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id ="itemTableBody">
+                                    </tbody>
+                                </table>
+                                <label id="errorLabel" style="color: red"></label>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!--end of table-->
+                        <div class="row float-right">
+                            <div class="col">
+                                <button class="btn btn-dark" id="addStore">Add store</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

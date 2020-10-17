@@ -31,7 +31,7 @@ public class Store {
     /**
      * constructor used in the addNewStore method
      */
-    public Store(String storeName, Point storeLocation, Map<Integer, Item> storeInventory, float storePPK, int storeId) {
+    public Store(String storeName, Point storeLocation, Map<Integer, Item> storeInventory, float storePPK, int storeId, Owner owner) {
         this.name = storeName;
         this.serialNumber = storeId;
         this.location = storeLocation;
@@ -43,6 +43,7 @@ public class Store {
         this.allOrders = new HashMap<Integer, StoreOrder>();
         this.allDiscounts = new HashSet<Discount>();
         this.feedbacks = new ArrayList<>();
+        this.storeOwner = owner;
     }
 
     /**

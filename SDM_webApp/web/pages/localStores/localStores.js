@@ -11,7 +11,7 @@ $(document).ready(function() {
     ajaxItemTableData();
     ajaxGetStores();
 
-    $(document).on('click', "#storesDropDown", function(){
+    $(document).on('change', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){
             $("#storesDropDown option[value=pickAStore]").remove();
@@ -21,8 +21,32 @@ $(document).ready(function() {
     });
 
     $(document).on('click', "#firstBtnText", function(){
-        //if(checkIfCustomer())
+        if(checkIfCustomer()){
             placeOrderPage()
+        }
+        else {
+            //store history page
+            window.location = "ownerPage/ownerStoresHistory/ownerStoresHistory.html"
+        }
+    });
+
+    $(document).on('click', "#secondBtnText", function(){
+        if(checkIfCustomer()){
+            //TODO: add this
+        }
+        else {
+            showFeedbacks()
+        }
+    });
+
+    $(document).on('click', "#thirdBtnText", function(){
+        if(checkIfCustomer()){
+            //TODO:add this
+        }
+        else {
+            //add store page
+            window.location = "ownerPage/addNewStore/addNewStore.html?username=" + userName+"&zonename="+zoneName
+        }
     });
 
     $(document).on('click', "#account", function(){
@@ -53,7 +77,6 @@ function updateTableSingleEntry(index, itemInfo){
         "<td>" +howManyItemSold + "</td>" +
         "</tr>");
 }
-
 
 function ajaxItemTableData(){
     var zone = GetURLParameter("zonename");
@@ -93,7 +116,7 @@ function loadCustomerUi(){
     $("#thirdBtnText").text("Your orders");
 }
 function loadOwnerUi(){
-    $("#firstBtnText").text("You store orders");
+    $("#firstBtnText").text("Your stores orders");
     $("#secondBtnText").text("Show feedbacks");
     $("#thirdBtnText").text("Open a new store");
 }
@@ -102,6 +125,7 @@ function updateTable(table){
     $("#tableBody").empty()
     $.each(table || [], updateTableSingleEntry)
 }
+
 function GetURLParameter(sParam) {
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
@@ -146,6 +170,11 @@ function ajaxGetStoreItems(storeId){
 function placeOrderPage(){
     window.location = "customerPage/placeOrder/placeOrder.html?username=" + userName+"&zonename="+zoneName;
 }
+
+function showFeedbacks(){
+    window.location = "ownerPage/ownerFeedbacks/ownerFeedbacks.html?username=" + userName+"&zonename="+zoneName
+}
+
 
 /**
  * function to update the items table of a specific store

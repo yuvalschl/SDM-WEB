@@ -34,6 +34,9 @@ public class StoreInfoServlet extends HttpServlet {
             out.println(json);
             out.flush();
         }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

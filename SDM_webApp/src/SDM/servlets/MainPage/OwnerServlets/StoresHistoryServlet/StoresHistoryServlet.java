@@ -29,8 +29,8 @@ public class StoresHistoryServlet extends HttpServlet {
             UserManager userManager = ServletUtils.getUserManager(getServletContext());
             Owner owner = (Owner) (userManager.getUsers().get(userName));
             ArrayList<OrderHistoryDto> orderDtoMap = new ArrayList<>();
-            Map<Integer, String> allStores = new HashMap<>();
-            owner.getAllStores().forEach((id, store) -> allStores.put(id, store.getName()));
+            ArrayList<StoreNameAndId> allStores = new ArrayList<>();
+            owner.getAllZones().forEach((zoneName, zone) -> zone.forEach((id, store) -> allStores.add(new StoreNameAndId(store.getName(), id))));
             owner.getAllOrders().forEach(storeOrder -> orderDtoMap.add(new OrderHistoryDto(storeOrder)));
             Gson gson = new Gson();
             out.println(gson.toJson(new OrderAndStores(allStores, orderDtoMap)));
@@ -42,11 +42,21 @@ public class StoresHistoryServlet extends HttpServlet {
         }
     }
 
+    private static class StoreNameAndId{
+        private String storeName;
+        private int storeId;
+
+        public StoreNameAndId(String storeName, int storeId) {
+            this.storeName = storeName;
+            this.storeId = storeId;
+        }
+    }
+
     public class OrderAndStores {
-        Map<Integer, String> allStores;
+        ArrayList<StoreNameAndId> allStores;
         ArrayList<OrderHistoryDto> allOrders;
 
-        public OrderAndStores(Map<Integer, String> allStores, ArrayList<OrderHistoryDto>  orderDtoMap){
+        public OrderAndStores(ArrayList<StoreNameAndId> allStores, ArrayList<OrderHistoryDto>  orderDtoMap){
             this.allStores = allStores;
             this.allOrders = orderDtoMap;
         }

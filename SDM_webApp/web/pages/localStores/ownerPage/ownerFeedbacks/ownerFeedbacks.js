@@ -1,6 +1,6 @@
 const GET_FEEDBACK_URL = buildUrlWithContextPath("getOwnerFeedbacks")
 const GET_STORES_FROM_ZONE = buildUrlWithContextPath("getStoresFromZone")
-const zone = 'Hasharon' //TODO: remove this
+const zone = decodeURI(GetURLParameter("zonename"))
 
 
 $(document).ready(function (){
@@ -57,4 +57,15 @@ function getStoreFeedbacks(storeId){
 
 function addStoresToDropDown(index, store){
     $("#storesDropDown").append("<option value=" + store.storeId + ">" + store.storeName + "</option")
+}
+
+function GetURLParameter(sParam) {
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1];
+        }
+    }
 }

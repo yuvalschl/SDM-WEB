@@ -80,6 +80,10 @@
         <servlet-name>GetOwnerStoresInZone</servlet-name>
         <servlet-class>SDM.servlets.MainPage.OwnerServlets.OwnerFeedbacks.GetOwnerStoresInZone</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddStoreServlet</servlet-name>
+        <servlet-class>SDM.servlets.MainPage.OwnerServlets.AddStore.AddStoreServlet</servlet-class>
+    </servlet>
 
     <servlet>
         <servlet-name>getAccountServlet</servlet-name>
@@ -174,6 +178,10 @@
     <servlet-mapping>
         <servlet-name>GetOwnerStoresInZone</servlet-name>
         <url-pattern>/getStoresFromZone</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddStoreServlet</servlet-name>
+        <url-pattern>/addStore</url-pattern>
     </servlet-mapping>
 
 </web-app>

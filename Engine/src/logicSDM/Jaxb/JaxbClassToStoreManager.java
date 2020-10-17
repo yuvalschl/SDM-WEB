@@ -33,9 +33,8 @@ public class JaxbClassToStoreManager {
     //TODO: do all the new testing
     public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore, Owner owner) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
         try{
-
             Map<Integer, Item> allItems = createAllItemsMap(xmlStore.getSDMItems().getSDMItem());
-            Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems, owner);
+            Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems, owner, xmlStore.getSDMZone().getName());
             HashSet<Integer> notSoldItems = checkIfAllTheItemsFromTheFileAreSold(allItems);
             String zoneName = xmlStore.getSDMZone().getName();
             if(!notSoldItems.isEmpty()){
@@ -63,7 +62,7 @@ public class JaxbClassToStoreManager {
         return allItems;
     }
 
-    private Map<Integer, Store> createAllStoresMap(List<SDMStore> sdmStores, Map<Integer, Item> allItems, Owner owner) throws DuplicateValueException, InvalidValueException {
+    private Map<Integer, Store> createAllStoresMap(List<SDMStore> sdmStores, Map<Integer, Item> allItems, Owner owner, String zoneName) throws DuplicateValueException, InvalidValueException {
         Map<Integer, Store> allStores = new HashMap<Integer, Store>();
         for(SDMStore store : sdmStores){
             if(allStores.containsKey(store.getId())){
@@ -80,8 +79,8 @@ public class JaxbClassToStoreManager {
             }
             Store currentStore = new Store(store.getName(), store.getId(), currentStoreInventory, null, currentStoreLocation, store.getDeliveryPpk(),currentStoreDiscount, owner);
             allStores.put(store.getId(), currentStore);
-            owner.getAllStores().put(store.getId(), currentStore);
         }
+        owner.getAllZones().put(zoneName, allStores);
         return allStores;
     }
 
