@@ -1,4 +1,5 @@
 var GET_NOTIFICATION = buildUrlWithContextPath("getNotification")
+var isNotificationsShown = false
 function showNotifications() {
     var notifacionDiv =
         "        <div>\n" +
@@ -12,6 +13,7 @@ function showNotifications() {
     $('#WatchNews').append(notifacionDiv);
     $(document).on('click', '#closeNotificationBtn', function(){
         $('#WatchNews').empty()
+        isNotificationsShown = false
     });
     setInterval(ajaxGetNotifactions, 2000)
 }
@@ -22,7 +24,10 @@ function ajaxGetNotifactions() {
         url: GET_NOTIFICATION,
         dataType: 'json',
         success : function (notification){
-            showNotifications()
+            if(!isNotificationsShown){
+                showNotifications()
+                isNotificationsShown = true
+            }
             presentNotifications(notification)
         },
         error: function (errorInfo){
