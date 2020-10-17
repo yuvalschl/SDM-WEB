@@ -42,7 +42,7 @@ public class AddStoreServlet extends HttpServlet {
                 items.put(id ,new Item(id, name, price, itemFromSystem.getSellBy()));
             }
             int maxId = storeManager.getAllStores().keySet().stream().max(Integer::compareTo).get();
-            storeManager.addNewStore(new Store(storeNameFromParameter, storeLocation, items, ppkFromParameter, maxId + 1, owner));
+            storeManager.addNewStore(new Store(storeNameFromParameter, storeLocation, items, ppkFromParameter, maxId + 1, owner, zoneName));
         }
         catch (Exception e){
             e.printStackTrace();

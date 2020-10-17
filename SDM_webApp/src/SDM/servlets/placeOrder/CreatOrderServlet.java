@@ -38,10 +38,7 @@ public class CreatOrderServlet extends HttpServlet {
             PrintWriter out = res.getWriter();
             AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
             String isOrderApproved = req.getParameter("approved");
-            boolean orderApproved = false;
-            if(isOrderApproved != null) {
-                orderApproved = true;
-            }
+            boolean orderApproved = isOrderApproved != null;
             String zoneName = req.getParameter("zonename");
             String store = req.getParameter("store");
             String userName = req.getSession(false).getAttribute(USERNAME).toString();
@@ -85,8 +82,8 @@ public class CreatOrderServlet extends HttpServlet {
             }
             ArrayList<Discount> discounts = currZoneManager.getEntitledDiscounts(order);
             ArrayList<DiscountDto> discountDtos = new ArrayList<>();
-            ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
             for (Discount discount: discounts){
+                ArrayList<OfferDto> offerDto = new ArrayList<>(); // this is for adding the item name to the discount
                 Map<Integer, Item> currentStoreInventory = currZoneManager.getAllStores().get(discount.getStoreId()).getInventory();
                 for(Offer offer : discount.getThenYouGet().getAllOffers()){
                     // getting the item name in the offer
