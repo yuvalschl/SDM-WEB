@@ -254,6 +254,7 @@ public class StoreManager {
                 if(item.getStore().getSerialNumber() == store.getValue().getSerialNumber()){
                     ordersToAdd.addItemToOrder(item);
                 }
+                addNotifications(ordersToAdd);
             }
             Owner currStoreOwner = store.getValue().getStoreOwner();
             if (storeOwners.containsKey(currStoreOwner.getName())){//if the store owner already appears in the owners map update his balance and the action
@@ -273,6 +274,17 @@ public class StoreManager {
         }
 
     }
+
+    private void addNotifications(StoreOrder order){
+        StringBuilder msg = new StringBuilder();
+        msg.append("order ID: ").append(order.getOrderId()).append('\n');
+        msg.append("customer name: ").append(order.getCustomerName()).append('\n');
+        msg.append("Amount of item types:").append(order.getAmountOfItems()).append('\n');
+        msg.append("Items cost").append(order.getTotalPriceOfItems()).append('\n');
+        msg.append("Shipping cost: ").append(order.getShippingCost()).append('\n');
+        order.getStore().getStoreOwner().addMsg(msg.toString());
+    }
+
 
 
     private float calcTotalPayment(Store store, ItemAmountAndStore item){

@@ -170,6 +170,16 @@ public class CreatOrderServlet extends HttpServlet {
         return items;
     }
 
+    //TODO: delate
+    private void addNotifications(Order order){
+        for(Store store  : order.getStores().values()){
+            StringBuilder msg = new StringBuilder();
+            msg.append("order ID: ").append(order.getOrderId()).append('\n');
+            msg.append("customer name: ").append(order.getCustomer().getName()).append('\n');
+
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
