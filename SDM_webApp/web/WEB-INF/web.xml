@@ -92,6 +92,14 @@
         <servlet-name>NotificationsServlet</servlet-name>
         <servlet-class>SDM.servlets.NotificationsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChatServlet</servlet-name>
+        <servlet-class>SDM.servlets.Chat.ChatServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendChatServlet</servlet-name>
+        <servlet-class>SDM.servlets.Chat.SendChatServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
@@ -189,6 +197,14 @@
     <servlet-mapping>
         <servlet-name>NotificationsServlet</servlet-name>
         <url-pattern>/getNotification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChatServlet</servlet-name>
+        <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendChatServlet</servlet-name>
+        <url-pattern>/sendMsg</url-pattern>
     </servlet-mapping>
 
 </web-app>
