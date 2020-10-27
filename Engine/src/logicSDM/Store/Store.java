@@ -194,8 +194,8 @@ public class Store {
 
     public synchronized void addFeedback(Feedback feedback){
         this.feedbacks.add(feedback);
-        String msg = "Rating: " + (feedback.getRating() != null ? feedback.getRating() : "N/A") + '\n' +
-                "Feedback: " + (feedback.getFeedback() != null ? feedback.getFeedback() : "N/A");
+        String msg = "Rating: " + (feedback.getRating() != -1 ? feedback.getRating() : "N/A") + '\n' +
+                "Feedback: " + (!feedback.getFeedback().isEmpty() ? feedback.getFeedback() : "N/A") + '\n';
         this.storeOwner.addMsg(msg);
     }
 }
