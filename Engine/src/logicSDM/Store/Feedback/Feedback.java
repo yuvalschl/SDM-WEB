@@ -3,7 +3,7 @@ package logicSDM.Store.Feedback;
 import java.util.Date;
 
 public class Feedback {
-    private int rating;
+    private Integer rating;
     private String feedback;
     private String userName;
     private Date date;
@@ -22,11 +22,11 @@ public class Feedback {
 
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         if(rating <= 5 && rating >= 1){
             this.rating = rating;
         }

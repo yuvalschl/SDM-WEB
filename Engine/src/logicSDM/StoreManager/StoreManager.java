@@ -104,7 +104,6 @@ public class StoreManager {
 
     }
 
-
     public void printOrder(Order order){
         System.out.println(order.getDateOfOrder()+"\n"+
                 order.getOrderId());
@@ -141,35 +140,10 @@ public class StoreManager {
         return priceAccumulator / (float)NumberOfStoresSellingItem(item);
     }
 
-   /* public HashMap<Integer ,logicSDM.Store> getAllDtoStores(){
-        HashMap<Integer ,logicSDM.Store> allDtoStores = new HashMap<>();
-        Map<Integer, logicSDM.Item> currentDtoInventory = new HashMap<>();
-        Set<StoreOrder> currentDtoOrders = new HashSet<>();
-        for(Integer key : allStores.keySet()){
-            logicSDM.Store currentStore = allStores.get(key);
-            currentDtoInventory = getDtoInventory(currentStore);
-            currentDtoOrders = getDtoOrders(currentStore);
-            allDtoStores.put(key, currentStore);
-        }
-        return allDtoStores;
-    }
-*/
- /*   public HashMap<Integer ,DtoOrder> getAllDtoOrders(){
-        HashMap<Integer ,DtoOrder> allDtoOrders = new HashMap<>();
-        for (logicSDM.Order order: allOrders){
-            DtoOrder dtoOrder = new DtoOrder(order.getDateOfOrder(),order.getAmountOfItems(),order.getTotalPriceOfItems()
-            ,order.getShippingCost(), order.getTotalCost(), order.getDistance(), order.getStores(),order.getItemAmountAndStores());
-            allDtoOrders.put(order.getOrderId(), dtoOrder);
-        }
-        return allDtoOrders;
-    }*/
-
     public void updateItemPrice(Item item, float newPrice, Store store) throws InvalidValueException {
         Store storeToUpdate = allStores.get(store.getSerialNumber());
         storeToUpdate.getInventory().get(item.getId()).setPrice(newPrice);
     }
-
-
 
     public Order createOrder(Point customerLocation, Date date, HashMap<Integer, ItemAmountAndStore> items, Clinet customer) {
         float totalPriceOfItems = 0;
@@ -254,8 +228,8 @@ public class StoreManager {
                 if(item.getStore().getSerialNumber() == store.getValue().getSerialNumber()){
                     ordersToAdd.addItemToOrder(item);
                 }
-                addNotifications(ordersToAdd);
             }
+            addNotifications(ordersToAdd);
             Owner currStoreOwner = store.getValue().getStoreOwner();
             if (storeOwners.containsKey(currStoreOwner.getName())){//if the store owner already appears in the owners map update his balance and the action
                 for (BalanceAction action:  currStoreOwner.getBalance().getBalanceActions().values()){

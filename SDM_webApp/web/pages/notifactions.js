@@ -31,7 +31,7 @@ function ajaxGetNotifactions() {
             presentNotifications(notification)
         },
         error: function (errorInfo){
-            console.log("Yuval schloser")
+            console.log("error")
         }
     })
 }
