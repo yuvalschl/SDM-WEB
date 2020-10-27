@@ -143,3 +143,8 @@ input::-webkit-inner-spin-button {
     margin-right: 4px;
 
 }
+#secondPgBtn{
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+    }
