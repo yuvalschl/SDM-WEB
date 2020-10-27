@@ -8,7 +8,7 @@ public class Feedback {
     private String userName;
     private Date date;
 
-    public Feedback(int rating, String feedback, Date date, String userName) {
+    public Feedback(Integer rating, String feedback, Date date, String userName) {
         this.rating = rating;
         this.feedback = feedback;
         this.date = date;

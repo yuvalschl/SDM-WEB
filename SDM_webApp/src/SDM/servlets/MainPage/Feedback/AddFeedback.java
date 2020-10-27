@@ -20,7 +20,10 @@ public class AddFeedback extends HttpServlet {
         try{
             String userName = SessionUtils.getUsername(req);
             String feedback = req.getParameter("feedback");
-            int rating = Integer.parseInt(req.getParameter("rating"));
+            Integer rating = -1;
+            if (req.getParameter("rating") != null){
+                rating = Integer.parseInt(req.getParameter("rating"));
+            }
             //TODO: fix the date
             String date = req.getParameter("date");
             Date date1 = new Date();
