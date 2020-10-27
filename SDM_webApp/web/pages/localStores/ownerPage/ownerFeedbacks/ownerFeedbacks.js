@@ -5,7 +5,7 @@ const zone = decodeURI(GetURLParameter("zonename"))
 
 $(document).ready(function (){
     getOwnerStoresFromZone()
-
+    setInterval(ajaxGetNotifactions, 2000)
     $(document).on('change', "#storesDropDown", function (){
         var currentStoreId = $(this).children(":selected").prop("value");
         $("#commentsSection").empty()

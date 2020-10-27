@@ -42,5 +42,6 @@ function presentNotifications(notification) {
 }
 function updateNotificationBox(index, notification) {
    var msgToAdd = notification.msg
+    msgToAdd+= "----------------------------------------\n "
    $('#TextWatchNews').append(msgToAdd)
 }

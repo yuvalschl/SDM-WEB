@@ -10,7 +10,7 @@ $(document).ready(function() {
     zoneName = decodeURI(GetURLParameter("zonename"))
     ajaxItemTableData();
     ajaxGetStores();
-
+    setInterval(ajaxGetNotifactions, 2000)
     $(document).on('change', "#storesDropDown", function(){
         var storeId = $(this).children(":selected").prop("value");
         if(storeId !== 'pickAStore'){

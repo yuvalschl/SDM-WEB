@@ -5,6 +5,8 @@ var zone = decodeURI(GetURLParameter("zonename"))
 
 $(document).ready(function (){
     allOrders = []
+    setInterval(ajaxGetNotifactions, 2000)
+
     //http request for getting the order history
     $.ajax({
         url: GET_STORES_HISTORY_URL,
