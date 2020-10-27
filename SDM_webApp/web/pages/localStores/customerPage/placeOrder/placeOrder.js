@@ -36,7 +36,7 @@ class Point {
 }
 var isDynamicOrder = true
 var showedDiscounts = false
-
+var itemAdded = false
 $(document).ready(function() {
     $('#userNameText').text(decodeURI(GetURLParameter("username")))
     currentOrder = new order(0)
@@ -114,6 +114,8 @@ $(document).ready(function() {
 
 
     $(document).on('click', '.addBtn', function(){
+        itemAdded = true
+        enableSubmitBtn()
         var rowID = $(this).attr('id'); // $(this) refers to button that was clicked
         rowID= rowID.replace( /^\D+/g, '')//this takes only the id number from the string
         updateCart(rowID, false)
@@ -132,26 +134,25 @@ $(document).ready(function() {
     })
 
     $(document).on('click', ".addDiscount", function (){
-        var discountName = $(this).attr('id').slice(6)
-         discountName.replace(/[^a-zA-Z ]/g, "")
-        var storeId = $("#"+'row'+discountName).find('td').eq(0).attr('id')
-        var forAdditional = parseInt($("#"+'row'+discountName).find('td').eq(3).text())
-        currentOrder._amountAddedByDiscounts += forAdditional//add the for additional to the amount added to order by discounts
-        if(availableDiscounts.entitledDiscounts[discountName] <= 0){
-            $(this).prop('disabled', true)
-        }else {
-            availableDiscounts.entitledDiscounts[discountName]--
-            if(!discountDropHappened){//if the then you get is all or nothing add all the items offered
-                for (var i=0;i<currOffers.length;i++){
-                    discountUpdateCart(currOffers[i].amount, currOffers[i].id, currOffers[i].itemName, storeId, forAdditional)
+        if(currDiscountItem.id != undefined){
+            var discountName = $(this).attr('id').slice(6)
+            discountName.replace(/[^a-zA-Z ]/g, "")
+            var storeId = $("#"+'row'+discountName).find('td').eq(0).attr('id')
+            var forAdditional = parseInt($("#"+'row'+discountName).find('td').eq(3).text())
+            currentOrder._amountAddedByDiscounts += forAdditional//add the for additional to the amount added to order by discounts
+            if(availableDiscounts.entitledDiscounts[discountName] <= 0){
+                $(this).prop('disabled', true)
+            }else {
+                availableDiscounts.entitledDiscounts[discountName]--
+                if(!discountDropHappened){//if the then you get is all or nothing add all the items offered
+                    for (var i=0;i<currOffers.length;i++){
+                        discountUpdateCart(currOffers[i].amount, currOffers[i].id, currOffers[i].itemName, storeId, forAdditional)
+                    }
+                }else{
+                    discountUpdateCart(currDiscountItem.amount, currDiscountItem.id,currDiscountItem.name, storeId, forAdditional)
                 }
-            }else{
-                discountUpdateCart(currDiscountItem.amount, currDiscountItem.id,currDiscountItem.name, storeId, forAdditional)
             }
-
-
         }
-
     })
 
     $(document).on('change', "#storesDropDown", function(){
@@ -225,7 +226,7 @@ function disableSubmitBtn(){
 }
 
 function enableSubmitBtn() {
-    if(pickedDate && xCoordinateValid && yCoordinateValid){
+    if(pickedDate && xCoordinateValid && yCoordinateValid && itemAdded){
     $('#submitOrder').attr("disabled", false);
     $('#submitOrder').css("color"," #fff");
     $('#submitOrder').css("background-color","#007bff");
@@ -533,32 +534,31 @@ function ajaxCreatOrder() {
 
     type = isDynamicOrder === true ? "dynamic":"static"
 
-    $.ajax({
-        url: CREATE_ORDER,
-        dataType: 'json',
-        data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
-        success: function (wrapper){
-            if(!showedDiscounts){
-                availableDiscounts = new EntitledDiscounts(currentOrder, wrapper.discount)
-                if(wrapper.discount.length !==0){
-                    maxItemID = wrapper.order.maxID
-                    createDiscountSelectionWindow(wrapper.discount)
-                    $('#submitOrder').val("Proceed to checkout")
-                }
-                else{
-                    showedDiscounts = true
+        $.ajax({
+            url: CREATE_ORDER,
+            dataType: 'json',
+            data: {'zonename': zone, 'location': location, 'items': items, 'date': date, 'type': type, 'store': store },
+            success: function (wrapper){
+                if(!showedDiscounts){
+                    availableDiscounts = new EntitledDiscounts(currentOrder, wrapper.discount)
+                    if(wrapper.discount.length !==0){
+                        maxItemID = wrapper.order.maxID
+                        createDiscountSelectionWindow(wrapper.discount)
+                        $('#submitOrder').val("Proceed to checkout")
+                    }
+                    else{
+                        showedDiscounts = true
+                        goToOrderApprovePg(wrapper,items)
+                    }
+
+                }else {
                     goToOrderApprovePg(wrapper,items)
                 }
-
-            }else {
-                goToOrderApprovePg(wrapper,items)
+            },
+            error : function (){
+                console.log("dani zion")
             }
-        },
-        error : function (){
-            console.log("dani zion")
-        }
-    })
-
+        })
 }
 
 function goToOrderApprovePg(order, itemsToSend){

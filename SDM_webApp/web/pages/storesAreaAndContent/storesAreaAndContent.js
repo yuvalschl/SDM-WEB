@@ -9,7 +9,6 @@ var pickedUp //the zone selected
 
 $(document).ready(function (){
     setInterval(ajaxGetNotifactions, 2000)
-/*    ajaxGetNotifactions()//taken from the notification script*/
     ajaxGetAllUsers()
     ajaxZoneTableData()
     setInterval(ajaxGetAllUsers, refreshRate);
