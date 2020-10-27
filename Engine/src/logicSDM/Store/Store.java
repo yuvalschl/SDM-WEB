@@ -198,5 +198,4 @@ public class Store {
                 "Feedback: " + (feedback.getFeedback() != null ? feedback.getFeedback() : "N/A");
         this.storeOwner.addMsg(msg);
     }
-
 }
