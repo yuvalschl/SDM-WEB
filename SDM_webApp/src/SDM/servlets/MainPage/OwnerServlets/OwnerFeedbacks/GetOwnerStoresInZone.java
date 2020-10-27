@@ -1,5 +1,6 @@
 package SDM.servlets.MainPage.OwnerServlets.OwnerFeedbacks;
 
+import SDM.servlets.MainPage.OwnerServlets.StoresHistoryServlet.StoresHistoryServlet;
 import SDM.utils.DTO.OrderHistory.OrderHistoryDto;
 import SDM.utils.DTO.StoreInfo;
 import SDM.utils.DTO.orderInfo.StoreDTO;
@@ -8,6 +9,7 @@ import SDM.utils.SessionUtils;
 import com.google.gson.Gson;
 import logicSDM.AllZonesManager.AllZonesManager;
 import logicSDM.Order.Order;
+import logicSDM.Store.Store;
 import logicSDM.StoreManager.StoreManager;
 import users.Clinet;
 import users.Owner;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +37,12 @@ public class GetOwnerStoresInZone extends HttpServlet {
             String zoneName = req.getParameter("zone");
             StoreManager storeManager = ServletUtils.getAllZoneManager(getServletContext()).getAllZones().get(zoneName);
             ArrayList<StoreNameAndId> storesToReturn = new ArrayList<>();
-            storeManager.getAllStores().values().forEach(store -> storesToReturn.add(new StoreNameAndId(store.getName(), store.getSerialNumber())));
+            Collection<Store> stores = ServletUtils.getAllZoneManager(getServletContext()).getAllZones().get(zoneName).getAllStores().values();
+            for(Store store : stores){
+                if(store.getStoreOwner().equals(owner)){
+                    storesToReturn.add(new StoreNameAndId(store.getName(), store.getSerialNumber()));
+                }
+            }
             Gson gson = new Gson();
             out.println(gson.toJson(storesToReturn));
             out.flush();

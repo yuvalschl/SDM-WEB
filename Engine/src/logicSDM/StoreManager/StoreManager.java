@@ -457,10 +457,12 @@ public class StoreManager {
      */
     public void addNewStore(Store storeToAdd){
         allStores.put(storeToAdd.getSerialNumber(), storeToAdd);
-        String msg = "New store opened in your zone!" + '\n' +
-                "Store name: " + storeToAdd.getName() + '\n' +
-                "Store ID: " + storeToAdd.getSerialNumber() + '\n';
-        this.getZoneOwner().addMsg(msg);
+        if(!this.getZoneOwner().equals(storeToAdd.getStoreOwner())){
+            String msg = "New store opened in your zone!" + '\n' +
+                    "Store name: " + storeToAdd.getName() + '\n' +
+                    "Store ID: " + storeToAdd.getSerialNumber() + '\n';
+            this.getZoneOwner().addMsg(msg);
+        }
     }
     public boolean isStoreCoordinateValid(Point storeToAddLocation){
         boolean isValid = true;
