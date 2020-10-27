@@ -26,6 +26,7 @@ public class AddStoreServlet extends HttpServlet {
             String xFromParameter = req.getParameter("x");
             String yFromParameter = req.getParameter("y");
             Point storeLocation = new Point(Integer.parseInt(xFromParameter), Integer.parseInt(yFromParameter));
+
             String itemsFromParameter = req.getParameter("items");
             String zoneName = req.getParameter("zone");
             Owner owner =  (Owner) ServletUtils.getUserManager(getServletContext()).getUsers().get(SessionUtils.getUsername(req));
@@ -42,7 +43,12 @@ public class AddStoreServlet extends HttpServlet {
                 items.put(id ,new Item(id, name, price, itemFromSystem.getSellBy()));
             }
             int maxId = storeManager.getAllStores().keySet().stream().max(Integer::compareTo).get();
-            storeManager.addNewStore(new Store(storeNameFromParameter, storeLocation, items, ppkFromParameter, maxId + 1, owner, zoneName));
+            if(storeManager.isStoreCoordinateValid(storeLocation)){
+                storeManager.addNewStore(new Store(storeNameFromParameter, storeLocation, items, ppkFromParameter, maxId + 1, owner, zoneName));
+            }
+            else{
+                resp.setStatus(409);
+            }
         }
         catch (Exception e){
             e.printStackTrace();

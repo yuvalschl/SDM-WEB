@@ -458,5 +458,15 @@ public class StoreManager {
     public void addNewStore(Store storeToAdd){
         allStores.put(storeToAdd.getSerialNumber(), storeToAdd);
     }
+    public boolean isStoreCoordinateValid(Point storeToAddLocation){
+        boolean isValid = true;
+        for (Store store: allStores.values()){
+            if(store.getLocation().equals(storeToAddLocation)){
+                isValid = false;
+                break;
+            }
+        }
+        return  isValid;
+    }
 
 }

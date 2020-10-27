@@ -134,13 +134,14 @@ function addStore(){
     var dani = JSON.stringify(store.inventory)
     $.ajax({
         url: ADD_STORE_URL,
-        type: 'POST',
+        type: 'GET',
         data: {'name': store.name, 'ppk': store.ppk, 'x': store.x, 'y': store.y, 'items': dani, 'zone': zone},
         success: function () {
             console.log('store Added')
             window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zone
         },
         error: function () {
+
             console.log('error in add store servlet')
         }
     })
@@ -157,6 +158,7 @@ function isCoordinateValid() {
 }
 
 function disableSubmitBtn(){
+    var button = $('#addStore')
     button.attr("disabled", true);
 }
 
