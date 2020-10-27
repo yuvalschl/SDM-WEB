@@ -48,6 +48,7 @@ public class AddStoreServlet extends HttpServlet {
             }
             else{
                 resp.setStatus(409);
+                resp.getWriter().println("Another store already in location");
             }
         }
         catch (Exception e){

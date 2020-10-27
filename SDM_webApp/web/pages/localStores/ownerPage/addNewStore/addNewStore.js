@@ -113,10 +113,6 @@ function addStore(){
     store.x = $("#x-cor").val()
     store.y = $("#y-cor").val()
 
-    if(store.inventory.length === 0){
-        $("#errorLabel").text('No items in store')
-    }
-
     $("#itemTableBody > tr").each(function () {
         var checked = $(this).children('td').eq(0).find(":checkbox").prop('checked')
         if(checked){
@@ -131,20 +127,26 @@ function addStore(){
             }
         }
     })
-    var dani = JSON.stringify(store.inventory)
-    $.ajax({
-        url: ADD_STORE_URL,
-        type: 'GET',
-        data: {'name': store.name, 'ppk': store.ppk, 'x': store.x, 'y': store.y, 'items': dani, 'zone': zone},
-        success: function () {
-            console.log('store Added')
-            window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zone
-        },
-        error: function () {
-
-            console.log('error in add store servlet')
-        }
-    })
+    if(store.inventory.length === 0){
+        $("#errorLabel").text('No items in store')
+    }
+    else{
+        var dani = JSON.stringify(store.inventory)
+        $.ajax({
+            url: ADD_STORE_URL,
+            type: 'GET',
+            dataType: 'text',
+            data: {'name': store.name, 'ppk': store.ppk, 'x': store.x, 'y': store.y, 'items': dani, 'zone': zone},
+            success: function () {
+                console.log('store Added')
+                window.location= "/SDM/pages/localStores/localStores.html?zonename=" + zone
+            },
+            error: function (error) {
+                console.log(error)
+                $("#errorLabel").text(error["responseText"])
+            }
+        })
+    }
 }
 
 function isCoordinateValid() {
@@ -164,7 +166,7 @@ function disableSubmitBtn(){
 
 function enableSubmitBtn() {
     var button = $('#addStore')
-    if(PPK > 0 && xCoordinateValid && yCoordinateValid && storeName){
+    if(PPK > 0 && xCoordinateValid && yCoordinateValid && storeName ){
         button.attr("disabled", false);
     }
     else {

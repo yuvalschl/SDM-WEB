@@ -3,6 +3,7 @@ package SDM.servlets.MainPage.OwnerServlets.StoresHistoryServlet;
 import SDM.utils.DTO.OrderHistory.OrderHistoryDto;
 import SDM.utils.ServletUtils;
 import com.google.gson.Gson;
+import logicSDM.Store.Store;
 import users.Owner;
 import users.UserManager;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +33,14 @@ public class StoresHistoryServlet extends HttpServlet {
             ArrayList<OrderHistoryDto> orderDtoMap = new ArrayList<>();
             ArrayList<StoreNameAndId> allStores = new ArrayList<>();
             String zoneName = req.getParameter("zone");
-            owner.getAllZones().get(zoneName).forEach((id, store) -> allStores.add(new StoreNameAndId(store.getName(), id)));
-            owner.getAllZones().get(zoneName).forEach((id, store) -> store.getAllOrders().forEach((integer, storeOrder) -> orderDtoMap.add(new OrderHistoryDto(storeOrder))));
+            Collection<Store> stores = ServletUtils.getAllZoneManager(getServletContext()).getAllZones().get(zoneName).getAllStores().values();
+            for(Store store : stores){
+                if(store.getStoreOwner().equals(owner)){
+                    allStores.add(new StoreNameAndId(store.getName(), store.getSerialNumber()));
+                }
+            }
+/*            owner.getAllZones().get(zoneName).forEach((id, store) -> allStores.add(new StoreNameAndId(store.getName(), id)));*/
+            stores.forEach(store -> store.getAllOrders().forEach((integer, storeOrder) -> orderDtoMap.add(new OrderHistoryDto(storeOrder))));
             Gson gson = new Gson();
             out.println(gson.toJson(new OrderAndStores(allStores, orderDtoMap)));
             out.flush();
