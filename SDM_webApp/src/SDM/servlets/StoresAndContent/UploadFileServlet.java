@@ -28,7 +28,7 @@ import java.util.Scanner;
 public class UploadFileServlet extends HttpServlet{
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException  {
         Collection<Part> parts = request.getParts();
         StringBuilder xml = new StringBuilder();
         for(Part part : parts){
@@ -44,8 +44,14 @@ public class UploadFileServlet extends HttpServlet{
             String userName = SessionUtils.getUsername(request);
             Owner owner  = (Owner) ServletUtils.getUserManager(getServletContext()).getUsers().get(userName);
             storeManager = jaxbClassToStoreManager.convertJaxbClassToStoreManager(XmlToObject.fromXmlFileToObject(file), owner);
-        } catch (DuplicateValueException | InvalidValueException | ItemNotSoldException | InterruptedException e) {
-            e.printStackTrace();
+            response.setStatus(202);
+        } catch (Exception/*| DuplicateValueException | InvalidValueException | ItemNotSoldException | InterruptedException*/ e) {
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            String json = e.getMessage();
+            out.println(json);
+            out.flush();
+            return;
         }
         AllZonesManager allZonesManager = ServletUtils.getAllZoneManager(getServletContext());
         assert storeManager != null;

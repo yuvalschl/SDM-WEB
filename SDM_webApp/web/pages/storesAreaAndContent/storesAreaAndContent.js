@@ -40,6 +40,7 @@ $(document).ready(function (){
  * this is the on click method for the upload file button
  */
 function uploadFile(){
+    $('#fileError').empty()
     var form = new FormData();
     var files = $("#fileChooser")[0].files[0];
     form.append("file", files)
@@ -54,12 +55,15 @@ function uploadFile(){
             console.log("file uploaded")
             removeUpload()
         },
-        error : function (message){
-            console.log("error while uploading file: " + message)
+        error : function (response){
+            presentError(response.responseText)
         }
     })
 }
 
+function presentError(response) {
+    $('#fileError').append(response)
+}
 /**
  *
  * recives a zone info json with:

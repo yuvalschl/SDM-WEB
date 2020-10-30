@@ -31,7 +31,7 @@ public class JaxbClassToStoreManager {
     }*/
 
     //TODO: do all the new testing
-    public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore, Owner owner) throws DuplicateValueException, InvalidValueException, ItemNotSoldException, InterruptedException {
+    public StoreManager convertJaxbClassToStoreManager(SuperDuperMarketDescriptor xmlStore, Owner owner) throws Exception {
         try{
             Map<Integer, Item> allItems = createAllItemsMap(xmlStore.getSDMItems().getSDMItem());
             Map<Integer, Store> allStores = createAllStoresMap(xmlStore.getSDMStores().getSDMStore(), allItems, owner, xmlStore.getSDMZone().getName());
@@ -43,7 +43,8 @@ public class JaxbClassToStoreManager {
             return new StoreManager(allStores, allItems, zoneName, owner);
         }
         catch (Exception e){
-            return null;
+
+            throw new Exception(e.getMessage());
         }
     }
 
