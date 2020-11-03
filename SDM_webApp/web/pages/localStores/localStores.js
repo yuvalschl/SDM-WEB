@@ -110,7 +110,7 @@ function lodUserUi(){
 }
 function loadCustomerUi(){
     $("#firstBtnText").text("Place an order");
-    $("#secondBtnText").text("Rate a store");
+    $("#secondBtnText").text();
     $("#thirdBtnText").text("Your orders");
 }
 function loadOwnerUi(){
