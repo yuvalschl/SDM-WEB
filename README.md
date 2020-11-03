@@ -15,8 +15,7 @@ This a was made for a collage project as part of Java course.
 - [x] Chat between the system users
 - [x] Stores feedback and rating system
 
-##ScreenShots
-
+## ScreenShots
 
 ![Feedback](https://github.com/danizion/SDM-Web/blob/master/ScreenShots/Feedback.PNG)
 ![summery](https://github.com/danizion/SDM-Web/blob/master/ScreenShots/orderSummery.PNG)
