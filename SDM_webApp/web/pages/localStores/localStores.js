@@ -32,7 +32,6 @@ $(document).ready(function() {
 
     $(document).on('click', "#secondBtnText", function(){
         if(checkIfCustomer()){
-            //TODO: add this
         }
         else {
             showFeedbacks()
@@ -41,7 +40,7 @@ $(document).ready(function() {
 
     $(document).on('click', "#thirdBtnText", function(){
         if(checkIfCustomer()){
-            //TODO:add this
+            window.location = "customerPage/userOrderHistoryPage/userOrderHistoryPage.html";
         }
         else {
             //add store page

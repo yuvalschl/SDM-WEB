@@ -39,6 +39,7 @@ function initializeGlobalVariables() {//initialize all the global vars used in t
     items = atob(GetURLParameter("orderAfterDiscount"))
     items = JSON.parse(items)
 }
+
 function approveOrder(){
     var store = currOrderPGapproveOrder.allStores[0].id
     store = JSON.stringify(store)
