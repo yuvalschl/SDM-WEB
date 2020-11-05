@@ -48,5 +48,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) f
 
 ## Team & Credits
 
-- Authors: <a href="mailto:tomerguttman27@gmail.com" target="_blank">Tomer Guttman</a>, <a href="mailto:ohadslu@gmail.com" target="_blank">Ohad Slutzky</a>
+- Authors: <a href="mailto:dani.zion87@gmail.com" target="_blank">Dani Zion</a>, <a href="mailto:yuval.schl@gmail.com" target="_blank">Yuval schlosser</a>
 - Mentor: Aviad Cohen
